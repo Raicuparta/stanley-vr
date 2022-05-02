@@ -10,9 +10,8 @@ public class StereoPortalRenderer: MonoBehaviour
     {
 	    var camera = Camera.current;
 	    var cameraRight = camera.transform.right;
-	    // Not really sure why I have to divide by 4. Probably related to the camera scale?
-	    var separation = stereoSeparation > 0 ? stereoSeparation : camera.stereoSeparation / 4f;
-	    var offset = cameraRight.normalized * separation;
+	    var separation = stereoSeparation > 0 ? stereoSeparation : camera.stereoSeparation * camera.transform.parent.localScale.x;
+	    var offset = cameraRight.normalized * separation * 0.5f;
 
 	    if (camera.stereoActiveEye == Camera.MonoOrStereoscopicEye.Left)
 	    {
