@@ -42,6 +42,14 @@ public static class Patches
     private static void FixCameraScale(MainCamera __instance)
     {
         __instance.transform.parent.localScale = Vector3.one * 0.5f;
+        __instance.gameObject.AddComponent<StereoPortalRenderer>();
+    }
+    
+    [HarmonyPrefix]
+    [HarmonyPatch(typeof(MainCamera), nameof(MainCamera.OnPreCull))]
+    private static bool DisableOnPreCull()
+    {
+	    return false;
     }
 
     // This definitely doesn't need to be called this often,
@@ -173,5 +181,53 @@ public static class Patches
 			__instance.character.Move((__instance.movement + Vector3.up * __instance.maxGravity * __instance.gravityMultiplier) * Singleton<GameMaster>.Instance.GameDeltaTime);
 		}
 		return false;
+    }
+    
+    // This is a copy paste of the entire StanleyController.Update method,
+    // with just small modifications to stop trying to change the FOV
+    [HarmonyPrefix]
+    [HarmonyPatch(typeof(StanleyController), nameof(StanleyController.Update))]
+    private static bool PreventChangingFov(StanleyController __instance)
+    {
+	    if (!Singleton<GameMaster>.Instance.IsLoading && GameMaster.ONMAINMENUORSETTINGS)
+		{
+			AudioListener.volume = Singleton<GameMaster>.Instance.masterVolume;
+		}
+		StanleyController.StanleyPosition = __instance.transform.position;
+		
+		// Trying to change the FOV in VR causes warnings.
+		// __instance.cam.fieldOfView = FieldOfViewBase + FieldOfViewAdditiveModifier;
+		
+		if (!__instance.viewFrozen)
+		{
+			__instance.View();
+		}
+		if (!__instance.motionFrozen)
+		{
+			__instance.Movement();
+			__instance.UpdateCurrentlyStandingOn();
+			__instance.Footsteps();
+			__instance.ClickingOnThings();
+		}
+		else if (__instance.character.enabled)
+		{
+			__instance.character.Move(Vector2.zero);
+		}
+		if (!__instance.viewFrozen)
+		{
+			__instance.FloatCamera();
+		}
+		if (BucketController.HASBUCKET)
+		{
+			if (__instance.character.enabled && __instance.grounded)
+			{
+				__instance.Bucket.SetWalkingSpeed(__instance.character.velocity.magnitude / (__instance.walkingSpeed * __instance.WalkingSpeedMultiplier));
+			}
+			else
+			{
+				__instance.Bucket.SetWalkingSpeed(0f);
+			}
+		}
+	    return false;
     }
 }
