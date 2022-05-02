@@ -18,12 +18,6 @@ namespace StanleyVr
 
             InputTracking.disablePositionalTracking = true;
             
-            Invoke(nameof(StartGame), 1);
-        }
-
-        private void StartGame()
-        {
-            SceneManager.LoadScene("map1_UD_MASTER");
         }
 
         private void Update()
