@@ -123,7 +123,12 @@ public static class Patches
 		// The original line was this:
 		// __instance.movement = __instance.transform.TransformDirection(__instance.movement);
 		// With this change, we can use the VR camera rotation as a basis for movement direction:
-		__instance.movement = Camera.main.transform.TransformDirection(__instance.movement);
+		var cameraForward = Camera.main.transform.forward;
+		cameraForward.y = 0;
+
+		var forwardRotation = Quaternion.LookRotation(cameraForward, Vector3.up);
+		
+		__instance.movement = forwardRotation * __instance.movement;
 		
 		__instance.movement += Vector3.up * __instance.jumpValue;
 		Action<Vector3> onPositionUpdate = BackgroundCamera.OnPositionUpdate;
