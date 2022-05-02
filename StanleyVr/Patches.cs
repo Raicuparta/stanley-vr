@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using AmplifyBloom;
 using HarmonyLib;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,6 +44,14 @@ public static class Patches
     {
         __instance.transform.parent.localScale = Vector3.one * 0.5f;
         __instance.gameObject.AddComponent<StereoPortalRenderer>();
+    }
+
+    [HarmonyPrefix]
+    [HarmonyPatch(typeof(MobileBlur), nameof(MobileBlur.OnRenderImage))]
+    private static bool PreventPauseBlur(MobileBlur __instance)
+    {
+	    __instance.enabled = false;
+	    return false;
     }
     
     [HarmonyPrefix]

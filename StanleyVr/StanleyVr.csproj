@@ -22,4 +22,15 @@
     <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
         <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\StanleyVrUnity\AssetBundles\StandaloneWindows\vr-ui">
+        <Link>Assets\vr-ui</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\StanleyVrUnity\AssetBundles\StandaloneWindows\vr-ui.manifest">
+        <Link>Assets\vr-ui.manifest</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
 </Project>
