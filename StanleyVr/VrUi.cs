@@ -13,6 +13,14 @@ public class VrUi : MonoBehaviour
         {
             canvas.worldCamera = uiCamera;
             canvas.renderMode = RenderMode.ScreenSpaceCamera;
+
+            if (canvas.gameObject.layer != LayerMask.NameToLayer("Default") ||
+                canvas.gameObject.layer != LayerMask.NameToLayer("UI"))
+            {
+                Debug.LogWarning($"Warning: changing canvas layer from {LayerMask.LayerToName(canvas.gameObject.layer)} to UI");
+            }
+            
+            canvas.gameObject.layer = LayerMask.NameToLayer("UI");
         }
     }
 }
