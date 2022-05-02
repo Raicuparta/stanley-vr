@@ -4,13 +4,11 @@ namespace StanleyVr;
 
 public class StereoPortalRenderer: MonoBehaviour
 {
-    public float stereoSeparation;
-
-    private void OnPreRender()
+	private void OnPreRender()
     {
 	    var camera = Camera.current;
 	    var cameraRight = camera.transform.right;
-	    var separation = stereoSeparation > 0 ? stereoSeparation : camera.stereoSeparation * camera.transform.parent.localScale.x;
+	    var separation = camera.stereoSeparation * camera.transform.parent.localScale.x;
 	    var offset = cameraRight.normalized * separation * 0.5f;
 
 	    if (camera.stereoActiveEye == Camera.MonoOrStereoscopicEye.Left)
