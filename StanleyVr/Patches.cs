@@ -43,4 +43,14 @@ public static class Patches
     {
         __instance.transform.parent.localScale = Vector3.one * 0.5f;
     }
+
+    // This definitely doesn't need to be called this often,
+    // but I'm not sure if there's some mechanism that can affect these values.
+    [HarmonyPrefix]
+    [HarmonyPatch(typeof(StanleyController), "View")]
+    private static void PreventCameraVerticalRotation(StanleyController __instance)
+    {
+        __instance.controllerSensitivityY = 0;
+        __instance.mouseSensitivityY = 0;
+    }
 }
