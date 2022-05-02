@@ -18,6 +18,7 @@ namespace StanleyVr
 
             InputTracking.disablePositionalTracking = true;
             
+            Debug.Log("####### Stanley Parable Ultra Deluxe version " + Application.version);
         }
 
         private void Update()
