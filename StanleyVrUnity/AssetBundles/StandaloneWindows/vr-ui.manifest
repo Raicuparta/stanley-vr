@@ -1,0 +1,39 @@
+ManifestFileVersion: 0
+CRC: 599879607
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 294f73a4c5a0487bb45c139c3c14e06e
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 121f21727b3c3c7d770f24418e6be66b
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 20
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 64
+  Script: {instanceID: 0}
+- Class: 84
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0cfdc910964ca374e85c5fb1411e33fd, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/VrUi/VrUi.prefab
+Dependencies: []
