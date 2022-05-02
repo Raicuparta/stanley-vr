@@ -40,13 +40,19 @@ namespace StanleyVr
 
             if (Input.GetKeyDown(KeyCode.F8))
             {
+                var camera = Camera.main;
+                if (!Camera.main)
+                {
+                    camera = new GameObject("VrCamera").AddComponent<Camera>();
+                    camera.tag = "MainCamera";
+                }
+                
                 var vrUiPrefab = vrUiBundle.LoadAsset<GameObject>("VrUi");
                 Debug.Log($"###### vrUiPrefab {vrUiPrefab}");
-                var instance = Instantiate(vrUiPrefab, Camera.main ? Camera.main.transform : null);
+                var instance = Instantiate(vrUiPrefab, camera.transform, false);
                 Debug.Log($"###### instance {instance}");
                 var vrUi = instance.AddComponent<VrUi>();
                 Debug.Log($"###### vrUi {vrUi}");
-                vrUi.transform.localPosition = Vector3.forward;
             }
 
             if (Input.GetKeyDown(KeyCode.F9))
