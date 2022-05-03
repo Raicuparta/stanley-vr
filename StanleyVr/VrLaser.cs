@@ -1,16 +1,15 @@
-﻿using StanleyVr;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace TwoForksVr.LaserPointer;
+namespace StanleyVr;
 
 public class VrLaser : MonoBehaviour
 {
-    private const float laserLength = 1f;
+    private const float laserLength = 100f;
     private bool ignoreNextInput;
 
     // private LaserInputModule inputModule;
     private LineRenderer lineRenderer;
-    private Vector3? target;
+    // private Vector3? target;
 
     public static VrLaser Create(Transform dominantHand)
     {
@@ -27,7 +26,7 @@ public class VrLaser : MonoBehaviour
     {
         // inputModule = LaserInputModule.Create(this);
         // inputModule.EventCamera = camera;
-        target = null;
+        // target = null;
     }
 
     private void Start()
@@ -39,8 +38,8 @@ public class VrLaser : MonoBehaviour
         lineRenderer.endWidth = 0.001f;
         lineRenderer.endColor = new Color(1, 1, 1, 0.8f);
         lineRenderer.startColor = Color.clear;
-        lineRenderer.material.shader = Shader.Find("Particles/Alpha Blended Premultiply");
-        lineRenderer.material.SetColor("_Color", Color.white);
+        lineRenderer.material.shader = Shader.Find("Stanley/Stanley_UnlitColorAlpha");
+        lineRenderer.material.SetColor("_Color", new Color(1, 1, 1, 0.5f));
         lineRenderer.sortingOrder = 10000;
         lineRenderer.enabled = false;
     }
@@ -53,25 +52,25 @@ public class VrLaser : MonoBehaviour
 
     public void SetTarget(Vector3? newTarget)
     {
-        target = newTarget;
+        // target = newTarget;
     }
 
     private void UpdateLaserTarget()
     {
-        lineRenderer.SetPosition(1,
-            target != null
-                ? transform.InverseTransformPoint((Vector3) target)
-                : Vector3.forward * laserLength);
+        // lineRenderer.SetPosition(1,
+        //     target != null
+        //         ? transform.InverseTransformPoint((Vector3) target)
+        //         : Vector3.forward * laserLength);
     }
 
-    private bool HasCurrentTarget()
-    {
-        return target != null;
-    }
+    // private bool HasCurrentTarget()
+    // {
+    //     return target != null;
+    // }
 
     private void UpdateLaserVisibility()
     {
-        lineRenderer.enabled = HasCurrentTarget() || true; // todo
+        lineRenderer.enabled = true; // todo
     }
 
     public bool ClickDown()

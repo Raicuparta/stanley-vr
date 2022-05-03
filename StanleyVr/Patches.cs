@@ -2,7 +2,6 @@
 using System.Linq;
 using AmplifyBloom;
 using HarmonyLib;
-using TwoForksVr.LaserPointer;
 using UnityEngine;
 using UnityEngine.SpatialTracking;
 using UnityEngine.UI;
