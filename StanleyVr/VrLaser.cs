@@ -1,11 +1,13 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace StanleyVr;
 
 public class VrLaser : MonoBehaviour
 {
-    private const float laserLength = 100f;
+    private const float laserLength = 20f;
     private bool ignoreNextInput;
+    public static VrLaser Instance; // TODO no public singletons.
 
     // private LaserInputModule inputModule;
     private LineRenderer lineRenderer;
@@ -20,6 +22,11 @@ public class VrLaser : MonoBehaviour
         instanceTransform.SetParent(dominantHand, false);
         instanceTransform.localEulerAngles = new Vector3(39.132f, 356.9302f, 0.3666f);
         return instance;
+    }
+
+    private void Awake()
+    {
+        Instance = this;
     }
 
     public void SetUp(Camera camera)
@@ -38,8 +45,8 @@ public class VrLaser : MonoBehaviour
         lineRenderer.endWidth = 0.001f;
         lineRenderer.endColor = new Color(1, 1, 1, 0.8f);
         lineRenderer.startColor = Color.clear;
-        lineRenderer.material.shader = Shader.Find("Stanley/Stanley_UnlitColorAlpha");
-        lineRenderer.material.SetColor("_Color", new Color(1, 1, 1, 0.5f));
+        lineRenderer.material.shader = Shader.Find("Legacy Shaders/Particles/Alpha Blended");
+        lineRenderer.material.SetColor("_Color", Color.white);
         lineRenderer.sortingOrder = 10000;
         lineRenderer.enabled = false;
     }

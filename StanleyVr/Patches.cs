@@ -35,6 +35,49 @@ public static class Patches
 		VrUi.Instance.SetUpCanvas(canvas);
     }
     
+    [HarmonyPrefix]
+    [HarmonyPatch(typeof(StanleyController), nameof(StanleyController.ClickingOnThings))]
+	private static bool LaserInteraction(StanleyController __instance)
+	{
+		if (!VrLaser.Instance)
+		{
+			return true;
+		}
+		if (Singleton<GameMaster>.Instance.FullScreenMoviePlaying || !Singleton<GameMaster>.Instance.stanleyActions.UseAction.WasPressed)
+		{
+			return false;
+		}
+		RaycastHit hitInfo;
+		// TODO just replace __instance.camparent during this method instead of copying everything.
+		if (Physics.Raycast(VrLaser.Instance.transform.position, VrLaser.Instance.transform.forward, out hitInfo, __instance.armReach, __instance.clickLayers, QueryTriggerInteraction.Ignore))
+		{
+			GameObject gameObject = hitInfo.collider.gameObject;
+			HammerEntity component = gameObject.GetComponent<HammerEntity>();
+			if (component != null)
+			{
+				component.Use();
+			}
+			else
+			{
+				__instance.PlayKeyboardSound();
+			}
+			if (StanleyController.OnInteract != null)
+			{
+				StanleyController.OnInteract(gameObject);
+			}
+		}
+		else
+		{
+			__instance.PlayKeyboardSound();
+			if (StanleyController.OnInteract != null)
+			{
+				StanleyController.OnInteract(null);
+			}
+		}
+
+		return false;
+	}
+    
 	[HarmonyPrefix]
     [HarmonyPatch(typeof(CanvasOrdering), nameof(CanvasOrdering.Update))]
     [HarmonyPatch(typeof(SetEventCameraOnStart), nameof(SetEventCameraOnStart.Start))]
