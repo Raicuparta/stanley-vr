@@ -65,7 +65,7 @@ namespace Valve.VR
             }
         }
         
-        public virtual SteamVR_Action_Boolean Rotate
+        public virtual SteamVR_Action_Vector2 Rotate
         {
             get
             {
