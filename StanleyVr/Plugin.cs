@@ -21,11 +21,13 @@ namespace StanleyVr
         
         private void Awake()
         {
+            Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
+            
+            SteamVR_Actions.PreInitialize();
             SteamVR.Initialize();
             SteamVR.settings.pauseGameWhenDashboardVisible = false;
             
             Debug.Log("####### Stanley Parable Ultra Deluxe version " + Application.version);
-            Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
             Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
 
             InputTracking.disablePositionalTracking = true;
@@ -104,6 +106,11 @@ namespace StanleyVr
                 livObject.SetActive(true);
                 
                 Debug.Log("Successfully created LIV");
+            }
+
+            if (SteamVR_Actions.default_Interact.stateDown)
+            {
+                Debug.Log("####### trigger down");
             }
         }
 

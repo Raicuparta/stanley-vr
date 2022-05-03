@@ -1,10 +1,12 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using AmplifyBloom;
 using HarmonyLib;
 using UnityEngine;
 using UnityEngine.SpatialTracking;
 using UnityEngine.UI;
+using Valve.VR;
 
 namespace StanleyVr;
 
@@ -302,5 +304,13 @@ public static class Patches
 			}
 		}
 	    return false;
+    }
+    
+    [HarmonyPrefix]
+    [HarmonyPatch(typeof(SteamVR_Input), nameof(SteamVR_Input.GetActionsFileFolder))]
+    private static bool GetActionsFileFromMod(ref string __result)
+    {
+        __result = $"{Directory.GetCurrentDirectory()}/BepInEx/plugins/StanleyVr/Bindings";
+        return false;
     }
 }
