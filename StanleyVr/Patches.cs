@@ -316,28 +316,40 @@ public static class Patches
         return false;
     }
 
-    private const string RotateHorizontal = "joystick 1 analog 3";
-    private const string RotateVertical = "joystick 1 analog 4";
-    private const string MoveVertical = "joystick 1 analog 1";
-    private const string MoveHorizontal = "joystick 1 analog 0";
+    private const string RotateHorizontal = "analog 3";
+    private const string RotateVertical = "analog 4";
+    private const string MoveVertical = "analog 1";
+    private const string MoveHorizontal = "analog 0";
+    private const string Interact = "button 0";
 
     [HarmonyPostfix]
     [HarmonyPatch(typeof(Input), nameof(Input.GetAxisRaw))]
     private static void ReadVrAnalogInput(string axisName, ref float __result)
     {
-	    if (Mathf.Abs(__result) > 0.5)
-	    {
-			Debug.Log($"axis {axisName}: {__result.ToString(CultureInfo.InvariantCulture)}");
-	    }
+	    if (axisName.EndsWith(RotateHorizontal))
+		    __result = SteamVR_Actions._default.Rotate.axis.x;
+	    else if (axisName.EndsWith(RotateVertical))
+		    __result = -SteamVR_Actions._default.Rotate.axis.y;
+	    else if (axisName.EndsWith(MoveVertical))
+		    __result = -SteamVR_Actions._default.Move.axis.y;
+	    else if (axisName.EndsWith(MoveHorizontal))
+		    __result = SteamVR_Actions._default.Move.axis.x;
+	    else
+		    __result = __result;
+	    // Debug.Log($"### ReadRawAnalogValue axisName {axisName}");
+	    // return true;
+    }
+    
 
-	    __result = axisName switch
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(Input), nameof(Input.GetKey), typeof(string))]
+    private static void ReadVrButtonInput(string name, ref bool __result)
+    {
+	    if (name.EndsWith(Interact))
 	    {
-		    RotateHorizontal => SteamVR_Actions._default.Rotate.axis.x,
-		    RotateVertical => -SteamVR_Actions._default.Rotate.axis.y,
-		    MoveVertical => -SteamVR_Actions._default.Move.axis.y,
-		    MoveHorizontal => SteamVR_Actions._default.Move.axis.x,
-		    _ => __result
-	    };
+			Debug.Log($"buttonName {name}");
+			__result = SteamVR_Actions._default.Interact.state;
+	    }
 	    // Debug.Log($"### ReadRawAnalogValue axisName {axisName}");
 	    // return true;
     }
