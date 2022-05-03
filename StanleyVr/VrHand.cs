@@ -1,5 +1,4 @@
-﻿using TwoForksVr.LaserPointer;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SpatialTracking;
 
 namespace StanleyVr;
