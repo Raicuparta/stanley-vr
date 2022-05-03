@@ -54,7 +54,6 @@ public static class Patches
         hand.transform.localPosition = Vector3.down;
         hand.transform.localRotation = Quaternion.identity;
 
-        XRSettings.enabled = false;
 
         var poseDriver = hand.AddComponent<TrackedPoseDriver>();
         poseDriver.SetPoseSource(TrackedPoseDriver.DeviceType.GenericXRController,
@@ -68,7 +67,6 @@ public static class Patches
         var cameraPoseDriver = __instance.gameObject.AddComponent<TrackedPoseDriver>();
         cameraPoseDriver.UseRelativeTransform = true;
 
-        XRSettings.enabled = true;
     }
 
     [HarmonyPrefix]
