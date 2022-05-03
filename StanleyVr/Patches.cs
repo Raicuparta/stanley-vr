@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using AmplifyBloom;
 using HarmonyLib;
+using InControl;
 using UnityEngine;
 using UnityEngine.SpatialTracking;
 using UnityEngine.UI;
@@ -312,5 +314,31 @@ public static class Patches
     {
         __result = $"{Directory.GetCurrentDirectory()}/BepInEx/plugins/StanleyVr/Bindings";
         return false;
+    }
+
+    private const string RotateHorizontal = "joystick 1 analog 3";
+    private const string RotateVertical = "joystick 1 analog 4";
+    private const string MoveVertical = "joystick 1 analog 1";
+    private const string MoveHorizontal = "joystick 1 analog 0";
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(Input), nameof(Input.GetAxisRaw))]
+    private static void ReadVrAnalogInput(string axisName, ref float __result)
+    {
+	    if (Mathf.Abs(__result) > 0.5)
+	    {
+			Debug.Log($"axis {axisName}: {__result.ToString(CultureInfo.InvariantCulture)}");
+	    }
+
+	    __result = axisName switch
+	    {
+		    RotateHorizontal => SteamVR_Actions._default.Rotate.axis.x,
+		    RotateVertical => -SteamVR_Actions._default.Rotate.axis.y,
+		    MoveVertical => -SteamVR_Actions._default.Move.axis.y,
+		    MoveHorizontal => SteamVR_Actions._default.Move.axis.x,
+		    _ => __result
+	    };
+	    // Debug.Log($"### ReadRawAnalogValue axisName {axisName}");
+	    // return true;
     }
 }
