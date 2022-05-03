@@ -5,7 +5,6 @@ using HarmonyLib;
 using UnityEngine;
 using UnityEngine.SpatialTracking;
 using UnityEngine.UI;
-using UnityEngine.XR;
 
 namespace StanleyVr;
 
@@ -22,22 +21,33 @@ public static class Patches
     [HarmonyPatch(typeof(CanvasScaler), "OnEnable")]
     private static void MoveCanvasesToWorldSpace(CanvasScaler __instance)
     {
-        Debug.Log($"Found CanvasScaler {__instance.name}");
-    
-        var canvas = __instance.GetComponent<Canvas>();
+	    var canvas = __instance.GetComponent<Canvas>();
 
-        if (canvasesToIgnore.Contains(canvas.name)) return;
-        
-        if (canvas.renderMode == RenderMode.ScreenSpaceCamera)
-        {
-            __instance.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
+        if (!canvas || canvasesToIgnore.Contains(canvas.name)) return;
+
+        Debug.Log($"Found CanvasScaler {__instance.name}");
+
+        if (!VrUi.Instance)
+        {  
+	        // TODO don't do this here dummy.
+	        VrUi.Instance = VrUi.Create();
         }
-        else if (canvas.renderMode == RenderMode.ScreenSpaceOverlay)
-        {
-            canvas.worldCamera = Camera.current;
-            canvas.renderMode = RenderMode.ScreenSpaceCamera;
-            __instance.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
-        }
+		VrUi.Instance.SetUpCanvas(canvas);
+    }
+    
+	[HarmonyPrefix]
+    [HarmonyPatch(typeof(CanvasOrdering), nameof(CanvasOrdering.Update))]
+    [HarmonyPatch(typeof(SetEventCameraOnStart), nameof(SetEventCameraOnStart.Start))]
+    private static bool DisableCanvasOrdering()
+    {
+	    return false;
+    }
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(MainMenu), nameof(MainMenu.Start))]
+    private static void FixMainMenuCanvas(MainMenu __instance)
+    {
+	    __instance.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
     }
 
     [HarmonyPostfix]
@@ -66,7 +76,8 @@ public static class Patches
         
         var cameraPoseDriver = __instance.gameObject.AddComponent<TrackedPoseDriver>();
         cameraPoseDriver.UseRelativeTransform = true;
-
+        
+        VrUi.Instance.SetUpCamera(__instance.GetComponent<Camera>());
     }
 
     [HarmonyPrefix]

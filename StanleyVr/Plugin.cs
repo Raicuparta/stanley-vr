@@ -13,8 +13,7 @@ namespace StanleyVr
     [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
     public class Plugin : BaseUnityPlugin
     {
-        private const string assetsDir = "/BepInEx/plugins/StanleyVr/Assets/";
-        private AssetBundle vrUiBundle;
+        private VrUi vrUi;
         
         private void Awake()
         {
@@ -23,12 +22,15 @@ namespace StanleyVr
             Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
 
             InputTracking.disablePositionalTracking = true;
-            
-            vrUiBundle = LoadBundle("vr-ui");
         }
 
         private void Update()
         {
+            if (!vrUi)
+            {
+                vrUi = VrUi.Create();
+            }
+            
             if (Input.GetKeyDown(KeyCode.KeypadMinus))
             {
                 Camera.main.transform.parent.localScale *= 1.1f;
@@ -46,13 +48,6 @@ namespace StanleyVr
                     camera = new GameObject("VrCamera").AddComponent<Camera>();
                     camera.tag = "MainCamera";
                 }
-                
-                var vrUiPrefab = vrUiBundle.LoadAsset<GameObject>("VrUi");
-                Debug.Log($"###### vrUiPrefab {vrUiPrefab}");
-                var instance = Instantiate(vrUiPrefab, camera.transform, false);
-                Debug.Log($"###### instance {instance}");
-                var vrUi = instance.AddComponent<VrUi>();
-                Debug.Log($"###### vrUi {vrUi}");
             }
 
             if (Input.GetKeyDown(KeyCode.F9))
@@ -76,19 +71,6 @@ namespace StanleyVr
             {
                 component.enabled = false;
             }
-        }
-        
-        private static AssetBundle LoadBundle(string assetName)
-        {
-            var bundle = AssetBundle.LoadFromFile(string.Format("{0}{1}{2}", Directory.GetCurrentDirectory(), assetsDir,
-	            assetName));
-
-            if (bundle == null)
-            {
-	            throw new Exception("Failed to load asset bundle" + assetName);
-            }
-
-            return bundle;
         }
     }
 }
