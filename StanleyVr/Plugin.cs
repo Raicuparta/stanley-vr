@@ -40,16 +40,6 @@ namespace StanleyVr
                 Camera.main.transform.parent.localScale *= 0.9f;
             }
 
-            if (Input.GetKeyDown(KeyCode.F8))
-            {
-                var camera = Camera.main;
-                if (!Camera.main)
-                {
-                    camera = new GameObject("VrCamera").AddComponent<Camera>();
-                    camera.tag = "MainCamera";
-                }
-            }
-
             if (Input.GetKeyDown(KeyCode.F9))
             {
                 DisableAll<MobileBlur>();
