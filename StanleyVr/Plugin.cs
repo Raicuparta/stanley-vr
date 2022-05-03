@@ -72,16 +72,21 @@ namespace StanleyVr
                     Destroy(liv.gameObject);
                 }
                 Debug.Log($"Attempting to create LIV with camera {Camera.main.name}");
+                
+                var livParent = new GameObject("LIVParent");
+                livParent.transform.SetParent(Camera.main.transform.parent, false);
+                livParent.transform.localPosition = Vector3.down;
+                
                 var livObject = new GameObject("LIV");
                 livObject.gameObject.SetActive(false);
-                livObject.transform.SetParent(Camera.main.transform.parent, false);
+                livObject.transform.SetParent(livParent.transform, false);
 
                 var cameraObject = new GameObject("LIVCamera");
                 cameraObject.SetActive(false);
                 cameraObject.AddComponent<Camera>();
                 
                 liv = livObject.AddComponent<LIV.SDK.Unity.LIV>();
-                liv.stage = Camera.main.transform.parent;
+                liv.stage = livParent.transform;
                 liv.HMDCamera = Camera.main;
                 liv.fixPostEffectsAlpha = true;
                 liv.spectatorLayerMask = Camera.main.cullingMask;
