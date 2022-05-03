@@ -29,7 +29,7 @@
     },
     {
       "name": "/actions/default/in/Rotate",
-      "type": "boolean"
+      "type": "vector2"
     },
     {
       "name": "/actions/default/out/Haptic",
