@@ -2,6 +2,7 @@
 using System.Linq;
 using AmplifyBloom;
 using HarmonyLib;
+using TwoForksVr.LaserPointer;
 using UnityEngine;
 using UnityEngine.SpatialTracking;
 using UnityEngine.UI;
@@ -57,27 +58,14 @@ public static class Patches
         __instance.transform.parent.localScale = Vector3.one * 0.5f;
         __instance.gameObject.AddComponent<StereoPortalRenderer>();
 
-        var hand = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        hand.name = "VrRightHand";
-        hand.transform.SetParent(__instance.transform.parent, false);
-        hand.transform.localScale = Vector3.one * 0.05f;
-        hand.transform.localPosition = Vector3.down;
-        hand.transform.localRotation = Quaternion.identity;
-
-
-        var poseDriver = hand.AddComponent<TrackedPoseDriver>();
-        poseDriver.SetPoseSource(TrackedPoseDriver.DeviceType.GenericXRController,
-	        TrackedPoseDriver.TrackedPose.RightPose);
-        poseDriver.UseRelativeTransform = true;
-
-        
         __instance.transform.localPosition = Vector3.down;
         __instance.transform.localRotation = Quaternion.identity;
         
         var cameraPoseDriver = __instance.gameObject.AddComponent<TrackedPoseDriver>();
         cameraPoseDriver.UseRelativeTransform = true;
-        
-        VrUi.Instance.SetUpCamera(__instance.GetComponent<Camera>());
+
+        var camera = __instance.GetComponent<Camera>();
+        VrUi.Instance.SetUpCamera(camera);
     }
 
     [HarmonyPrefix]

@@ -69,6 +69,8 @@ public class VrUi : MonoBehaviour
         }
         
         transform.SetParent(mainCamera.transform, false);
+        
+        VrHand.Create(mainCamera);
     }
 
     public void SetUpCanvas(Canvas canvas)
