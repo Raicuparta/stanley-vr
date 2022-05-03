@@ -5,9 +5,11 @@ namespace StanleyVr;
 
 public class VrHand: MonoBehaviour
 {
+    
     public static void Create(Camera camera)
     {
         var hand = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        var instance = hand.AddComponent<VrHand>();
         hand.name = "VrRightHand";
         hand.transform.SetParent(camera.transform.parent, false);
         hand.transform.localScale = Vector3.one * 0.05f;
@@ -22,5 +24,7 @@ public class VrHand: MonoBehaviour
         poseDriver.SetPoseSource(TrackedPoseDriver.DeviceType.GenericXRController,
 	        TrackedPoseDriver.TrackedPose.RightPose);
         poseDriver.UseRelativeTransform = true;
+        
+        
     }
 }

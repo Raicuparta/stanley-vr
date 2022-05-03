@@ -1,12 +1,15 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using AmplifyBloom;
 using BepInEx;
 using HarmonyLib;
+using LIV.SDK.Unity;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR;
+using Valve.VR;
 
 namespace StanleyVr
 {
@@ -14,14 +17,22 @@ namespace StanleyVr
     public class Plugin : BaseUnityPlugin
     {
         private VrUi vrUi;
+        private LIV.SDK.Unity.LIV liv;
         
         private void Awake()
         {
+            SteamVR.Initialize();
+            SteamVR.settings.pauseGameWhenDashboardVisible = false;
+            
             Debug.Log("####### Stanley Parable Ultra Deluxe version " + Application.version);
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
             Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
 
             InputTracking.disablePositionalTracking = true;
+            
+			var shaderBundle = VrAssetManager.LoadBundle("liv-shaders");
+            Debug.Log($"###### using bundl for LIV {shaderBundle}");
+            SDKShaders.LoadFromAssetBundle(shaderBundle);
         }
 
         private void Update()
@@ -51,6 +62,43 @@ namespace StanleyVr
             if (Input.GetKeyDown(KeyCode.F1))
             {
                 FindObjectOfType<MainMenu>().BeginTheGame();
+            }
+            
+            if (Input.GetKeyDown(KeyCode.F4))
+            {
+                if (liv)
+                {
+                    Debug.Log("#### LIV already exists, destroying");
+                    Destroy(liv.gameObject);
+                }
+                Debug.Log($"Attempting to create LIV with camera {Camera.main.name}");
+                var livObject = new GameObject("LIV");
+                livObject.gameObject.SetActive(false);
+                livObject.transform.SetParent(Camera.main.transform.parent, false);
+
+                var cameraObject = new GameObject("LIVCamera");
+                cameraObject.SetActive(false);
+                cameraObject.AddComponent<Camera>();
+                
+                liv = livObject.AddComponent<LIV.SDK.Unity.LIV>();
+                liv.stage = Camera.main.transform.parent;
+                liv.HMDCamera = Camera.main;
+                liv.fixPostEffectsAlpha = true;
+                liv.spectatorLayerMask = Camera.main.cullingMask;
+                liv.excludeBehaviours = liv.excludeBehaviours.Concat(new[]
+                {
+                    "MainCamera",
+                    "AudioListener",
+                    "FlareLayer",
+                    "CanvasRenderer",
+                    "EnableDepthOnHighQuality",
+                    "StereoPortalRenderer",
+                    "TrackedPoseDriver",
+                }).ToArray();
+                
+                livObject.SetActive(true);
+                
+                Debug.Log("Successfully created LIV");
             }
         }
 
