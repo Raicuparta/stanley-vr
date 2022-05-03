@@ -1,7 +1,10 @@
 ManifestFileVersion: 0
-CRC: 2541075566
+CRC: 606909264
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
       Name: vr-ui
+      Dependencies: {}
+    Info_1:
+      Name: liv-shaders
       Dependencies: {}
