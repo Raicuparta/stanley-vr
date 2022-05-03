@@ -3,7 +3,9 @@ using System.Linq;
 using AmplifyBloom;
 using HarmonyLib;
 using UnityEngine;
+using UnityEngine.SpatialTracking;
 using UnityEngine.UI;
+using UnityEngine.XR;
 
 namespace StanleyVr;
 
@@ -44,6 +46,29 @@ public static class Patches
     {
         __instance.transform.parent.localScale = Vector3.one * 0.5f;
         __instance.gameObject.AddComponent<StereoPortalRenderer>();
+
+        var hand = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        hand.name = "VrRightHand";
+        hand.transform.SetParent(__instance.transform.parent, false);
+        hand.transform.localScale = Vector3.one * 0.05f;
+        hand.transform.localPosition = Vector3.down;
+        hand.transform.localRotation = Quaternion.identity;
+
+        XRSettings.enabled = false;
+
+        var poseDriver = hand.AddComponent<TrackedPoseDriver>();
+        poseDriver.SetPoseSource(TrackedPoseDriver.DeviceType.GenericXRController,
+	        TrackedPoseDriver.TrackedPose.RightPose);
+        poseDriver.UseRelativeTransform = true;
+
+        
+        __instance.transform.localPosition = Vector3.down;
+        __instance.transform.localRotation = Quaternion.identity;
+        
+        var cameraPoseDriver = __instance.gameObject.AddComponent<TrackedPoseDriver>();
+        cameraPoseDriver.UseRelativeTransform = true;
+
+        XRSettings.enabled = true;
     }
 
     [HarmonyPrefix]

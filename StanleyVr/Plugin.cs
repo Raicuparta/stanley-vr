@@ -62,6 +62,11 @@ namespace StanleyVr
                 DisableAll<AmplifyBloomEffect>();
                 DisableAll<PostEffectsCamera>();
             }
+
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+                FindObjectOfType<MainMenu>().BeginTheGame();
+            }
         }
 
         private void DisableAll<TBehaviour>() where TBehaviour: MonoBehaviour
