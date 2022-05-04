@@ -107,11 +107,6 @@ namespace StanleyVr
                 
                 Debug.Log("Successfully created LIV");
             }
-
-            if (SteamVR_Actions.default_Interact.stateDown)
-            {
-                Debug.Log("####### trigger down");
-            }
         }
 
         private void DisableAll<TBehaviour>() where TBehaviour: MonoBehaviour

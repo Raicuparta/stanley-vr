@@ -5,7 +5,7 @@ namespace StanleyVr;
 
 public class VrLaser : MonoBehaviour
 {
-    private const float laserLength = 20f;
+    private const float laserLength = 1f;
     private bool ignoreNextInput;
     public static VrLaser Instance; // TODO no public singletons.
 
@@ -43,10 +43,7 @@ public class VrLaser : MonoBehaviour
         lineRenderer.SetPositions(new[] {Vector3.zero, Vector3.forward * laserLength});
         lineRenderer.startWidth = 0.005f;
         lineRenderer.endWidth = 0.001f;
-        lineRenderer.endColor = new Color(1, 1, 1, 0.8f);
-        lineRenderer.startColor = Color.clear;
-        lineRenderer.material.shader = Shader.Find("Legacy Shaders/Particles/Alpha Blended");
-        lineRenderer.material.SetColor("_Color", Color.white);
+        lineRenderer.material.shader = Shader.Find("Stanley/Misc/ToolsTransparent");
         lineRenderer.sortingOrder = 10000;
         lineRenderer.enabled = false;
     }
