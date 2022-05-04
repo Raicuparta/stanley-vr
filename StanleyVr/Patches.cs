@@ -347,7 +347,7 @@ public static class Patches
     {
 	    if (name.EndsWith(Interact))
 	    {
-			Debug.Log($"buttonName {name}");
+			// Debug.Log($"buttonName {name}");
 			__result = SteamVR_Actions._default.Interact.state;
 	    }
 	    // Debug.Log($"### ReadRawAnalogValue axisName {axisName}");

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using Valve.VR;
 
 namespace StanleyVr;
 
@@ -70,7 +71,8 @@ public class VrUi : MonoBehaviour
         
         transform.SetParent(mainCamera.transform, false);
         
-        VrHand.Create(mainCamera);
+        VrHand.Create(mainCamera, SteamVR_Input_Sources.RightHand);
+        VrHand.Create(mainCamera, SteamVR_Input_Sources.LeftHand);
     }
 
     public void SetUpCanvas(Canvas canvas)
