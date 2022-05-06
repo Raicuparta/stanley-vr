@@ -8,6 +8,7 @@ using InControl;
 using UnityEngine;
 using UnityEngine.SpatialTracking;
 using UnityEngine.UI;
+using UnityEngine.Video;
 using Valve.VR;
 
 namespace StanleyVr;
@@ -350,6 +351,22 @@ public static class Patches
 			// Debug.Log($"buttonName {name}");
 			__result = SteamVR_Actions._default.Interact.state;
 	    }
+	    // Debug.Log($"### ReadRawAnalogValue axisName {axisName}");
+	    // return true;
+    }
+    
+
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(VideoPlayer), nameof(VideoPlayer.Play))]
+    private static void FixVideoPlayer(VideoPlayer __instance)
+    {
+	    Debug.Log($"######## found video player {__instance.name}");
+	    var camera = __instance.GetComponent<Camera>();
+
+	    if (!camera) return;
+
+	    camera.targetTexture = VrUi.Instance.GetComponentInChildren<Camera>().targetTexture;
+
 	    // Debug.Log($"### ReadRawAnalogValue axisName {axisName}");
 	    // return true;
     }
