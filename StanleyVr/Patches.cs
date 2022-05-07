@@ -99,19 +99,33 @@ public static class Patches
     }
 
     [HarmonyPostfix]
+    [HarmonyPatch(typeof(AmplifyColorBase), nameof(AmplifyColorBase.Start))]
+    private static void TrackCameraVrRotation(AmplifyColorBase __instance)
+    {
+	    if (__instance.GetComponent<TrackedPoseDriver>()) return;
+
+	    var poseDriver = __instance.gameObject.AddComponent<TrackedPoseDriver>();
+	    poseDriver.trackingType = TrackedPoseDriver.TrackingType.RotationOnly;
+	    __instance.transform.localScale = Vector3.one * 0.5f;
+    }
+
+    [HarmonyPostfix]
     [HarmonyPatch(typeof(MainCamera), nameof(MainCamera.Start))]
     private static void FixCameraScale(MainCamera __instance)
     {
-        __instance.transform.parent.localScale = Vector3.one * 0.5f;
-        __instance.gameObject.AddComponent<StereoPortalRenderer>();
 
+        __instance.gameObject.AddComponent<StereoPortalRenderer>();
         __instance.transform.localPosition = Vector3.down;
         __instance.transform.localRotation = Quaternion.identity;
-        
-        var cameraPoseDriver = __instance.gameObject.AddComponent<TrackedPoseDriver>();
-        cameraPoseDriver.UseRelativeTransform = true;
+
+        if (!__instance.GetComponent<TrackedPoseDriver>())
+        {
+			var cameraPoseDriver = __instance.gameObject.AddComponent<TrackedPoseDriver>();	        
+			cameraPoseDriver.UseRelativeTransform = true;
+        }
 
         var camera = __instance.GetComponent<Camera>();
+        camera.transform.parent.localScale = Vector3.one * 0.5f;
         VrUi.Instance.SetUpCamera(camera);
     }
 
