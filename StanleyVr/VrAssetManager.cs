@@ -10,6 +10,7 @@ public static class VrAssetManager
         
 	public static AssetBundle LoadBundle(string assetName)
     {
+        Debug.Log($"loading bundle {assetName}...");
         var bundle = AssetBundle.LoadFromFile(string.Format("{0}{1}{2}", Directory.GetCurrentDirectory(), assetsDir,
             assetName));
 
@@ -17,6 +18,8 @@ public static class VrAssetManager
         {
             throw new Exception("Failed to load asset bundle" + assetName);
         }
+        
+        Debug.Log($"Loaed bundle {bundle.name}");
 
         return bundle;
     }

@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 606909264
+CRC: 3543484875
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -7,4 +7,7 @@ AssetBundleManifest:
       Dependencies: {}
     Info_1:
       Name: liv-shaders
+      Dependencies: {}
+    Info_2:
+      Name: xrmanager
       Dependencies: {}

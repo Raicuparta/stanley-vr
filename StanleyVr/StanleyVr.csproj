@@ -40,6 +40,14 @@
         <Link>Assets\vr-ui.manifest</Link>
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+      <Content Include="..\StanleyVrUnity\AssetBundles\StandaloneWindows\xrmanager">
+        <Link>Assets\xrmanager</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="..\StanleyVrUnity\AssetBundles\StandaloneWindows\xrmanager.manifest">
+        <Link>Assets\xrmanager.manifest</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
       <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\actions.json">
         <Link>Bindings\actions.json</Link>
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -121,6 +129,12 @@
       </Reference>
       <Reference Include="SteamVR_Actions, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
         <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\SteamVR_Actions.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.XR.Management, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\Unity.XR.Management.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.XR.OpenVR, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\Unity.XR.OpenVR.dll</HintPath>
       </Reference>
     </ItemGroup>
 </Project>

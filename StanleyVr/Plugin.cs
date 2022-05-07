@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -6,9 +7,11 @@ using AmplifyBloom;
 using BepInEx;
 using HarmonyLib;
 using LIV.SDK.Unity;
+using Unity.XR.OpenVR;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR;
+using UnityEngine.XR.Management;
 using Valve.VR;
 
 namespace StanleyVr
@@ -24,17 +27,36 @@ namespace StanleyVr
             Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
             
             SteamVR_Actions.PreInitialize();
+            LoadXRModule();
+            
             SteamVR.Initialize();
             SteamVR.settings.pauseGameWhenDashboardVisible = false;
             
             Debug.Log("####### Stanley Parable Ultra Deluxe version " + Application.version);
             Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
 
-            InputTracking.disablePositionalTracking = true;
+            // InputTracking.disablePositionalTracking = true;
             
 			var shaderBundle = VrAssetManager.LoadBundle("liv-shaders");
             Debug.Log($"###### using bundl for LIV {shaderBundle}");
             SDKShaders.LoadFromAssetBundle(shaderBundle);
+            
+            if (XRGeneralSettings.Instance != null && XRGeneralSettings.Instance.Manager != null
+                && XRGeneralSettings.Instance.Manager.activeLoader != null)
+            {
+                XRGeneralSettings.Instance.Manager.StartSubsystems();
+            }
+            else
+                throw new Exception("Cannot initialize VRSubsystem");
+
+            //Change tracking origin to headset
+            var subsystems = new List<XRInputSubsystem>();
+            SubsystemManager.GetInstances(subsystems);
+            foreach (var subsystem in subsystems)
+            {
+                subsystem.TrySetTrackingOriginMode(TrackingOriginModeFlags.Device);
+                subsystem.TryRecenter();
+            }
         }
 
         private void Update()
@@ -116,6 +138,30 @@ namespace StanleyVr
             {
                 component.enabled = false;
             }
+        }
+        
+        private static void LoadXRModule()
+        {
+            var xrManagerBundle = VrAssetManager.LoadBundle("xrmanager");
+            
+            foreach (var xrManager in xrManagerBundle.LoadAllAssets())
+                Debug.Log($"######## Loaded xrManager: {xrManager.name}");
+
+            XRGeneralSettings instance = XRGeneralSettings.Instance;
+            if (instance == null) throw new System.Exception("XRGeneralSettings instance is null");
+
+            var xrManagerSettings = instance.Manager;
+            if (xrManagerSettings == null) throw new System.Exception("XRManagerSettings instance is null");
+            
+            xrManagerSettings.InitializeLoaderSync();
+            if (xrManagerSettings.activeLoader == null) throw new System.Exception("Cannot initialize OpenVR Loader");
+
+            OpenVRSettings openVrSettings = OpenVRSettings.GetSettings(false);
+            openVrSettings.EditorAppKey = "steam.app.753640";
+            openVrSettings.InitializationType = OpenVRSettings.InitializationTypes.Scene;
+            if (openVrSettings == null) throw new System.Exception("OpenVRSettings instance is null");
+
+            openVrSettings.SetMirrorViewMode(OpenVRSettings.MirrorViewModes.Right);
         }
     }
 }
