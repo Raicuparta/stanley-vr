@@ -49,12 +49,12 @@ MonoBehaviour:
     actionPath: 
     needsReinit: 0
   inputSource: 2
-  rangeOfMotion: 0
+  rangeOfMotion: 1
   skeletonRoot: {fileID: 1477991173608967444}
   origin: {fileID: 0}
   updatePose: 1
   onlySetRotations: 0
-  skeletonBlend: 0.51
+  skeletonBlend: 1
   onBoneTransformsUpdated:
     m_PersistentCalls:
       m_Calls: []
