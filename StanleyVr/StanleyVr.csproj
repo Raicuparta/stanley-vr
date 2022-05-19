@@ -13,128 +13,128 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
-        <PackageReference Include="BepInEx.Core" Version="5.4.19" />
-        <PackageReference Include="BepInEx.PluginInfoProps" Version="1.*" />
-        <PackageReference Include="StanleyParable.GameLibs" Version="1.4.0" />
+        <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all"/>
+        <PackageReference Include="BepInEx.Core" Version="5.4.19"/>
+        <PackageReference Include="BepInEx.PluginInfoProps" Version="1.*"/>
+        <PackageReference Include="StanleyParable.GameLibs" Version="1.4.0"/>
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
-        <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\StanleyVrUnity\AssetBundles\StandaloneWindows\liv-shaders">
-        <Link>Assets\liv-shaders</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="..\StanleyVrUnity\AssetBundles\StandaloneWindows\liv-shaders.manifest">
-        <Link>Assets\liv-shaders.manifest</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="..\StanleyVrUnity\AssetBundles\StandaloneWindows\vr-ui">
-        <Link>Assets\vr-ui</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="..\StanleyVrUnity\AssetBundles\StandaloneWindows\vr-ui.manifest">
-        <Link>Assets\vr-ui.manifest</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="..\StanleyVrUnity\AssetBundles\StandaloneWindows\xrmanager">
-        <Link>Assets\xrmanager</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="..\StanleyVrUnity\AssetBundles\StandaloneWindows\xrmanager.manifest">
-        <Link>Assets\xrmanager.manifest</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\actions.json">
-        <Link>Bindings\actions.json</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\bindings_holographic_controller.json">
-        <Link>Bindings\bindings_holographic_controller.json</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\bindings_knuckles.json">
-        <Link>Bindings\bindings_knuckles.json</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\bindings_logitech_stylus.json">
-        <Link>Bindings\bindings_logitech_stylus.json</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\bindings_oculus_touch.json">
-        <Link>Bindings\bindings_oculus_touch.json</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\bindings_vive_controller.json">
-        <Link>Bindings\bindings_vive_controller.json</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\bindings_vive_cosmos_controller.json">
-        <Link>Bindings\bindings_vive_cosmos_controller.json</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\binding_holographic_hmd.json">
-        <Link>Bindings\binding_holographic_hmd.json</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\binding_index_hmd.json">
-        <Link>Bindings\binding_index_hmd.json</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\binding_rift.json">
-        <Link>Bindings\binding_rift.json</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\binding_vive.json">
-        <Link>Bindings\binding_vive.json</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\binding_vive_cosmos.json">
-        <Link>Bindings\binding_vive_cosmos.json</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\binding_vive_pro.json">
-        <Link>Bindings\binding_vive_pro.json</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\binding_vive_tracker_camera.json">
-        <Link>Bindings\binding_vive_tracker_camera.json</Link>
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <None Remove="Bindings\actions.json" />
-      <None Remove="Bindings\binding_holographic_hmd.json" />
-      <None Remove="Bindings\binding_index_hmd.json" />
-      <None Remove="Bindings\binding_rift.json" />
-      <None Remove="Bindings\binding_vive.json" />
-      <None Remove="Bindings\binding_vive_cosmos.json" />
-      <None Remove="Bindings\binding_vive_pro.json" />
-      <None Remove="Bindings\binding_vive_tracker_camera.json" />
-      <None Remove="Bindings\bindings_holographic_controller.json" />
-      <None Remove="Bindings\bindings_knuckles.json" />
-      <None Remove="Bindings\bindings_logitech_stylus.json" />
-      <None Remove="Bindings\bindings_oculus_touch.json" />
-      <None Remove="Bindings\bindings_vive_controller.json" />
-      <None Remove="Bindings\bindings_vive_cosmos_controller.json" />
+        <Content Include="..\StanleyVrUnity\AssetBundles\StandaloneWindows\liv-shaders">
+            <Link>Assets\liv-shaders</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\StanleyVrUnity\AssetBundles\StandaloneWindows\liv-shaders.manifest">
+            <Link>Assets\liv-shaders.manifest</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\StanleyVrUnity\AssetBundles\StandaloneWindows\vr-ui">
+            <Link>Assets\vr-ui</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\StanleyVrUnity\AssetBundles\StandaloneWindows\vr-ui.manifest">
+            <Link>Assets\vr-ui.manifest</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\StanleyVrUnity\AssetBundles\StandaloneWindows\xrmanager">
+            <Link>Assets\xrmanager</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\StanleyVrUnity\AssetBundles\StandaloneWindows\xrmanager.manifest">
+            <Link>Assets\xrmanager.manifest</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\actions.json">
+            <Link>Bindings\actions.json</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\bindings_holographic_controller.json">
+            <Link>Bindings\bindings_holographic_controller.json</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\bindings_knuckles.json">
+            <Link>Bindings\bindings_knuckles.json</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\bindings_logitech_stylus.json">
+            <Link>Bindings\bindings_logitech_stylus.json</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\bindings_oculus_touch.json">
+            <Link>Bindings\bindings_oculus_touch.json</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\bindings_vive_controller.json">
+            <Link>Bindings\bindings_vive_controller.json</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\bindings_vive_cosmos_controller.json">
+            <Link>Bindings\bindings_vive_cosmos_controller.json</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\binding_holographic_hmd.json">
+            <Link>Bindings\binding_holographic_hmd.json</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\binding_index_hmd.json">
+            <Link>Bindings\binding_index_hmd.json</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\binding_rift.json">
+            <Link>Bindings\binding_rift.json</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\binding_vive.json">
+            <Link>Bindings\binding_vive.json</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\binding_vive_cosmos.json">
+            <Link>Bindings\binding_vive_cosmos.json</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\binding_vive_pro.json">
+            <Link>Bindings\binding_vive_pro.json</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\binding_vive_tracker_camera.json">
+            <Link>Bindings\binding_vive_tracker_camera.json</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <None Remove="Bindings\actions.json"/>
+        <None Remove="Bindings\binding_holographic_hmd.json"/>
+        <None Remove="Bindings\binding_index_hmd.json"/>
+        <None Remove="Bindings\binding_rift.json"/>
+        <None Remove="Bindings\binding_vive.json"/>
+        <None Remove="Bindings\binding_vive_cosmos.json"/>
+        <None Remove="Bindings\binding_vive_pro.json"/>
+        <None Remove="Bindings\binding_vive_tracker_camera.json"/>
+        <None Remove="Bindings\bindings_holographic_controller.json"/>
+        <None Remove="Bindings\bindings_knuckles.json"/>
+        <None Remove="Bindings\bindings_logitech_stylus.json"/>
+        <None Remove="Bindings\bindings_oculus_touch.json"/>
+        <None Remove="Bindings\bindings_vive_controller.json"/>
+        <None Remove="Bindings\bindings_vive_cosmos_controller.json"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Reference Include="LIV, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-        <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\LIV.dll</HintPath>
-      </Reference>
-      <Reference Include="SteamVR, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-        <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\SteamVR.dll</HintPath>
-      </Reference>
-      <Reference Include="SteamVR_Actions, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-        <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\SteamVR_Actions.dll</HintPath>
-      </Reference>
-      <Reference Include="Unity.XR.Management, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-        <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\Unity.XR.Management.dll</HintPath>
-      </Reference>
-      <Reference Include="Unity.XR.OpenVR, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-        <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\Unity.XR.OpenVR.dll</HintPath>
-      </Reference>
+        <Reference Include="LIV, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+            <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\LIV.dll</HintPath>
+        </Reference>
+        <Reference Include="SteamVR, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+            <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\SteamVR.dll</HintPath>
+        </Reference>
+        <Reference Include="SteamVR_Actions, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+            <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\SteamVR_Actions.dll</HintPath>
+        </Reference>
+        <Reference Include="Unity.XR.Management, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+            <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\Unity.XR.Management.dll</HintPath>
+        </Reference>
+        <Reference Include="Unity.XR.OpenVR, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+            <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\Unity.XR.OpenVR.dll</HintPath>
+        </Reference>
     </ItemGroup>
 </Project>

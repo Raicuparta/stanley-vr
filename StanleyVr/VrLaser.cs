@@ -1,101 +1,101 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace StanleyVr;
 
 public class VrLaser : MonoBehaviour
 {
-    private const float laserLength = 1f;
-    private bool ignoreNextInput;
-    public static VrLaser Instance; // TODO no public singletons.
+	private const float laserLength = 1f;
+	private bool ignoreNextInput;
+	public static VrLaser Instance; // TODO no public singletons.
 
-    // private LaserInputModule inputModule;
-    private LineRenderer lineRenderer;
-    // private Vector3? target;
+	// private LaserInputModule inputModule;
+	private LineRenderer lineRenderer;
+	// private Vector3? target;
 
-    public static VrLaser Create(Transform dominantHand)
-    {
-        Debug.Log("Creting laser...");
-        
-        var instance = new GameObject("VrHandLaser").AddComponent<VrLaser>();
-        var instanceTransform = instance.transform;
-        instanceTransform.SetParent(dominantHand, false);
-        instanceTransform.localEulerAngles = new Vector3(39.132f, 356.9302f, 0.3666f);
-        return instance;
-    }
+	public static VrLaser Create(Transform dominantHand)
+	{
+		Debug.Log("Creting laser...");
 
-    private void Awake()
-    {
-        Instance = this;
-    }
+		var instance = new GameObject("VrHandLaser").AddComponent<VrLaser>();
+		var instanceTransform = instance.transform;
+		instanceTransform.SetParent(dominantHand, false);
+		instanceTransform.localEulerAngles = new Vector3(39.132f, 356.9302f, 0.3666f);
+		return instance;
+	}
 
-    public void SetUp(Camera camera)
-    {
-        // inputModule = LaserInputModule.Create(this);
-        // inputModule.EventCamera = camera;
-        // target = null;
-    }
+	private void Awake()
+	{
+		Instance = this;
+	}
 
-    private void Start()
-    {
-        lineRenderer = gameObject.AddComponent<LineRenderer>();
-        lineRenderer.useWorldSpace = false;
-        lineRenderer.SetPositions(new[] {Vector3.zero, Vector3.forward * laserLength});
-        lineRenderer.startWidth = 0.005f;
-        lineRenderer.endWidth = 0.001f;
-        lineRenderer.material.shader = Shader.Find("Stanley/Misc/ToolsTransparent");
-        lineRenderer.sortingOrder = 10000;
-        lineRenderer.enabled = false;
-    }
+	public void SetUp(Camera camera)
+	{
+		// inputModule = LaserInputModule.Create(this);
+		// inputModule.EventCamera = camera;
+		// target = null;
+	}
 
-    private void Update()
-    {
-        UpdateLaserVisibility();
-        UpdateLaserTarget();
-    }
+	private void Start()
+	{
+		lineRenderer = gameObject.AddComponent<LineRenderer>();
+		lineRenderer.useWorldSpace = false;
+		lineRenderer.SetPositions(new[] {Vector3.zero, Vector3.forward * laserLength});
+		lineRenderer.startWidth = 0.005f;
+		lineRenderer.endWidth = 0.001f;
+		lineRenderer.material.shader = Shader.Find("Stanley/Misc/ToolsTransparent");
+		lineRenderer.sortingOrder = 10000;
+		lineRenderer.enabled = false;
+	}
 
-    public void SetTarget(Vector3? newTarget)
-    {
-        // target = newTarget;
-    }
+	private void Update()
+	{
+		UpdateLaserVisibility();
+		UpdateLaserTarget();
+	}
 
-    private void UpdateLaserTarget()
-    {
-        // lineRenderer.SetPosition(1,
-        //     target != null
-        //         ? transform.InverseTransformPoint((Vector3) target)
-        //         : Vector3.forward * laserLength);
-    }
+	public void SetTarget(Vector3? newTarget)
+	{
+		// target = newTarget;
+	}
 
-    // private bool HasCurrentTarget()
-    // {
-    //     return target != null;
-    // }
+	private void UpdateLaserTarget()
+	{
+		// lineRenderer.SetPosition(1,
+		//     target != null
+		//         ? transform.InverseTransformPoint((Vector3) target)
+		//         : Vector3.forward * laserLength);
+	}
 
-    private void UpdateLaserVisibility()
-    {
-        lineRenderer.enabled = true; // todo
-    }
+	// private bool HasCurrentTarget()
+	// {
+	//     return target != null;
+	// }
 
-    public bool ClickDown()
-    {
-        if (ignoreNextInput) return false;
-        return Input.GetKeyDown(KeyCode.Space);
-    }
+	private void UpdateLaserVisibility()
+	{
+		lineRenderer.enabled = true; // todo
+	}
 
-    public bool ClickUp()
-    {
-        if (ignoreNextInput)
-        {
-            ignoreNextInput = false;
-            return false;
-        }
+	public bool ClickDown()
+	{
+		if (ignoreNextInput) return false;
+		return Input.GetKeyDown(KeyCode.Space);
+	}
 
-        return Input.GetKeyUp(KeyCode.Space);
-    }
+	public bool ClickUp()
+	{
+		if (ignoreNextInput)
+		{
+			ignoreNextInput = false;
+			return false;
+		}
 
-    public bool IsClicking()
-    {
-        return Input.GetKey(KeyCode.Space);;
-    }
+		return Input.GetKeyUp(KeyCode.Space);
+	}
+
+	public bool IsClicking()
+	{
+		return Input.GetKey(KeyCode.Space);
+		;
+	}
 }
