@@ -107,17 +107,21 @@ public static class Patches
 
 	[HarmonyPostfix]
 	[HarmonyPatch(typeof(MainCamera), nameof(MainCamera.Start))]
-	private static void FixCameraScale(MainCamera __instance)
+	private static void SetUpVrCamera(MainCamera __instance)
 	{
 		__instance.gameObject.AddComponent<StereoPortalRenderer>();
-		__instance.transform.localPosition = Vector3.down;
-		__instance.transform.localRotation = Quaternion.identity;
+		var transform = __instance.transform;
+		transform.localPosition = Vector3.down;
+		transform.localRotation = Quaternion.identity;
+		var cameraParent = transform.parent;
 
-		if (!__instance.GetComponent<TrackedPoseDriver>())
-		{
-			var cameraPoseDriver = __instance.gameObject.AddComponent<TrackedPoseDriver>();
-			cameraPoseDriver.UseRelativeTransform = true;
-		}
+		var vrPlayerInstance = Object.Instantiate(VrAssetManager.VrPlayerPrefab, cameraParent, false);
+		vrPlayerInstance.transform.localPosition = Vector3.down;
+		var steamVrPlayer = vrPlayerInstance.GetComponent<Valve.VR.InteractionSystem.Player>();
+		steamVrPlayer.trackingOriginTransform = cameraParent.parent;
+		steamVrPlayer.hmdTransforms = new[] {transform};
+		vrPlayerInstance.SetActive(true);
+		__instance.gameObject.AddComponent<VrCamera>();
 
 		var camera = __instance.GetComponent<Camera>();
 		camera.transform.parent.localScale = Vector3.one * 0.5f;
