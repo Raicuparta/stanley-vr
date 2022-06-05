@@ -6,18 +6,12 @@ namespace StanleyVr;
 
 public class VrUi : MonoBehaviour
 {
-	private static AssetBundle vrUiBundle;
 	private Camera uiCamera;
 	public static VrUi Instance; // TODO no public singletons.
 
 	public static VrUi Create()
 	{
-		if (!vrUiBundle)
-		{
-			vrUiBundle = VrAssetManager.LoadBundle("vr-ui");
-		}
-		var vrUiPrefab = vrUiBundle.LoadAsset<GameObject>("VrUi");
-		var instance = Instantiate(vrUiPrefab);
+		var instance = Instantiate(VrAssetManager.VrUi);
 		DontDestroyOnLoad(instance);
 		return instance.AddComponent<VrUi>();
 	}
@@ -71,8 +65,8 @@ public class VrUi : MonoBehaviour
 
 		transform.SetParent(mainCamera.transform, false);
 
-		VrHand.Create(mainCamera, SteamVR_Input_Sources.RightHand);
-		VrHand.Create(mainCamera, SteamVR_Input_Sources.LeftHand);
+		// VrHand.Create(mainCamera, SteamVR_Input_Sources.RightHand);
+		// VrHand.Create(mainCamera, SteamVR_Input_Sources.LeftHand);
 	}
 
 	public void SetUpCanvas(Canvas canvas)

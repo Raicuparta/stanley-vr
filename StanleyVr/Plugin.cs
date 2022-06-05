@@ -24,6 +24,7 @@ public class Plugin : BaseUnityPlugin
 	{
 		Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
 
+		VrAssetManager.Initialize();
 		SteamVR_Actions.PreInitialize();
 		LoadXRModule();
 
@@ -35,7 +36,7 @@ public class Plugin : BaseUnityPlugin
 
 		// InputTracking.disablePositionalTracking = true;
 
-		var shaderBundle = VrAssetManager.LoadBundle("liv-shaders");
+		var shaderBundle = VrAssetManager.LivShadersBundle;
 		Debug.Log($"###### using bundl for LIV {shaderBundle}");
 		SDKShaders.LoadFromAssetBundle(shaderBundle);
 
@@ -140,9 +141,7 @@ public class Plugin : BaseUnityPlugin
 
 	private static void LoadXRModule()
 	{
-		var xrManagerBundle = VrAssetManager.LoadBundle("xrmanager");
-
-		foreach (var xrManager in xrManagerBundle.LoadAllAssets())
+		foreach (var xrManager in VrAssetManager.XrManagerAssets)
 			Debug.Log($"######## Loaded xrManager: {xrManager.name}");
 
 		var instance = XRGeneralSettings.Instance;
