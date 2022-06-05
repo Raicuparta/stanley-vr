@@ -29,7 +29,7 @@
             <LinkBase>Assets</LinkBase>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\*.json">
+        <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\bindings_*.json">
             <Link>Bindings\actions.json</Link>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
