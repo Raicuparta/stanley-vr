@@ -11,8 +11,7 @@ public static class VrAssetManager
 	public static AssetBundle LoadBundle(string assetName)
 	{
 		Debug.Log($"loading bundle {assetName}...");
-		var bundle = AssetBundle.LoadFromFile(string.Format("{0}{1}{2}", Directory.GetCurrentDirectory(), assetsDir,
-			assetName));
+		var bundle = AssetBundle.LoadFromFile($"{Directory.GetCurrentDirectory()}{assetsDir}{assetName}");
 
 		if (bundle == null)
 		{

@@ -1,39 +1,39 @@
 ManifestFileVersion: 0
-        CRC: 644387171
-        Hashes:
-        AssetFileHash:
-        serializedVersion: 2
-        Hash: f511e8cb31a6af5eec69fe0d1c5dfe23
-        TypeTreeHash:
-        serializedVersion: 2
-        Hash: 76e2ff80539793e7c21cd66ac1ce8505
-        HashAppended: 0
-        ClassTypes:
-        - Class: 1
-        Script: {instanceID: 0}
-        - Class: 4
-        Script: {instanceID: 0}
-        - Class: 20
-        Script: {instanceID: 0}
-        - Class: 21
-        Script: {instanceID: 0}
-        - Class: 23
-        Script: {instanceID: 0}
-        - Class: 33
-        Script: {instanceID: 0}
-        - Class: 43
-        Script: {instanceID: 0}
-        - Class: 48
-        Script: {instanceID: 0}
-        - Class: 64
-        Script: {instanceID: 0}
-        - Class: 84
-        Script: {instanceID: 0}
-        - Class: 114
-        Script: {fileID: 11500000, guid: 0cfdc910964ca374e85c5fb1411e33fd, type: 3}
-        - Class: 115
-        Script: {instanceID: 0}
-        SerializeReferenceClassIdentifiers: []
-        Assets:
-        - Assets/VrUi/VrUi.prefab
-        Dependencies: []
+CRC: 831821610
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 0f6e61c152d4f8c432288b1f0e612a36
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 76e2ff80539793e7c21cd66ac1ce8505
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 20
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 64
+  Script: {instanceID: 0}
+- Class: 84
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0cfdc910964ca374e85c5fb1411e33fd, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/VrUi/VrUi.prefab
+Dependencies: []
