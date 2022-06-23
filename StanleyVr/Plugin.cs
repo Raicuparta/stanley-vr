@@ -6,18 +6,17 @@ using AmplifyBloom;
 using BepInEx;
 using HarmonyLib;
 using LIV.SDK.Unity;
-using Unity.XR.OpenVR;
 using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.XR.Management;
-using Valve.VR;
+using UnityEngine.XR.OpenXR;
 
 namespace StanleyVr;
 
 [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
 public class Plugin : BaseUnityPlugin
 {
-	private VrUi vrUi;
+	// private VrUi vrUi;
 	private LIV.SDK.Unity.LIV liv;
 
 	private void Awake()
@@ -25,11 +24,7 @@ public class Plugin : BaseUnityPlugin
 		Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
 
 		VrAssetManager.Initialize();
-		SteamVR_Actions.PreInitialize();
-		LoadXRModule();
-
-		SteamVR.Initialize();
-		SteamVR.settings.pauseGameWhenDashboardVisible = false;
+		// LoadXRModule();
 
 		Debug.Log("####### Stanley Parable Ultra Deluxe version " + Application.version);
 		Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
@@ -40,30 +35,15 @@ public class Plugin : BaseUnityPlugin
 		Debug.Log($"###### using bundl for LIV {shaderBundle}");
 		SDKShaders.LoadFromAssetBundle(shaderBundle);
 
-		if (XRGeneralSettings.Instance != null && XRGeneralSettings.Instance.Manager != null
-		                                       && XRGeneralSettings.Instance.Manager.activeLoader != null)
-		{
-			XRGeneralSettings.Instance.Manager.StartSubsystems();
-		}
-		else
-			throw new Exception("Cannot initialize VRSubsystem");
-
-		//Change tracking origin to headset
-		var subsystems = new List<XRInputSubsystem>();
-		SubsystemManager.GetInstances(subsystems);
-		foreach (var subsystem in subsystems)
-		{
-			subsystem.TrySetTrackingOriginMode(TrackingOriginModeFlags.Device);
-			subsystem.TryRecenter();
-		}
+		gameObject.AddComponent<ModXrManager>();
 	}
 
 	private void Update()
 	{
-		if (!vrUi)
-		{
-			vrUi = VrUi.Create();
-		}
+		// if (!vrUi)
+		// {
+		// 	vrUi = VrUi.Create();
+		// }
 
 		if (Input.GetKeyDown(KeyCode.KeypadMinus))
 		{
@@ -137,27 +117,5 @@ public class Plugin : BaseUnityPlugin
 		{
 			component.enabled = false;
 		}
-	}
-
-	private static void LoadXRModule()
-	{
-		foreach (var xrManager in VrAssetManager.XrManagerAssets)
-			Debug.Log($"######## Loaded xrManager: {xrManager.name}");
-
-		var instance = XRGeneralSettings.Instance;
-		if (instance == null) throw new Exception("XRGeneralSettings instance is null");
-
-		var xrManagerSettings = instance.Manager;
-		if (xrManagerSettings == null) throw new Exception("XRManagerSettings instance is null");
-
-		xrManagerSettings.InitializeLoaderSync();
-		if (xrManagerSettings.activeLoader == null) throw new Exception("Cannot initialize OpenVR Loader");
-
-		var openVrSettings = OpenVRSettings.GetSettings(false);
-		openVrSettings.EditorAppKey = "steam.app.753640";
-		openVrSettings.InitializationType = OpenVRSettings.InitializationTypes.Scene;
-		if (openVrSettings == null) throw new Exception("OpenVRSettings instance is null");
-
-		openVrSettings.SetMirrorViewMode(OpenVRSettings.MirrorViewModes.Right);
 	}
 }
