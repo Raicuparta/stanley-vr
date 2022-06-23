@@ -1,0 +1,16 @@
+{
+    "name": "Unity.XR.OpenXR.TestHelpers",
+    "references": [
+        "Unity.XR.OpenXR",
+        "Unity.XR.Management"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
