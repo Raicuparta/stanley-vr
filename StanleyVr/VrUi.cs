@@ -5,80 +5,27 @@ namespace StanleyVr;
 
 public class VrUi : MonoBehaviour
 {
-	private Camera uiCamera;
-	public static VrUi Instance; // TODO no public singletons.
+	private Canvas canvas;
 
-	public static VrUi Create()
+	public static VrUi Create(Canvas canvas)
 	{
-		var instance = Instantiate(VrAssetManager.VrUi);
-		DontDestroyOnLoad(instance);
-		return instance.AddComponent<VrUi>();
-	}
-
-	private void Awake()
-	{
-		Instance = this;
-		DontDestroyOnLoad(gameObject);
-		uiCamera = GetComponentInChildren<Camera>();
-	}
-
-	private void OnDisable()
-	{
-		throw new Exception("Disabling VrUI");
+		var instance = canvas.gameObject.AddComponent<VrUi>();
+		instance.canvas = canvas;
+		return instance;
 	}
 
 	private void Start()
 	{
-		SetUp();
-		SetUpCamera(null);
+		canvas.planeDistance = 0.2f;
+		canvas.transform.parent.localScale = Vector3.one * 0.5f;
 	}
 
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.F2))
-		{
-			Debug.Log("## setting up vr ui");
-			SetUp();
-		}
-	}
-
-	private void SetUp()
-	{
-		var canvases = FindObjectsOfType<Canvas>();
-		foreach (var canvas in canvases)
-		{
-			SetUpCanvas(canvas);
-		}
-	}
-
-	public void SetUpCamera(Camera camera)
-	{
-		Debug.Log($"Setting up VrUi with camera {camera}");
-
-		var mainCamera = camera;
-		if (!mainCamera)
-		{
-			mainCamera = new GameObject("VrCamera").AddComponent<Camera>();
-			mainCamera.tag = "MainCamera";
-		}
-
-		transform.SetParent(mainCamera.transform, false);
-
-		// VrHand.Create(mainCamera, SteamVR_Input_Sources.RightHand);
-		// VrHand.Create(mainCamera, SteamVR_Input_Sources.LeftHand);
-	}
-
-	public void SetUpCanvas(Canvas canvas)
-	{
-		canvas.worldCamera = uiCamera;
+		// Inneficient way of doing this.
+		// I just want to make sure the camera-space canvas use the correct camera.
+		// Should be easy if we use a reference from the VrCamera behaviour.
+		canvas.worldCamera = Camera.main ? Camera.main : Camera.current;
 		canvas.renderMode = RenderMode.ScreenSpaceCamera;
-
-		if (canvas.gameObject.layer != LayerMask.NameToLayer("Default") ||
-		    canvas.gameObject.layer != LayerMask.NameToLayer("UI"))
-		{
-			Debug.LogWarning($"Warning: changing canvas layer from {LayerMask.LayerToName(canvas.gameObject.layer)} to UI");
-		}
-
-		canvas.gameObject.layer = LayerMask.NameToLayer("UI");
 	}
 }

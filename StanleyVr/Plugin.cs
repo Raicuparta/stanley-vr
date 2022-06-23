@@ -16,7 +16,7 @@ namespace StanleyVr;
 [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
 public class Plugin : BaseUnityPlugin
 {
-	private VrUi vrUi;
+	// private VrUi vrUi;
 	private LIV.SDK.Unity.LIV liv;
 
 	private void Awake()
@@ -40,11 +40,6 @@ public class Plugin : BaseUnityPlugin
 
 	private void Update()
 	{
-		if (!vrUi)
-		{
-			vrUi = VrUi.Create();
-		}
-
 		if (Input.GetKeyDown(KeyCode.KeypadMinus))
 		{
 			Camera.main.transform.parent.localScale *= 1.1f;

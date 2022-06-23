@@ -23,16 +23,17 @@ public static class Patches
 	{
 		var canvas = __instance.GetComponent<Canvas>();
 
-		if (!canvas || canvasesToIgnore.Contains(canvas.name)) return;
-
-		Debug.Log($"Found CanvasScaler {__instance.name}");
-
-		if (!VrUi.Instance)
+		if (!canvas || canvas.renderMode == RenderMode.WorldSpace || canvasesToIgnore.Contains(canvas.name))
 		{
-			// TODO don't do this here dummy.
-			VrUi.Instance = VrUi.Create();
-		}
-		VrUi.Instance.SetUpCanvas(canvas);
+			Debug.Log($"Ignored CanvasScaler {__instance.name}");
+			Debug.Log($"!canvas {!canvas}");
+			Debug.Log($"canvas.renderMode {canvas.renderMode}");
+			return;
+		};
+	
+		Debug.Log($"Found CanvasScaler {__instance.name}");
+		
+		VrUi.Create(canvas);
 	}
 
 	[HarmonyPrefix]
@@ -83,6 +84,7 @@ public static class Patches
 	[HarmonyPatch(typeof(SetEventCameraOnStart), nameof(SetEventCameraOnStart.Start))]
 	private static bool DisableCanvasOrdering()
 	{
+		// This behaviour changes the canvas plane distance and world camera, so I'm disabling it.
 		return false;
 	}
 
@@ -90,7 +92,15 @@ public static class Patches
 	[HarmonyPatch(typeof(MainMenu), nameof(MainMenu.Start))]
 	private static void FixMainMenuCanvas(MainMenu __instance)
 	{
+		// The MainMenu behaviour changes the canvas rendermode to overlay, so I need ot change it to camera here too.
 		__instance.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
+	}
+
+	[HarmonyPostfix]
+	[HarmonyPatch(typeof(GameMaster), nameof(GameMaster.Awake))]
+	private static void SetGameMasterScale(GameMaster __instance)
+	{
+		__instance.transform.localScale = Vector3.one * 0.5f;
 	}
 
 	[HarmonyPostfix]
@@ -120,7 +130,7 @@ public static class Patches
 
 		var camera = __instance.GetComponent<Camera>();
 		camera.transform.parent.localScale = Vector3.one * 0.5f;
-		VrUi.Instance.SetUpCamera(camera);
+		// VrUi.Instance.SetUpCamera(camera);
 	}
 
 	[HarmonyPrefix]
@@ -374,7 +384,7 @@ public static class Patches
 
 		if (!camera) return;
 
-		camera.targetTexture = VrUi.Instance.GetComponentInChildren<Camera>().targetTexture;
+		// camera.targetTexture = VrUi.Instance.GetComponentInChildren<Camera>().targetTexture;
 
 		// Debug.Log($"### ReadRawAnalogValue axisName {axisName}");
 		// return true;
