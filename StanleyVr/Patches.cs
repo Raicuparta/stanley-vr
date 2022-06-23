@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
+using AmplifyBloom;
 using HarmonyLib;
 using UnityEngine;
 using UnityEngine.SpatialTracking;
@@ -14,7 +15,7 @@ public static class Patches
 	private static readonly string[] canvasesToIgnore =
 	{
 		"com.sinai.unityexplorer_Root", // UnityExplorer.
-		"com.sinai.unityexplorer.MouseInspector_Root" // UnityExplorer.
+		"com.sinai.unityexplorer.MouseInspector_Root", // UnityExplorer.
 	};
 
 	[HarmonyPrefix]
@@ -87,6 +88,14 @@ public static class Patches
 		// This behaviour changes the canvas plane distance and world camera, so I'm disabling it.
 		return false;
 	}
+	
+	[HarmonyPrefix]
+	[HarmonyPatch(typeof(AmplifyBloomBase), nameof(AmplifyBloomBase.Awake))]
+	private static void DisableBloom(AmplifyBloomBase __instance)
+	{
+		// This bloom looks terrible in VR, so disabling it.
+		__instance.enabled = false;
+	}
 
 	[HarmonyPostfix]
 	[HarmonyPatch(typeof(MainMenu), nameof(MainMenu.Start))]
@@ -101,6 +110,20 @@ public static class Patches
 	private static void SetGameMasterScale(GameMaster __instance)
 	{
 		__instance.transform.localScale = Vector3.one * 0.5f;
+	}
+	
+	[HarmonyPostfix]
+	[HarmonyPatch(typeof(BackgroundCamera), nameof(BackgroundCamera.Awake))]
+	private static void FixBackgroundCameraScale(BackgroundCamera __instance)
+	{
+		// BackgroundCamera is what renders the sky in the Epilogue.
+		// So it looks much better if we resize it to make the skybox look huge.
+		// I'm not sure if BackgorundCamera is used for anything else. Might look bad in other usages.
+		__instance.transform.localScale = Vector3.one * 0.1f;
+
+		// TODO is still broken since the sky camera won't rotate when the player rotates with the mouse / controller.
+		__instance.backgroundCamera.gameObject.AddComponent<VrCamera>();
+		__instance.enabled = false;
 	}
 
 	[HarmonyPostfix]
