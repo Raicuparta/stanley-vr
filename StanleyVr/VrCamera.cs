@@ -8,6 +8,8 @@ public class VrCamera: MonoBehaviour
 {
 	private void Start()
 	{
-		GetComponent<TrackedPoseDriver>().UseRelativeTransform = true;
+		var trackedPoseDriver = gameObject.AddComponent<TrackedPoseDriver>();
+		trackedPoseDriver.trackingType = TrackedPoseDriver.TrackingType.RotationOnly;
+		// GetComponent<TrackedPoseDriver>().UseRelativeTransform = true;
 	}
 }

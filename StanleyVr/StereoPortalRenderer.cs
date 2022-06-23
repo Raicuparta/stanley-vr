@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.XR;
 
 namespace StanleyVr;
 
@@ -7,17 +8,17 @@ public class StereoPortalRenderer : MonoBehaviour
 	private void OnPreRender()
 	{
 		var camera = Camera.current;
-		var cameraRight = camera.transform.right;
-		var separation = camera.stereoSeparation * camera.transform.parent.localScale.x;
-		var offset = cameraRight.normalized * separation * 0.5f;
 
-		if (camera.stereoActiveEye == Camera.MonoOrStereoscopicEye.Left)
-		{
-			offset *= -1;
-		}
+		var isLeft = camera.stereoActiveEye == Camera.MonoOrStereoscopicEye.Left;
+		
+		InputDevices.GetDeviceAtXRNode(XRNode.CenterEye)
+			.TryGetFeatureValue(CommonUsages.centerEyePosition, out var centerEyePosition);
+		
+		InputDevices.GetDeviceAtXRNode(isLeft ? XRNode.LeftEye : XRNode.RightEye)
+			.TryGetFeatureValue(isLeft ? CommonUsages.leftEyePosition : CommonUsages.rightEyePosition, out var eyePosition);
 
 		var cameraPosition = camera.transform.position;
-		camera.transform.position = cameraPosition + offset;
+		camera.transform.localPosition = eyePosition - centerEyePosition;
 
 		foreach (var portal in MainCamera.Portals)
 		{
