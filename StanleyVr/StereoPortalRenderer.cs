@@ -19,8 +19,6 @@ public class StereoPortalRenderer : MonoBehaviour
 
 		var cameraPosition = camera.transform.position;
 		camera.transform.localPosition = eyePosition - centerEyePosition;
-
-		// TODO: figure out why the second portal is disappearing.
 		
 		foreach (var portal in MainCamera.Portals)
 		{
