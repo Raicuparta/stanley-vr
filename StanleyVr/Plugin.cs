@@ -5,11 +5,13 @@ using System.Reflection;
 using AmplifyBloom;
 using BepInEx;
 using HarmonyLib;
+using InControl;
 using LIV.SDK.Unity;
 using UnityEngine;
 using UnityEngine.XR;
 using UnityEngine.XR.Management;
 using UnityEngine.XR.OpenXR;
+using Mouse = UnityEngine.InputSystem.Mouse;
 
 namespace StanleyVr;
 
@@ -40,6 +42,8 @@ public class Plugin : BaseUnityPlugin
 
 	private void Update()
 	{
+		Cursor.lockState = CursorLockMode.None;
+		
 		if (Input.GetKeyDown(KeyCode.KeypadMinus))
 		{
 			Camera.main.transform.parent.localScale *= 1.1f;

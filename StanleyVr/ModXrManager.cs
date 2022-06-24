@@ -7,18 +7,28 @@ namespace StanleyVr;
 
 public class ModXrManager : MonoBehaviour
 {
-    public static bool IsVrEnabled;
+    private static bool isVrEnabled;
     private static OpenXRLoaderBase openXrLoader;
     private bool isXrSetUp;
-    // private static bool IsInitialized => openXrLoader != null && openXrLoader.GetValue<bool>("isInitialized");
+
+    private void Awake()
+    {
+        ToggleXr();
+    }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F3))
         {
+            ToggleXr();
+        }
+    }
+
+    private void ToggleXr()
+    {
             if (!isXrSetUp) SetUpXr();
 
-            if (!IsVrEnabled)
+            if (!isVrEnabled)
             {
                 XRGeneralSettings.Instance.Manager.StartSubsystems();
                 XRGeneralSettings.Instance.Manager.activeLoader.Initialize();
@@ -30,8 +40,7 @@ public class ModXrManager : MonoBehaviour
                 XRGeneralSettings.Instance.Manager.activeLoader.Deinitialize();
             }
 
-            // IsVrEnabled = IsInitialized;
-        }
+            isVrEnabled = !isVrEnabled;
     }
 
     private void SetUpXr()

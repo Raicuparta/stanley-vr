@@ -41,17 +41,13 @@ public static class Patches
 	[HarmonyPatch(typeof(StanleyController), nameof(StanleyController.ClickingOnThings))]
 	private static bool LaserInteraction(StanleyController __instance)
 	{
-		if (!VrLaser.Instance)
-		{
-			return true;
-		}
 		if (Singleton<GameMaster>.Instance.FullScreenMoviePlaying || !Singleton<GameMaster>.Instance.stanleyActions.UseAction.WasPressed)
 		{
 			return false;
 		}
 		RaycastHit hitInfo;
 		// TODO just replace __instance.camparent during this method instead of copying everything.
-		if (Physics.Raycast(VrLaser.Instance.transform.position, VrLaser.Instance.transform.forward, out hitInfo, __instance.armReach, __instance.clickLayers, QueryTriggerInteraction.Ignore))
+		if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hitInfo, __instance.armReach, __instance.clickLayers, QueryTriggerInteraction.Ignore))
 		{
 			var gameObject = hitInfo.collider.gameObject;
 			var component = gameObject.GetComponent<HammerEntity>();
@@ -76,7 +72,7 @@ public static class Patches
 				StanleyController.OnInteract(null);
 			}
 		}
-
+	
 		return false;
 	}
 
@@ -106,13 +102,6 @@ public static class Patches
 	}
 
 	[HarmonyPostfix]
-	[HarmonyPatch(typeof(GameMaster), nameof(GameMaster.Awake))]
-	private static void SetGameMasterScale(GameMaster __instance)
-	{
-		__instance.transform.localScale = Vector3.one * 0.5f;
-	}
-	
-	[HarmonyPostfix]
 	[HarmonyPatch(typeof(BackgroundCamera), nameof(BackgroundCamera.Awake))]
 	private static void FixBackgroundCameraScale(BackgroundCamera __instance)
 	{
@@ -128,18 +117,16 @@ public static class Patches
 
 	[HarmonyPostfix]
 	[HarmonyPatch(typeof(AmplifyColorBase), nameof(AmplifyColorBase.Start))]
-	private static void TrackCameraVrRotation(AmplifyColorBase __instance)
+	private static void SetUpVrCameraGeneral(AmplifyColorBase __instance)
 	{
-		if (__instance.GetComponent<TrackedPoseDriver>()) return;
+		if (__instance.GetComponent<VrCamera>()) return;
 
-		var poseDriver = __instance.gameObject.AddComponent<TrackedPoseDriver>();
-		poseDriver.trackingType = TrackedPoseDriver.TrackingType.RotationOnly;
-		__instance.transform.localScale = Vector3.one * 0.5f;
+		__instance.gameObject.AddComponent<VrCamera>();
 	}
 
 	[HarmonyPostfix]
 	[HarmonyPatch(typeof(MainCamera), nameof(MainCamera.Start))]
-	private static void SetUpVrCamera(MainCamera __instance)
+	private static void SetUpVrCameraMain(MainCamera __instance)
 	{
 		__instance.gameObject.AddComponent<StereoPortalRenderer>();
 		var transform = __instance.transform;
@@ -153,7 +140,6 @@ public static class Patches
 
 		var camera = __instance.GetComponent<Camera>();
 		camera.transform.parent.localScale = Vector3.one * 0.5f;
-		// VrUi.Instance.SetUpCamera(camera);
 	}
 
 	[HarmonyPrefix]
