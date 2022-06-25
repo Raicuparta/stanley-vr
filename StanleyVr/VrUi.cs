@@ -16,6 +16,8 @@ public class VrUi : MonoBehaviour
 	private void Start()
 	{
 		canvas.planeDistance = 0.2f;
+		canvas.scaleFactor = 1.3f;
+		gameObject.layer = LayerMask.NameToLayer("UI");
 		Debug.Log($"Canvas parent is {(canvas.transform.parent ? canvas.transform.parent.name : "NONE")}");
 		
 		SetUpScale();
@@ -23,10 +25,7 @@ public class VrUi : MonoBehaviour
 
 	private void Update()
 	{
-		// Inneficient way of doing this.
-		// I just want to make sure the camera-space canvas use the correct camera.
-		// Should be easy if we use a reference from the VrCamera behaviour.
-		canvas.worldCamera = Camera.main ? Camera.main : Camera.current;
+		canvas.worldCamera = VrCamera.GetUiCamera();
 		canvas.renderMode = RenderMode.ScreenSpaceCamera;
 	}
 
