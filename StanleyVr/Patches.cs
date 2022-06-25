@@ -89,8 +89,8 @@ public static class Patches
 	[HarmonyPatch(typeof(AmplifyBloomBase), nameof(AmplifyBloomBase.Awake))]
 	private static void DisableBloom(AmplifyBloomBase __instance)
 	{
-		// This bloom looks terrible in VR, so disabling it.
-		__instance.enabled = false;
+		// This bloom looks terrible in VR, so removing it.
+		Object.Destroy(__instance);
 	}
 
 	[HarmonyPostfix]
