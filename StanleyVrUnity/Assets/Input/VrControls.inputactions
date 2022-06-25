@@ -1,0 +1,52 @@
+{
+    "name": "VrControls",
+    "maps": [
+        {
+            "name": "ActionMap",
+            "id": "202e0b20-e0a6-4cf7-9db5-9a42e20dbbec",
+            "actions": [
+                {
+                    "name": "RightHandPose",
+                    "type": "Value",
+                    "id": "bb7cae79-288e-4de4-a0fa-08d2670849b8",
+                    "expectedControlType": "Pose",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "LeftHandPose",
+                    "type": "Button",
+                    "id": "bdee6a18-4f75-49ab-8c1d-7fbd6057d0ef",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "d620a98a-61f8-48d1-a370-db86319c5121",
+                    "path": "<XRController>{RightHand}/devicePose",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightHandPose",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "42579ed7-e8c1-41a0-ba2d-b9eb6747126b",
+                    "path": "<XRController>{LeftHand}/devicePose",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftHandPose",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
