@@ -1,28 +1,28 @@
 ManifestFileVersion: 0
-CRC: 1598406050
+CRC: 3010823564
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 21af45bcb0482d4cb063fe33924814f7
+    Hash: e78d542002953e8ff9620162b05154a7
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 1a0fdbce7576ee3b8a65566901805ef2
+    Hash: 8fe993588675871d0c9f731d52662fc1
 HashAppended: 0
 ClassTypes:
-- Class: 114
-  Script: {fileID: 11500000, guid: d236b7d11115f2143951f1e14045df39, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: f4c3631f5e58749a59194e0cf6baf6d5, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 7de993716e042c6499d0c18eed3a773c, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 96efa89124dda0941802f28ad8249b87, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d236b7d11115f2143951f1e14045df39, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: d3552e428dc7646a88de3ed3650f87da, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 761fdd4502cb7a84e9ec7a2b24f33f37, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: b3cf79659a011bd419c7a2a30eb74e9a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: c46f07b5ed07e4e92aa78254188d3d10, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 274c02963f889a64e90bc2e596e21d13, type: 3}
 - Class: 114
@@ -41,6 +41,8 @@ ClassTypes:
   Script: {fileID: 11500000, guid: b5a1f07dc5afe854f9f12a4194aca3fb, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 056125dd64c0ed540b40a4af74f7b495, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f4c3631f5e58749a59194e0cf6baf6d5, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
@@ -50,4 +52,5 @@ Assets:
 - Assets/XR/Loaders/Open XR Loader.asset
 - Assets/XR/Settings/OpenXR Editor Settings.asset
 - Assets/XR/Settings/OpenXR Package Settings.asset
+- Assets/InputSystem.inputsettings.asset
 Dependencies: []

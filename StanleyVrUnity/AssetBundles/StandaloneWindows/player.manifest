@@ -1,30 +1,36 @@
 ManifestFileVersion: 0
-CRC: 1072376869
+CRC: 687387627
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: cd73a435c8e5d973e9e3647f311851d1
+    Hash: 8bba73058177406397f392e02ac1b032
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 9141ff2c47122375e1227f0357ff5775
+    Hash: c933009b7622caa232da828b84af1bbc
 HashAppended: 0
 ClassTypes:
 - Class: 1
   Script: {instanceID: 0}
 - Class: 4
   Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 90
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
 - Class: 114
-  Script: {fileID: 11500000, guid: 29e3e4511966ba94d8ba0b98c6c62f82, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 202a6e24b48d1684398409c47161adcb, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 8ca2cc563cc33f542a5d9f8f661184ba, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: ea1001a6626353541ab4d4b39f4c3569, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 9a5fb0ca93b55ef4b8d54b512b103341, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 1e75fe4b0c190eb4ba97e59f062510e9, type: 3}
+  Script: {fileID: 11500000, guid: 5a2a9c34df4095f47b9ca8f975175f5b, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 137
+  Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/StanleyVrPlayer.prefab
