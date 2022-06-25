@@ -1,7 +1,9 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.XR.Management;
 using UnityEngine.XR.OpenXR;
+using UnityEngine.XR.OpenXR.Features.Interactions;
 
 namespace StanleyVr;
 
@@ -51,6 +53,15 @@ public class ModXrManager : MonoBehaviour
 
         foreach (var xrManager in xrManagerBundle.LoadAllAssets())
             Debug.Log($"######## Loaded xrManager: {xrManager.name}");
+
+        // var inputSettings = xrManagerBundle.LoadAsset<InputSettings>("InputSystem.inputsettings");
+        // if (!inputSettings)
+        // {
+        //     throw new Exception("Input Settings is null");
+        // }
+        //
+        // InputSystem.settings = inputSettings;
+        // InputSystem.AddDevice<OculusTouchControllerProfile.OculusTouchController>();
 
         var instance = XRGeneralSettings.Instance;
         if (instance == null) throw new Exception("XRGeneralSettings instance is null");
