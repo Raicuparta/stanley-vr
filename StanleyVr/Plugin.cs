@@ -39,13 +39,6 @@ public class Plugin : BaseUnityPlugin
 		SDKShaders.LoadFromAssetBundle(shaderBundle);
 
 		gameObject.AddComponent<ModXrManager>();
-		
-		InputManager.OnSetup += () =>
-		{
-			var vrDevice = new VrInputDevice();
-			InputManager.AttachDevice(vrDevice);
-			InputManager.activeDevice = vrDevice;
-		};
 	}
 
 	private void Update()

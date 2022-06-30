@@ -415,22 +415,6 @@ public static class Patches
 		// return true;
 	}
 	
-	[HarmonyPostfix]
-	[HarmonyPatch(typeof(InControl.InputDevice), nameof(InControl.InputDevice.Commit))]
-	private static void ForceActiveDevice(InControl.InputDevice __instance)
-	{
-		__instance.IsActive = true;
-	}
-	
-	
-	[HarmonyPostfix]
-	[HarmonyPatch(typeof(UnityInputDevice), nameof(UnityInputDevice.Update))]
-	private static void PreventUnityInputDevice(UnityInputDevice __instance)
-	{
-		InputManager.DetachDevice(__instance);
-	}
-
-
 	private static StanleyActions staneyActionsInstance;
 	[HarmonyPostfix]
 	[HarmonyPatch(typeof(StanleyActions), MethodType.Constructor)]
