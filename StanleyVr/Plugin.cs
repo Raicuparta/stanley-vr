@@ -8,6 +8,7 @@ using HarmonyLib;
 using InControl;
 using LIV.SDK.Unity;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.XR;
 using UnityEngine.XR.Management;
 using UnityEngine.XR.OpenXR;
@@ -38,11 +39,20 @@ public class Plugin : BaseUnityPlugin
 		SDKShaders.LoadFromAssetBundle(shaderBundle);
 
 		gameObject.AddComponent<ModXrManager>();
+		
+		InputManager.OnSetup += () =>
+		{
+			var vrDevice = new VrInputDevice();
+			InputManager.AttachDevice(vrDevice);
+			InputManager.activeDevice = vrDevice;
+		};
 	}
 
 	private void Update()
 	{
 		Cursor.lockState = CursorLockMode.None;
+		
+
 		
 		if (Input.GetKeyDown(KeyCode.KeypadMinus))
 		{

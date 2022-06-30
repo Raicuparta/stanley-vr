@@ -1,11 +1,15 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using AmplifyBloom;
 using HarmonyLib;
+using InControl;
 using UnityEngine;
 using UnityEngine.SpatialTracking;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using UnityEngine.XR;
+using InputDevice = UnityEngine.XR.InputDevice;
 
 namespace StanleyVr;
 
@@ -345,25 +349,36 @@ public static class Patches
 	// 	return false;
 	// }
 	//
+
 	// private const string rotateHorizontal = "analog 3";
 	// private const string rotateVertical = "analog 4";
 	// private const string moveVertical = "analog 1";
 	// private const string moveHorizontal = "analog 0";
 	// private const string interact = "button 0";
-	//
+	
 	// [HarmonyPostfix]
 	// [HarmonyPatch(typeof(Input), nameof(Input.GetAxisRaw))]
 	// private static void ReadVrAnalogInput(string axisName, ref float __result)
 	// {
+	// 	var rightHandDevices = new List<InputDevice>();
+	// 	InputDevices.GetDevicesAtXRNode(XRNode.RightHand, rightHandDevices);
+	//
+	// 	if (rightHandDevices.Count == 0) return;
+	//
+	// 	var device = rightHandDevices[0];
+	//
+	// 	device.TryGetFeatureValue(CommonUsages.primary2DAxis, out var primaryAxis);
+	// 	device.TryGetFeatureValue(CommonUsages.secondary2DAxis, out var secondaryAxis);
+	// 	
 	// 	Debug.Log($"## reading axis {axisName}: {__result}");
 	// 	if (axisName.EndsWith(rotateHorizontal))
-	// 		__result = SteamVR_Actions._default.Rotate.axis.x;
+	// 		__result = secondaryAxis.x;
 	// 	else if (axisName.EndsWith(rotateVertical))
-	// 		__result = -SteamVR_Actions._default.Rotate.axis.y;
+	// 		__result = -secondaryAxis.y;
 	// 	else if (axisName.EndsWith(moveVertical))
-	// 		__result = -SteamVR_Actions._default.Move.axis.y;
+	// 		__result = -primaryAxis.y;
 	// 	else if (axisName.EndsWith(moveHorizontal))
-	// 		__result = SteamVR_Actions._default.Move.axis.x;
+	// 		__result = primaryAxis.x;
 	// 	else
 	// 		__result = __result;
 	// 	// Debug.Log($"### ReadRawAnalogValue axisName {axisName}");
@@ -398,5 +413,63 @@ public static class Patches
 
 		// Debug.Log($"### ReadRawAnalogValue axisName {axisName}");
 		// return true;
+	}
+	
+	[HarmonyPostfix]
+	[HarmonyPatch(typeof(InControl.InputDevice), nameof(InControl.InputDevice.Commit))]
+	private static void ForceActiveDevice(InControl.InputDevice __instance)
+	{
+		__instance.IsActive = true;
+	}
+	
+	
+	[HarmonyPostfix]
+	[HarmonyPatch(typeof(UnityInputDevice), nameof(UnityInputDevice.Update))]
+	private static void PreventUnityInputDevice(UnityInputDevice __instance)
+	{
+		InputManager.DetachDevice(__instance);
+	}
+
+
+	private static StanleyActions staneyActionsInstance;
+	[HarmonyPostfix]
+	[HarmonyPatch(typeof(StanleyActions), MethodType.Constructor)]
+	private static void SaveStanleyActionsInstance(StanleyActions __instance)
+	{
+		staneyActionsInstance = __instance;
+	}
+	
+	[HarmonyPrefix]
+	[HarmonyPatch(typeof(TwoAxisInputControl), nameof(TwoAxisInputControl.UpdateWithAxes))]
+	private static void ReadXrVectorInput(TwoAxisInputControl __instance, ref float x, ref float y)
+	{
+		XRNode hand;
+		InputFeatureUsage<Vector2> featureUsage;
+		if (__instance == staneyActionsInstance.View)
+		{
+			hand = XRNode.RightHand;
+			featureUsage = CommonUsages.primary2DAxis;
+		}
+		else if (__instance == staneyActionsInstance.Movement)
+		{
+			hand = XRNode.LeftHand;
+			featureUsage = CommonUsages.primary2DAxis;
+		}
+		else
+		{
+			return;
+		}
+		
+		var devices = new List<InputDevice>();
+
+		InputDevices.GetDevicesAtXRNode(hand, devices);
+	
+		if (devices.Count == 0) return;
+	
+		var device = devices[0];
+	
+		device.TryGetFeatureValue(featureUsage, out var axis);
+		x = axis.x;
+		y = axis.y;
 	}
 }
