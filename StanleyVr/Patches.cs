@@ -415,26 +415,56 @@ public static class Patches
 		// return true;
 	}
 	
-	private static StanleyActions staneyActionsInstance;
+	private static Dictionary<IInputControl, InputFeatureUsage<bool>> boolInputMap;
+	
+	private static StanleyActions stanleyActionsInstance;
 	[HarmonyPostfix]
 	[HarmonyPatch(typeof(StanleyActions), MethodType.Constructor)]
 	private static void SaveStanleyActionsInstance(StanleyActions __instance)
 	{
-		staneyActionsInstance = __instance;
+		stanleyActionsInstance = __instance;
+		boolInputMap = new Dictionary<IInputControl, InputFeatureUsage<bool>>()
+		{
+			// { stanleyActionsInstance.AnyButton, CommonUsages.triggerButton }, // TODO any button.
+			// { stanleyActionsInstance.MoveForward, CommonUsages.triggerButton },
+			// { stanleyActionsInstance.MoveBackward, CommonUsages.triggerButton },
+			// { stanleyActionsInstance.MoveLeft, CommonUsages.triggerButton },
+			// { stanleyActionsInstance.MoveRight, CommonUsages.triggerButton },
+			// { stanleyActionsInstance.LookUp, CommonUsages.triggerButton },
+			// { stanleyActionsInstance.LookDown, CommonUsages.triggerButton },
+			// { stanleyActionsInstance.LookLeft, CommonUsages.triggerButton },
+			// { stanleyActionsInstance.LookRight, CommonUsages.triggerButton },
+			// { stanleyActionsInstance.Up, CommonUsages.triggerButton },
+			// { stanleyActionsInstance.Down, CommonUsages.triggerButton },
+			// { stanleyActionsInstance.Left, CommonUsages.triggerButton },
+			// { stanleyActionsInstance.Right, CommonUsages.triggerButton },
+			// { stanleyActionsInstance.Crouch, CommonUsages.triggerButton },
+			{ stanleyActionsInstance.Use, CommonUsages.triggerButton },
+			{ stanleyActionsInstance.Jump, CommonUsages.primaryButton },
+			{ stanleyActionsInstance.Start, CommonUsages.menuButton },
+			// { stanleyActionsInstance.MenuTabLeft, CommonUsages.triggerButton },
+			{ stanleyActionsInstance.MenuTabRight, CommonUsages.triggerButton },
+			{ stanleyActionsInstance.MenuConfirm, CommonUsages.primaryButton },
+			{ stanleyActionsInstance.MenuBack, CommonUsages.secondaryButton },
+			{ stanleyActionsInstance.MenuOpen, CommonUsages.menuButton },
+			// { stanleyActionsInstance.FastForward, CommonUsages.primaryButton },
+			// { stanleyActionsInstance.SlowDown, CommonUsages.triggerButton },
+			
+		};
 	}
 	
 	[HarmonyPrefix]
 	[HarmonyPatch(typeof(TwoAxisInputControl), nameof(TwoAxisInputControl.UpdateWithAxes))]
-	private static void ReadXrVectorInput(TwoAxisInputControl __instance, ref float x, ref float y)
+	private static void ReadXrTwoAxisInput(TwoAxisInputControl __instance, ref float x, ref float y)
 	{
 		XRNode hand;
 		InputFeatureUsage<Vector2> featureUsage;
-		if (__instance == staneyActionsInstance.View)
+		if (__instance == stanleyActionsInstance.View)
 		{
 			hand = XRNode.RightHand;
 			featureUsage = CommonUsages.primary2DAxis;
 		}
-		else if (__instance == staneyActionsInstance.Movement)
+		else if (__instance == stanleyActionsInstance.Movement)
 		{
 			hand = XRNode.LeftHand;
 			featureUsage = CommonUsages.primary2DAxis;
@@ -455,5 +485,70 @@ public static class Patches
 		device.TryGetFeatureValue(featureUsage, out var axis);
 		x = axis.x;
 		y = axis.y;
+	}
+
+	[HarmonyPrefix]
+	[HarmonyPatch(typeof(OneAxisInputControl), nameof(OneAxisInputControl.UpdateWithState))]
+	private static void ReadXrOneAxisInput(OneAxisInputControl __instance, ref bool state)
+	{
+		if (boolInputMap == null || !boolInputMap.ContainsKey(__instance))
+		{
+			// Debug.Log($"not doing it with {__instance} {boolInputMap == null} {boolInputMap.ContainsKey(__instance)}");
+			return;
+		}
+		
+		var devices = new List<InputDevice>();
+
+		InputDevices.GetDevicesAtXRNode(XRNode.LeftHand, devices);
+		InputDevices.GetDevicesAtXRNode(XRNode.RightHand, devices);
+	
+		if (devices.Count == 0) return;
+	
+		var device = devices[0];
+	
+		device.TryGetFeatureValue(boolInputMap[__instance], out state);
+	}
+	
+	[HarmonyPrefix]
+	[HarmonyPatch(typeof(OneAxisInputControl), nameof(OneAxisInputControl.UpdateWithValue))]
+	[HarmonyPatch(typeof(OneAxisInputControl), nameof(OneAxisInputControl.UpdateWithRawValue))]
+	[HarmonyPatch(typeof(OneAxisInputControl), nameof(OneAxisInputControl.SetValue))]
+	private static void ReadXrOneAxisInput(OneAxisInputControl __instance, ref float value)
+	{
+		if (stanleyActionsInstance.UseAction == __instance)
+		{
+			var adevices = new List<InputDevice>();
+
+			InputDevices.GetDevicesAtXRNode(XRNode.LeftHand, adevices);
+			InputDevices.GetDevicesAtXRNode(XRNode.RightHand, adevices);
+		
+			if (adevices.Count == 0) return;
+		
+			var adevice = adevices[0];
+		
+			adevice.TryGetFeatureValue(CommonUsages.triggerButton, out var astate);
+
+			value = astate ? 1 : 0;
+			
+			return;
+		}
+		
+		if (boolInputMap == null || !boolInputMap.ContainsKey(__instance))
+		{
+			return;
+		}
+		
+		var devices = new List<InputDevice>();
+
+		InputDevices.GetDevicesAtXRNode(XRNode.LeftHand, devices);
+		InputDevices.GetDevicesAtXRNode(XRNode.RightHand, devices);
+	
+		if (devices.Count == 0) return;
+	
+		var device = devices[0];
+	
+		device.TryGetFeatureValue(boolInputMap[__instance], out var state);
+
+		value = state ? 1 : 0;
 	}
 }
