@@ -17,7 +17,7 @@
         <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
         <PackageReference Include="BepInEx.Core" Version="5.4.19" />
         <PackageReference Include="BepInEx.PluginInfoProps" Version="1.*" />
-        <PackageReference Include="StanleyParable.GameLibs" Version="1.4.0" />
+        <PackageReference Include="StanleyParable.GameLibs" Version="1.5.0" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
