@@ -33,6 +33,10 @@
       "requirement": "optional"
     },
     {
+      "name": "/actions/default/in/Pointer",
+      "type": "pose"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },
