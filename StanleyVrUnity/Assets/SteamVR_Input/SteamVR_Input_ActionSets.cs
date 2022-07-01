@@ -19,11 +19,15 @@ namespace Valve.VR
         
         private static SteamVR_Input_ActionSet_default p__default;
         
-        private static SteamVR_Input_ActionSet_platformer p_platformer;
+        private static SteamVR_Input_ActionSet_dominant_hand p_dominant_hand;
         
-        private static SteamVR_Input_ActionSet_buggy p_buggy;
+        private static SteamVR_Input_ActionSet_non_dominant_hand p_non_dominant_hand;
         
-        private static SteamVR_Input_ActionSet_mixedreality p_mixedreality;
+        private static SteamVR_Input_ActionSet_movement_hand p_movement_hand;
+        
+        private static SteamVR_Input_ActionSet_rotation_hand p_rotation_hand;
+        
+        private static SteamVR_Input_ActionSet_menu p_menu;
         
         public static SteamVR_Input_ActionSet_default _default
         {
@@ -33,41 +37,61 @@ namespace Valve.VR
             }
         }
         
-        public static SteamVR_Input_ActionSet_platformer platformer
+        public static SteamVR_Input_ActionSet_dominant_hand dominant_hand
         {
             get
             {
-                return SteamVR_Actions.p_platformer.GetCopy<SteamVR_Input_ActionSet_platformer>();
+                return SteamVR_Actions.p_dominant_hand.GetCopy<SteamVR_Input_ActionSet_dominant_hand>();
             }
         }
         
-        public static SteamVR_Input_ActionSet_buggy buggy
+        public static SteamVR_Input_ActionSet_non_dominant_hand non_dominant_hand
         {
             get
             {
-                return SteamVR_Actions.p_buggy.GetCopy<SteamVR_Input_ActionSet_buggy>();
+                return SteamVR_Actions.p_non_dominant_hand.GetCopy<SteamVR_Input_ActionSet_non_dominant_hand>();
             }
         }
         
-        public static SteamVR_Input_ActionSet_mixedreality mixedreality
+        public static SteamVR_Input_ActionSet_movement_hand movement_hand
         {
             get
             {
-                return SteamVR_Actions.p_mixedreality.GetCopy<SteamVR_Input_ActionSet_mixedreality>();
+                return SteamVR_Actions.p_movement_hand.GetCopy<SteamVR_Input_ActionSet_movement_hand>();
+            }
+        }
+        
+        public static SteamVR_Input_ActionSet_rotation_hand rotation_hand
+        {
+            get
+            {
+                return SteamVR_Actions.p_rotation_hand.GetCopy<SteamVR_Input_ActionSet_rotation_hand>();
+            }
+        }
+        
+        public static SteamVR_Input_ActionSet_menu menu
+        {
+            get
+            {
+                return SteamVR_Actions.p_menu.GetCopy<SteamVR_Input_ActionSet_menu>();
             }
         }
         
         private static void StartPreInitActionSets()
         {
             SteamVR_Actions.p__default = ((SteamVR_Input_ActionSet_default)(SteamVR_ActionSet.Create<SteamVR_Input_ActionSet_default>("/actions/default")));
-            SteamVR_Actions.p_platformer = ((SteamVR_Input_ActionSet_platformer)(SteamVR_ActionSet.Create<SteamVR_Input_ActionSet_platformer>("/actions/platformer")));
-            SteamVR_Actions.p_buggy = ((SteamVR_Input_ActionSet_buggy)(SteamVR_ActionSet.Create<SteamVR_Input_ActionSet_buggy>("/actions/buggy")));
-            SteamVR_Actions.p_mixedreality = ((SteamVR_Input_ActionSet_mixedreality)(SteamVR_ActionSet.Create<SteamVR_Input_ActionSet_mixedreality>("/actions/mixedreality")));
+            SteamVR_Actions.p_dominant_hand = ((SteamVR_Input_ActionSet_dominant_hand)(SteamVR_ActionSet.Create<SteamVR_Input_ActionSet_dominant_hand>("/actions/dominant_hand")));
+            SteamVR_Actions.p_non_dominant_hand = ((SteamVR_Input_ActionSet_non_dominant_hand)(SteamVR_ActionSet.Create<SteamVR_Input_ActionSet_non_dominant_hand>("/actions/non_dominant_hand")));
+            SteamVR_Actions.p_movement_hand = ((SteamVR_Input_ActionSet_movement_hand)(SteamVR_ActionSet.Create<SteamVR_Input_ActionSet_movement_hand>("/actions/movement_hand")));
+            SteamVR_Actions.p_rotation_hand = ((SteamVR_Input_ActionSet_rotation_hand)(SteamVR_ActionSet.Create<SteamVR_Input_ActionSet_rotation_hand>("/actions/rotation_hand")));
+            SteamVR_Actions.p_menu = ((SteamVR_Input_ActionSet_menu)(SteamVR_ActionSet.Create<SteamVR_Input_ActionSet_menu>("/actions/menu")));
             Valve.VR.SteamVR_Input.actionSets = new Valve.VR.SteamVR_ActionSet[] {
                     SteamVR_Actions._default,
-                    SteamVR_Actions.platformer,
-                    SteamVR_Actions.buggy,
-                    SteamVR_Actions.mixedreality};
+                    SteamVR_Actions.dominant_hand,
+                    SteamVR_Actions.non_dominant_hand,
+                    SteamVR_Actions.movement_hand,
+                    SteamVR_Actions.rotation_hand,
+                    SteamVR_Actions.menu};
         }
     }
 }
