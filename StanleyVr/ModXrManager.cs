@@ -16,6 +16,15 @@ public class ModXrManager : MonoBehaviour
 		SetUpXr();
 		SteamVR.Initialize();
 		SteamVR.settings.pauseGameWhenDashboardVisible = false;
+
+		foreach (var actionSet in SteamVR_Input.actionSets)
+		{
+			if (actionSet != SteamVR_Actions.menu) actionSet.Activate();
+			else
+			{
+				actionSet.Deactivate();
+			}
+		}
 		
 		if (XRGeneralSettings.Instance != null && XRGeneralSettings.Instance.Manager != null
 		                                       && XRGeneralSettings.Instance.Manager.activeLoader != null)

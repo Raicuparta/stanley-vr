@@ -9,6 +9,7 @@ using UnityEngine.SpatialTracking;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using UnityEngine.XR;
+using Valve.VR;
 using InputDevice = UnityEngine.XR.InputDevice;
 
 namespace StanleyVr;
@@ -342,14 +343,14 @@ public static class Patches
 		return false;
 	}
 
-	// [HarmonyPrefix]
-	// [HarmonyPatch(typeof(SteamVR_Input), nameof(SteamVR_Input.GetActionsFileFolder))]
-	// private static bool GetActionsFileFromMod(ref string __result)
-	// {
-	// 	__result = $"{Directory.GetCurrentDirectory()}/BepInEx/plugins/StanleyVr/Bindings";
-	// 	return false;
-	// }
-	//
+	[HarmonyPrefix]
+	[HarmonyPatch(typeof(SteamVR_Input), nameof(SteamVR_Input.GetActionsFileFolder))]
+	private static bool GetActionsFileFromMod(ref string __result)
+	{
+		__result = $"{Directory.GetCurrentDirectory()}/BepInEx/plugins/StanleyVr/Bindings";
+		return false;
+	}
+	
 
 	// private const string rotateHorizontal = "analog 3";
 	// private const string rotateVertical = "analog 4";
@@ -416,7 +417,8 @@ public static class Patches
 		// return true;
 	}
 	
-	private static Dictionary<IInputControl, InputFeatureUsage<bool>> boolInputMap;
+	private static Dictionary<IInputControl, SteamVR_Action_Boolean> boolInputMap;
+	private static Dictionary<IInputControl, SteamVR_Action_Vector2> vector2InputMap;
 	
 	private static StanleyActions stanleyActionsInstance;
 	[HarmonyPostfix]
@@ -424,33 +426,37 @@ public static class Patches
 	private static void SaveStanleyActionsInstance(StanleyActions __instance)
 	{
 		stanleyActionsInstance = __instance;
-		boolInputMap = new Dictionary<IInputControl, InputFeatureUsage<bool>>()
+		boolInputMap = new Dictionary<IInputControl, SteamVR_Action_Boolean>()
 		{
-			// { stanleyActionsInstance.AnyButton, CommonUsages.triggerButton }, // TODO any button.
-			// { stanleyActionsInstance.MoveForward, CommonUsages.triggerButton },
-			// { stanleyActionsInstance.MoveBackward, CommonUsages.triggerButton },
-			// { stanleyActionsInstance.MoveLeft, CommonUsages.triggerButton },
-			// { stanleyActionsInstance.MoveRight, CommonUsages.triggerButton },
-			// { stanleyActionsInstance.LookUp, CommonUsages.triggerButton },
-			// { stanleyActionsInstance.LookDown, CommonUsages.triggerButton },
-			// { stanleyActionsInstance.LookLeft, CommonUsages.triggerButton },
-			// { stanleyActionsInstance.LookRight, CommonUsages.triggerButton },
-			// { stanleyActionsInstance.Up, CommonUsages.triggerButton },
-			// { stanleyActionsInstance.Down, CommonUsages.triggerButton },
-			// { stanleyActionsInstance.Left, CommonUsages.triggerButton },
-			// { stanleyActionsInstance.Right, CommonUsages.triggerButton },
-			// { stanleyActionsInstance.Crouch, CommonUsages.triggerButton },
-			{ stanleyActionsInstance.Use, CommonUsages.triggerButton },
-			{ stanleyActionsInstance.Jump, CommonUsages.primaryButton },
-			{ stanleyActionsInstance.Start, CommonUsages.menuButton },
-			// { stanleyActionsInstance.MenuTabLeft, CommonUsages.triggerButton },
-			{ stanleyActionsInstance.MenuTabRight, CommonUsages.triggerButton },
-			{ stanleyActionsInstance.MenuConfirm, CommonUsages.primaryButton },
-			{ stanleyActionsInstance.MenuBack, CommonUsages.secondaryButton },
-			{ stanleyActionsInstance.MenuOpen, CommonUsages.menuButton },
-			// { stanleyActionsInstance.FastForward, CommonUsages.primaryButton },
-			// { stanleyActionsInstance.SlowDown, CommonUsages.triggerButton },
-			
+			// { stanleyActionsInstance.AnyButton, SteamVR_Actions.triggerButton }, // TODO any button.
+			// { stanleyActionsInstance.MoveForward, SteamVR_Actions.triggerButton },
+			// { stanleyActionsInstance.MoveBackward, SteamVR_Actions.triggerButton },
+			// { stanleyActionsInstance.MoveLeft, SteamVR_Actions.triggerButton },
+			// { stanleyActionsInstance.MoveRight, SteamVR_Actions.triggerButton },
+			// { stanleyActionsInstance.LookUp, SteamVR_Actions.triggerButton },
+			// { stanleyActionsInstance.LookDown, SteamVR_Actions.triggerButton },
+			// { stanleyActionsInstance.LookLeft, SteamVR_Actions.triggerButton },
+			// { stanleyActionsInstance.LookRight, SteamVR_Actions.triggerButton },
+			{ stanleyActionsInstance.Up, SteamVR_Actions.menu_MenuUp },
+			{ stanleyActionsInstance.Down, SteamVR_Actions.menu_MenuDown },
+			{ stanleyActionsInstance.Left, SteamVR_Actions.menu_MenuLeft },
+			{ stanleyActionsInstance.Right, SteamVR_Actions.menu_MenuRight },
+			{ stanleyActionsInstance.Crouch, SteamVR_Actions.non_dominant_hand_Crouch },
+			{ stanleyActionsInstance.Use, SteamVR_Actions.dominant_hand_Interact },
+			{ stanleyActionsInstance.Jump, SteamVR_Actions.rotation_hand_Jump },
+			{ stanleyActionsInstance.Start, SteamVR_Actions.non_dominant_hand_Menu },
+			{ stanleyActionsInstance.MenuTabLeft, SteamVR_Actions.menu_MenuTabLeft },
+			{ stanleyActionsInstance.MenuTabRight, SteamVR_Actions.menu_MenuTabRight },
+			{ stanleyActionsInstance.MenuConfirm, SteamVR_Actions.dominant_hand_Interact },
+			{ stanleyActionsInstance.MenuBack, SteamVR_Actions.non_dominant_hand_Menu },
+			{ stanleyActionsInstance.MenuOpen, SteamVR_Actions.non_dominant_hand_Menu },
+			// { stanleyActionsInstance.FastForward, SteamVR_Actions.primaryButton },
+			// { stanleyActionsInstance.SlowDown, SteamVR_Actions.triggerButton },
+		};
+		vector2InputMap = new Dictionary<IInputControl, SteamVR_Action_Vector2>()
+		{
+			{ stanleyActionsInstance.View, SteamVR_Actions.rotation_hand_Rotate },
+			{ stanleyActionsInstance.Movement, SteamVR_Actions.movement_hand_Move },
 		};
 	}
 	
@@ -458,34 +464,11 @@ public static class Patches
 	[HarmonyPatch(typeof(TwoAxisInputControl), nameof(TwoAxisInputControl.UpdateWithAxes))]
 	private static void ReadXrTwoAxisInput(TwoAxisInputControl __instance, ref float x, ref float y)
 	{
-		XRNode hand;
-		InputFeatureUsage<Vector2> featureUsage;
-		if (__instance == stanleyActionsInstance.View)
-		{
-			hand = XRNode.RightHand;
-			featureUsage = CommonUsages.primary2DAxis;
-		}
-		else if (__instance == stanleyActionsInstance.Movement)
-		{
-			hand = XRNode.LeftHand;
-			featureUsage = CommonUsages.primary2DAxis;
-		}
-		else
-		{
-			return;
-		}
-		
-		var devices = new List<InputDevice>();
+		if (vector2InputMap == null || !vector2InputMap.ContainsKey(__instance)) return;
 
-		InputDevices.GetDevicesAtXRNode(hand, devices);
-	
-		if (devices.Count == 0) return;
-	
-		var device = devices[0];
-	
-		device.TryGetFeatureValue(featureUsage, out var axis);
-		x = axis.x;
-		y = axis.y;
+		var vrInput = vector2InputMap[__instance];
+		x = vrInput.axis.x;
+		y = vrInput.axis.y;
 	}
 
 	[HarmonyPrefix]
@@ -494,20 +477,10 @@ public static class Patches
 	{
 		if (boolInputMap == null || !boolInputMap.ContainsKey(__instance))
 		{
-			// Debug.Log($"not doing it with {__instance} {boolInputMap == null} {boolInputMap.ContainsKey(__instance)}");
 			return;
 		}
-		
-		var devices = new List<InputDevice>();
 
-		InputDevices.GetDevicesAtXRNode(XRNode.LeftHand, devices);
-		InputDevices.GetDevicesAtXRNode(XRNode.RightHand, devices);
-	
-		if (devices.Count == 0) return;
-	
-		var device = devices[0];
-	
-		device.TryGetFeatureValue(boolInputMap[__instance], out state);
+		state = boolInputMap[__instance].state;
 	}
 	
 	[HarmonyPrefix]
@@ -516,41 +489,12 @@ public static class Patches
 	[HarmonyPatch(typeof(OneAxisInputControl), nameof(OneAxisInputControl.SetValue))]
 	private static void ReadXrOneAxisInput(OneAxisInputControl __instance, ref float value)
 	{
-		// if (stanleyActionsInstance.UseAction == __instance)
-		// {
-		// 	var adevices = new List<InputDevice>();
-		//
-		// 	InputDevices.GetDevicesAtXRNode(XRNode.LeftHand, adevices);
-		// 	InputDevices.GetDevicesAtXRNode(XRNode.RightHand, adevices);
-		//
-		// 	if (adevices.Count == 0) return;
-		//
-		// 	var adevice = adevices[0];
-		//
-		// 	adevice.TryGetFeatureValue(CommonUsages.triggerButton, out var astate);
-		//
-		// 	value = astate ? 1 : 0;
-		// 	
-		// 	return;
-		// }
-		
 		if (boolInputMap == null || !boolInputMap.ContainsKey(__instance))
 		{
 			return;
 		}
 		
-		var devices = new List<InputDevice>();
-
-		InputDevices.GetDevicesAtXRNode(XRNode.LeftHand, devices);
-		InputDevices.GetDevicesAtXRNode(XRNode.RightHand, devices);
-	
-		if (devices.Count == 0) return;
-	
-		var device = devices[0];
-	
-		device.TryGetFeatureValue(boolInputMap[__instance], out var state);
-
-		value = state ? 1 : 0;
+		value = boolInputMap[__instance].state ? 1 : 0;
 	}
 
 	[HarmonyPrefix]

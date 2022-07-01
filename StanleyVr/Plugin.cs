@@ -5,6 +5,7 @@ using BepInEx;
 using HarmonyLib;
 using LIV.SDK.Unity;
 using UnityEngine;
+using Valve.VR;
 
 namespace StanleyVr;
 
@@ -17,7 +18,7 @@ public class Plugin : BaseUnityPlugin
 	private void Awake()
 	{
 		Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
-
+		
 		VrAssetManager.Initialize();
 		// LoadXRModule();
 
