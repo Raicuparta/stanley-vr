@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 using AmplifyBloom;
 using BepInEx;
 using HarmonyLib;
-using InControl;
 using LIV.SDK.Unity;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
-using UnityEngine.XR;
-using UnityEngine.XR.Management;
-using UnityEngine.XR.OpenXR;
-using Mouse = UnityEngine.InputSystem.Mouse;
 
 namespace StanleyVr;
 
@@ -44,8 +36,6 @@ public class Plugin : BaseUnityPlugin
 	private void Update()
 	{
 		Cursor.lockState = CursorLockMode.None;
-		
-
 		
 		if (Input.GetKeyDown(KeyCode.KeypadMinus))
 		{
