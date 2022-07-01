@@ -30,6 +30,14 @@
             {
                "output" : "/actions/default/in/pose",
                "path" : "/user/hand/right/pose/raw"
+            },
+            {
+               "output" : "/actions/default/in/pointer",
+               "path" : "/user/hand/left/pose/openxr_aim"
+            },
+            {
+               "output" : "/actions/default/in/pointer",
+               "path" : "/user/hand/right/pose/openxr_aim"
             }
          ],
          "skeleton" : [

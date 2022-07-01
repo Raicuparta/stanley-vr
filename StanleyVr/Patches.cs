@@ -11,6 +11,7 @@ using UnityEngine.UI;
 using UnityEngine.Video;
 using UnityEngine.XR;
 using Valve.VR;
+using Valve.VR.Extras;
 using InputDevice = UnityEngine.XR.InputDevice;
 
 namespace StanleyVr;
@@ -47,13 +48,15 @@ public static class Patches
 	[HarmonyPatch(typeof(StanleyController), nameof(StanleyController.ClickingOnThings))]
 	private static bool LaserInteraction(StanleyController __instance)
 	{
+		if (laser == null) return false;
+		
 		if (Singleton<GameMaster>.Instance.FullScreenMoviePlaying || !Singleton<GameMaster>.Instance.stanleyActions.UseAction.WasPressed)
 		{
 			return false;
 		}
 		RaycastHit hitInfo;
 		// TODO just replace __instance.camparent during this method instead of copying everything.
-		if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hitInfo, __instance.armReach, __instance.clickLayers, QueryTriggerInteraction.Ignore))
+		if (Physics.Raycast(laser.position, laser.forward, out hitInfo, __instance.armReach, __instance.clickLayers, QueryTriggerInteraction.Ignore))
 		{
 			var gameObject = hitInfo.collider.gameObject;
 			var component = gameObject.GetComponent<HammerEntity>();
@@ -130,6 +133,8 @@ public static class Patches
 		__instance.gameObject.AddComponent<VrCamera>();
 	}
 
+	private static Transform laser;
+
 	[HarmonyPostfix]
 	[HarmonyPatch(typeof(MainCamera), nameof(MainCamera.Start))]
 	private static void SetUpVrCameraMain(MainCamera __instance)
@@ -143,6 +148,9 @@ public static class Patches
 		var playerPrefab = VrAssetManager.LoadBundle("player").LoadAsset<GameObject>("StanleyVrPlayer");
 		var vrPlayerInstance = Object.Instantiate(playerPrefab, cameraParent, false);
 		vrPlayerInstance.transform.localPosition = Vector3.down;
+
+		laser = vrPlayerInstance.transform.GetComponentInChildren<SteamVR_LaserPointer>().transform;
+		
 		__instance.gameObject.AddComponent<VrCamera>();
 
 		var camera = __instance.GetComponent<Camera>();
