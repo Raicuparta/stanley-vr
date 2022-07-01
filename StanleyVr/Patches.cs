@@ -4,6 +4,7 @@ using System.Linq;
 using AmplifyBloom;
 using HarmonyLib;
 using InControl;
+using StanleyVr.VrInput.ActionInputs;
 using UnityEngine;
 using UnityEngine.SpatialTracking;
 using UnityEngine.UI;
@@ -417,16 +418,15 @@ public static class Patches
 		// return true;
 	}
 	
-	private static Dictionary<IInputControl, SteamVR_Action_Boolean> boolInputMap;
-	private static Dictionary<IInputControl, SteamVR_Action_Vector2> vector2InputMap;
-	
+	private static Dictionary<IInputControl, IActionInput> inputMap;
+
 	private static StanleyActions stanleyActionsInstance;
 	[HarmonyPostfix]
 	[HarmonyPatch(typeof(StanleyActions), MethodType.Constructor)]
 	private static void SaveStanleyActionsInstance(StanleyActions __instance)
 	{
 		stanleyActionsInstance = __instance;
-		boolInputMap = new Dictionary<IInputControl, SteamVR_Action_Boolean>()
+		inputMap = new Dictionary<IInputControl, IActionInput>()
 		{
 			// { stanleyActionsInstance.AnyButton, SteamVR_Actions.triggerButton }, // TODO any button.
 			// { stanleyActionsInstance.MoveForward, SteamVR_Actions.triggerButton },
@@ -437,26 +437,23 @@ public static class Patches
 			// { stanleyActionsInstance.LookDown, SteamVR_Actions.triggerButton },
 			// { stanleyActionsInstance.LookLeft, SteamVR_Actions.triggerButton },
 			// { stanleyActionsInstance.LookRight, SteamVR_Actions.triggerButton },
-			{ stanleyActionsInstance.Up, SteamVR_Actions.menu_MenuUp },
-			{ stanleyActionsInstance.Down, SteamVR_Actions.menu_MenuDown },
-			{ stanleyActionsInstance.Left, SteamVR_Actions.menu_MenuLeft },
-			{ stanleyActionsInstance.Right, SteamVR_Actions.menu_MenuRight },
-			{ stanleyActionsInstance.Crouch, SteamVR_Actions.non_dominant_hand_Crouch },
-			{ stanleyActionsInstance.Use, SteamVR_Actions.dominant_hand_Interact },
-			{ stanleyActionsInstance.Jump, SteamVR_Actions.rotation_hand_Jump },
-			{ stanleyActionsInstance.Start, SteamVR_Actions.non_dominant_hand_Menu },
-			{ stanleyActionsInstance.MenuTabLeft, SteamVR_Actions.menu_MenuTabLeft },
-			{ stanleyActionsInstance.MenuTabRight, SteamVR_Actions.menu_MenuTabRight },
-			{ stanleyActionsInstance.MenuConfirm, SteamVR_Actions.dominant_hand_Interact },
-			{ stanleyActionsInstance.MenuBack, SteamVR_Actions.non_dominant_hand_Menu },
-			{ stanleyActionsInstance.MenuOpen, SteamVR_Actions.non_dominant_hand_Menu },
+			{ stanleyActionsInstance.Up, ActionInputDefinitions.MenuUp },
+			{ stanleyActionsInstance.Down, ActionInputDefinitions.MenuDown },
+			{ stanleyActionsInstance.Left, ActionInputDefinitions.MenuLeft },
+			{ stanleyActionsInstance.Right, ActionInputDefinitions.MenuRight },
+			{ stanleyActionsInstance.Crouch, ActionInputDefinitions.Crouch },
+			{ stanleyActionsInstance.Use, ActionInputDefinitions.Interact },
+			{ stanleyActionsInstance.Jump, ActionInputDefinitions.Jump },
+			{ stanleyActionsInstance.Start, ActionInputDefinitions.Menu },
+			{ stanleyActionsInstance.MenuTabLeft, ActionInputDefinitions.MenuTabLeft },
+			{ stanleyActionsInstance.MenuTabRight, ActionInputDefinitions.MenuTabRight },
+			{ stanleyActionsInstance.MenuConfirm, ActionInputDefinitions.Interact },
+			{ stanleyActionsInstance.MenuBack, ActionInputDefinitions.Menu },
+			{ stanleyActionsInstance.MenuOpen, ActionInputDefinitions.Menu },
 			// { stanleyActionsInstance.FastForward, SteamVR_Actions.primaryButton },
 			// { stanleyActionsInstance.SlowDown, SteamVR_Actions.triggerButton },
-		};
-		vector2InputMap = new Dictionary<IInputControl, SteamVR_Action_Vector2>()
-		{
-			{ stanleyActionsInstance.View, SteamVR_Actions.rotation_hand_Rotate },
-			{ stanleyActionsInstance.Movement, SteamVR_Actions.movement_hand_Move },
+			{ stanleyActionsInstance.View, ActionInputDefinitions.Rotate },
+			{ stanleyActionsInstance.Movement, ActionInputDefinitions.Move },
 		};
 	}
 	
@@ -464,23 +461,23 @@ public static class Patches
 	[HarmonyPatch(typeof(TwoAxisInputControl), nameof(TwoAxisInputControl.UpdateWithAxes))]
 	private static void ReadXrTwoAxisInput(TwoAxisInputControl __instance, ref float x, ref float y)
 	{
-		if (vector2InputMap == null || !vector2InputMap.ContainsKey(__instance)) return;
+		if (inputMap == null || !inputMap.ContainsKey(__instance)) return;
 
-		var vrInput = vector2InputMap[__instance];
-		x = vrInput.axis.x;
-		y = vrInput.axis.y;
+		var vrInput = inputMap[__instance];
+		x = vrInput.Position.x;
+		y = vrInput.Position.y;
 	}
 
 	[HarmonyPrefix]
 	[HarmonyPatch(typeof(OneAxisInputControl), nameof(OneAxisInputControl.UpdateWithState))]
 	private static void ReadXrOneAxisInput(OneAxisInputControl __instance, ref bool state)
 	{
-		if (boolInputMap == null || !boolInputMap.ContainsKey(__instance))
+		if (inputMap == null || !inputMap.ContainsKey(__instance))
 		{
 			return;
 		}
 
-		state = boolInputMap[__instance].state;
+		state = inputMap[__instance].ButtonValue;
 	}
 	
 	[HarmonyPrefix]
@@ -489,12 +486,12 @@ public static class Patches
 	[HarmonyPatch(typeof(OneAxisInputControl), nameof(OneAxisInputControl.SetValue))]
 	private static void ReadXrOneAxisInput(OneAxisInputControl __instance, ref float value)
 	{
-		if (boolInputMap == null || !boolInputMap.ContainsKey(__instance))
+		if (inputMap == null || !inputMap.ContainsKey(__instance))
 		{
 			return;
 		}
 		
-		value = boolInputMap[__instance].state ? 1 : 0;
+		value = inputMap[__instance].ButtonValue ? 1 : 0;
 	}
 
 	[HarmonyPrefix]
