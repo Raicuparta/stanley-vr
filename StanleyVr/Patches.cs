@@ -138,7 +138,8 @@ public static class Patches
 		transform.localRotation = Quaternion.identity;
 		var cameraParent = transform.parent;
 
-		var vrPlayerInstance = Object.Instantiate(VrAssetManager.VrPlayerPrefab, cameraParent, false);
+		var playerPrefab = VrAssetManager.LoadBundle("player").LoadAsset<GameObject>("StanleyVrPlayer");
+		var vrPlayerInstance = Object.Instantiate(playerPrefab, cameraParent, false);
 		vrPlayerInstance.transform.localPosition = Vector3.down;
 		__instance.gameObject.AddComponent<VrCamera>();
 

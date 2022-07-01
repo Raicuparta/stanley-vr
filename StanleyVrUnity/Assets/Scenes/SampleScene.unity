@@ -225,11 +225,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: StanleyVrPlayer
       objectReference: {fileID: 0}
-    - target: {fileID: 3260746009489784898, guid: 4650ecd87f7e564429c580071ff0354d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3260746009490108474, guid: 4650ecd87f7e564429c580071ff0354d,
         type: 3}
       propertyPath: m_RootOrder
