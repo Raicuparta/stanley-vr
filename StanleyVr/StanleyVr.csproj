@@ -29,8 +29,12 @@
             <LinkBase>Assets</LinkBase>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\bindings_*.json">
+        <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\actions.json">
             <Link>Bindings\actions.json</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\bindings_*.json">
+            <LinkBase>Bindings</LinkBase>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
@@ -38,6 +42,12 @@
     <ItemGroup>
         <Reference Include="LIV">
             <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\LIV.dll</HintPath>
+        </Reference>
+        <Reference Include="SteamVR, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\SteamVR.dll</HintPath>
+        </Reference>
+        <Reference Include="SteamVR_Actions, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\SteamVR_Actions.dll</HintPath>
         </Reference>
         <Reference Include="Unity.InputSystem, Version=1.0.2.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\Unity.InputSystem.dll</HintPath>
@@ -48,26 +58,8 @@
         <Reference Include="Unity.XR.Management, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\Unity.XR.Management.dll</HintPath>
         </Reference>
-        <Reference Include="Unity.XR.OpenXR, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\Unity.XR.OpenXR.dll</HintPath>
-        </Reference>
-        <Reference Include="Unity.XR.OpenXR.Features.ConformanceAutomation, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\Unity.XR.OpenXR.Features.ConformanceAutomation.dll</HintPath>
-        </Reference>
-        <Reference Include="Unity.XR.OpenXR.Features.MockDriver, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\Unity.XR.OpenXR.Features.MockDriver.dll</HintPath>
-        </Reference>
-        <Reference Include="Unity.XR.OpenXR.Features.MockRuntime, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\Unity.XR.OpenXR.Features.MockRuntime.dll</HintPath>
-        </Reference>
-        <Reference Include="Unity.XR.OpenXR.Features.OculusQuestSupport, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\Unity.XR.OpenXR.Features.OculusQuestSupport.dll</HintPath>
-        </Reference>
-        <Reference Include="Unity.XR.OpenXR.Features.RuntimeDebugger, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\Unity.XR.OpenXR.Features.RuntimeDebugger.dll</HintPath>
-        </Reference>
-        <Reference Include="Unity.XR.OpenXR.TestHelpers, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\Unity.XR.OpenXR.TestHelpers.dll</HintPath>
+        <Reference Include="Unity.XR.OpenVR, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\Unity.XR.OpenVR.dll</HintPath>
         </Reference>
     </ItemGroup>
 </Project>

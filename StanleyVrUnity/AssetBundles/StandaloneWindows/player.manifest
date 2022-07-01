@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 687387627
+CRC: 4165923442
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 8bba73058177406397f392e02ac1b032
+    Hash: 3f39637e9a49e1ea84d709585191c718
   TypeTreeHash:
     serializedVersion: 2
     Hash: c933009b7622caa232da828b84af1bbc
@@ -33,5 +33,5 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
-- Assets/StanleyVrPlayer.prefab
+- Assets/StanleyVrPlayerStatic.prefab
 Dependencies: []
