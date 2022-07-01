@@ -515,23 +515,23 @@ public static class Patches
 	[HarmonyPatch(typeof(OneAxisInputControl), nameof(OneAxisInputControl.SetValue))]
 	private static void ReadXrOneAxisInput(OneAxisInputControl __instance, ref float value)
 	{
-		if (stanleyActionsInstance.UseAction == __instance)
-		{
-			var adevices = new List<InputDevice>();
-
-			InputDevices.GetDevicesAtXRNode(XRNode.LeftHand, adevices);
-			InputDevices.GetDevicesAtXRNode(XRNode.RightHand, adevices);
-		
-			if (adevices.Count == 0) return;
-		
-			var adevice = adevices[0];
-		
-			adevice.TryGetFeatureValue(CommonUsages.triggerButton, out var astate);
-
-			value = astate ? 1 : 0;
-			
-			return;
-		}
+		// if (stanleyActionsInstance.UseAction == __instance)
+		// {
+		// 	var adevices = new List<InputDevice>();
+		//
+		// 	InputDevices.GetDevicesAtXRNode(XRNode.LeftHand, adevices);
+		// 	InputDevices.GetDevicesAtXRNode(XRNode.RightHand, adevices);
+		//
+		// 	if (adevices.Count == 0) return;
+		//
+		// 	var adevice = adevices[0];
+		//
+		// 	adevice.TryGetFeatureValue(CommonUsages.triggerButton, out var astate);
+		//
+		// 	value = astate ? 1 : 0;
+		// 	
+		// 	return;
+		// }
 		
 		if (boolInputMap == null || !boolInputMap.ContainsKey(__instance))
 		{
@@ -550,5 +550,28 @@ public static class Patches
 		device.TryGetFeatureValue(boolInputMap[__instance], out var state);
 
 		value = state ? 1 : 0;
+	}
+
+	[HarmonyPrefix]
+	[HarmonyPatch(typeof(StanleyActions), nameof(StanleyActions.UseAction), MethodType.Getter)]
+	private static bool ForceUseActionToUse(ref PlayerAction __result, StanleyActions __instance)
+	{
+		__result = __instance.Use;
+		return false;
+	}
+
+	[HarmonyPrefix]
+	[HarmonyPatch(typeof(StanleyActions), nameof(StanleyActions.JumpAction), MethodType.Getter)]
+	private static bool ForceJumpActionToJump(ref PlayerAction __result, StanleyActions __instance)
+	{
+		__result = __instance.Jump;
+		return false;
+	}
+
+	[HarmonyPrefix]
+	[HarmonyPatch(typeof(GameMaster), nameof(GameMaster.RegisterInputDeviceTypeChange))]
+	private static void ForceRegisterInputDevice(ref GameMaster.InputDevice newDeviceType)
+	{
+		newDeviceType = GameMaster.InputDevice.GamepadXBOXOneOrGeneric;
 	}
 }
