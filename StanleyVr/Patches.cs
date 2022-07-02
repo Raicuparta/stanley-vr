@@ -4,6 +4,7 @@ using System.Linq;
 using AmplifyBloom;
 using HarmonyLib;
 using InControl;
+using StanleyVr.VrInput;
 using StanleyVr.VrInput.ActionInputs;
 using UnityEngine;
 using UnityEngine.SpatialTracking;
@@ -426,7 +427,7 @@ public static class Patches
 		// return true;
 	}
 	
-	private static Dictionary<IInputControl, IActionInput> inputMap;
+	private static Dictionary<string, IActionInput> inputMap;
 
 	private static StanleyActions stanleyActionsInstance;
 	[HarmonyPostfix]
@@ -434,44 +435,57 @@ public static class Patches
 	private static void SaveStanleyActionsInstance(StanleyActions __instance)
 	{
 		stanleyActionsInstance = __instance;
-		inputMap = new Dictionary<IInputControl, IActionInput>()
+		inputMap = new Dictionary<string, IActionInput>()
 		{
-			// { stanleyActionsInstance.AnyButton, SteamVR_Actions.triggerButton }, // TODO any button.
-			// { stanleyActionsInstance.MoveForward, SteamVR_Actions.triggerButton },
-			// { stanleyActionsInstance.MoveBackward, SteamVR_Actions.triggerButton },
-			// { stanleyActionsInstance.MoveLeft, SteamVR_Actions.triggerButton },
-			// { stanleyActionsInstance.MoveRight, SteamVR_Actions.triggerButton },
-			// { stanleyActionsInstance.LookUp, SteamVR_Actions.triggerButton },
-			// { stanleyActionsInstance.LookDown, SteamVR_Actions.triggerButton },
-			// { stanleyActionsInstance.LookLeft, SteamVR_Actions.triggerButton },
-			// { stanleyActionsInstance.LookRight, SteamVR_Actions.triggerButton },
-			{ stanleyActionsInstance.Up, ActionInputDefinitions.MenuUp },
-			{ stanleyActionsInstance.Down, ActionInputDefinitions.MenuDown },
-			{ stanleyActionsInstance.Left, ActionInputDefinitions.MenuLeft },
-			{ stanleyActionsInstance.Right, ActionInputDefinitions.MenuRight },
-			{ stanleyActionsInstance.Crouch, ActionInputDefinitions.Crouch },
-			{ stanleyActionsInstance.Use, ActionInputDefinitions.Interact },
-			{ stanleyActionsInstance.Jump, ActionInputDefinitions.Jump },
-			{ stanleyActionsInstance.Start, ActionInputDefinitions.Menu },
-			{ stanleyActionsInstance.MenuTabLeft, ActionInputDefinitions.MenuTabLeft },
-			{ stanleyActionsInstance.MenuTabRight, ActionInputDefinitions.MenuTabRight },
-			{ stanleyActionsInstance.MenuConfirm, ActionInputDefinitions.Interact },
-			{ stanleyActionsInstance.MenuBack, ActionInputDefinitions.Menu },
-			{ stanleyActionsInstance.MenuOpen, ActionInputDefinitions.Menu },
-			// { stanleyActionsInstance.FastForward, SteamVR_Actions.primaryButton },
-			// { stanleyActionsInstance.SlowDown, SteamVR_Actions.triggerButton },
-			{ stanleyActionsInstance.View, ActionInputDefinitions.Rotate },
-			{ stanleyActionsInstance.Movement, ActionInputDefinitions.Move },
+			// { ActionNames.AnyButton, SteamVR_Actions.triggerButton }, // TODO any button.
+			// { ActionNames.MoveForward, SteamVR_Actions.triggerButton },
+			// { ActionNames.MoveBackward, SteamVR_Actions.triggerButton },
+			// { ActionNames.MoveLeft, SteamVR_Actions.triggerButton },
+			// { ActionNames.MoveRight, SteamVR_Actions.triggerButton },
+			// { ActionNames.LookUp, SteamVR_Actions.triggerButton },
+			// { ActionNames.LookDown, SteamVR_Actions.triggerButton },
+			// { ActionNames.LookLeft, SteamVR_Actions.triggerButton },
+			// { ActionNames.LookRight, SteamVR_Actions.triggerButton },
+			{ ActionNames.Up, ActionInputDefinitions.MenuUp },
+			{ ActionNames.Down, ActionInputDefinitions.MenuDown },
+			{ ActionNames.Left, ActionInputDefinitions.MenuLeft },
+			{ ActionNames.Right, ActionInputDefinitions.MenuRight },
+			{ ActionNames.Crouch, ActionInputDefinitions.Crouch },
+			{ ActionNames.Use, ActionInputDefinitions.Interact },
+			{ ActionNames.Jump, ActionInputDefinitions.Jump },
+			{ ActionNames.Start, ActionInputDefinitions.Menu },
+			{ ActionNames.MenuTabLeft, ActionInputDefinitions.MenuTabLeft },
+			{ ActionNames.MenuTabRight, ActionInputDefinitions.MenuTabRight },
+			{ ActionNames.MenuConfirm, ActionInputDefinitions.Interact },
+			{ ActionNames.AnyButton, ActionInputDefinitions.Interact },
+			{ ActionNames.MenuBack, ActionInputDefinitions.Menu },
+			{ ActionNames.MenuOpen, ActionInputDefinitions.Menu },
+			// { ActionNames.FastForward, SteamVR_Actions.primaryButton },
+			// { ActionNames.SlowDown, SteamVR_Actions.triggerButton },
+			{ ActionNames.Movement, ActionInputDefinitions.Move },
+			{ ActionNames.View, ActionInputDefinitions.Rotate },
 		};
+
+		var inputModule = Object.FindObjectOfType<InControlInputModule>();
+		inputModule.SubmitAction = stanleyActionsInstance.UseAction;
+		inputModule.CancelAction = stanleyActionsInstance.MenuBack;
+		inputModule.direction = stanleyActionsInstance.Movement;
 	}
 	
 	[HarmonyPrefix]
 	[HarmonyPatch(typeof(TwoAxisInputControl), nameof(TwoAxisInputControl.UpdateWithAxes))]
 	private static void ReadXrTwoAxisInput(TwoAxisInputControl __instance, ref float x, ref float y)
 	{
-		if (inputMap == null || !inputMap.ContainsKey(__instance)) return;
+		if (inputMap == null) return;
 
-		var vrInput = inputMap[__instance];
+		string actionName;
+
+		// Two axis actions don't have names in the game code, so we assign them manually.
+		if (__instance == stanleyActionsInstance.View) actionName = ActionNames.View;
+		else if (__instance == stanleyActionsInstance.Movement) actionName = ActionNames.Movement;
+		else return;
+		
+		var vrInput = inputMap[actionName];
 		x = vrInput.Position.x;
 		y = vrInput.Position.y;
 	}
@@ -480,12 +494,16 @@ public static class Patches
 	[HarmonyPatch(typeof(OneAxisInputControl), nameof(OneAxisInputControl.UpdateWithState))]
 	private static void ReadXrOneAxisInput(OneAxisInputControl __instance, ref bool state)
 	{
-		if (inputMap == null || !inputMap.ContainsKey(__instance))
+		if (__instance is not PlayerAction action) return;
+		
+		var actionName = action.Name;
+
+		if (inputMap == null || !inputMap.ContainsKey(actionName))
 		{
 			return;
 		}
 
-		state = inputMap[__instance].ButtonValue;
+		state = inputMap[actionName].ButtonValue;
 	}
 	
 	[HarmonyPrefix]
@@ -494,12 +512,16 @@ public static class Patches
 	[HarmonyPatch(typeof(OneAxisInputControl), nameof(OneAxisInputControl.SetValue))]
 	private static void ReadXrOneAxisInput(OneAxisInputControl __instance, ref float value)
 	{
-		if (inputMap == null || !inputMap.ContainsKey(__instance))
+		if (__instance is not PlayerAction action) return;
+
+		var actionName = action.Name;
+		
+		if (inputMap == null || !inputMap.ContainsKey(actionName))
 		{
 			return;
 		}
 		
-		value = inputMap[__instance].ButtonValue ? 1 : 0;
+		value = inputMap[actionName].ButtonValue ? 1 : 0;
 	}
 
 	[HarmonyPrefix]

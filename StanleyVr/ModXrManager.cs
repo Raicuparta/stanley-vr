@@ -19,11 +19,7 @@ public class ModXrManager : MonoBehaviour
 
 		foreach (var actionSet in SteamVR_Input.actionSets)
 		{
-			if (actionSet != SteamVR_Actions.menu) actionSet.Activate();
-			else
-			{
-				actionSet.Deactivate();
-			}
+			actionSet.Activate();
 		}
 		
 		if (XRGeneralSettings.Instance != null && XRGeneralSettings.Instance.Manager != null
