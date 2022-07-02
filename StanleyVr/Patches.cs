@@ -416,15 +416,14 @@ public static class Patches
 	[HarmonyPatch(typeof(VideoPlayer), nameof(VideoPlayer.Play))]
 	private static void FixVideoPlayer(VideoPlayer __instance)
 	{
-		Debug.Log($"######## found video player {__instance.name}");
 		var camera = __instance.GetComponent<Camera>();
+		camera.enabled = false;
+		Object.Destroy(camera);
 
-		if (!camera) return;
-
-		// camera.targetTexture = VrUi.Instance.GetComponentInChildren<Camera>().targetTexture;
-
-		// Debug.Log($"### ReadRawAnalogValue axisName {axisName}");
-		// return true;
+		__instance.targetCamera = VrCamera.GetUiCamera();
+		__instance.targetCamera.clearFlags = CameraClearFlags.Color;
+		__instance.targetCamera.backgroundColor = Color.black;
+		__instance.gameObject.layer = LayerMask.NameToLayer("Bucket"); // TODO organize layers.
 	}
 	
 	private static Dictionary<string, IActionInput> inputMap;
@@ -458,7 +457,7 @@ public static class Patches
 		var inputModule = Object.FindObjectOfType<InControlInputModule>();
 		inputModule.SubmitAction = stanleyActionsInstance.UseAction;
 		inputModule.CancelAction = stanleyActionsInstance.MenuBack;
-		inputModule.direction = stanleyActionsInstance.Movement;
+		inputModule.direction = stanleyActionsInstance.Movement; // TODO make a new action for this.
 	}
 	
 	[HarmonyPrefix]

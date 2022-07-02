@@ -47,6 +47,11 @@ public class Plugin : BaseUnityPlugin
 			Camera.main.transform.parent.localScale *= 0.9f;
 		}
 
+		if (Input.GetKeyDown((KeyCode.Equals)))
+		{
+			Time.timeScale = Time.timeScale == 0 ? 1 : 0;
+		}
+
 		if (Input.GetKeyDown(KeyCode.F9))
 		{
 			DisableAll<MobileBlur>();
@@ -57,6 +62,7 @@ public class Plugin : BaseUnityPlugin
 
 		if (Input.GetKeyDown(KeyCode.F1))
 		{
+			FindObjectOfType<MainMenu>().ExitMenu();
 			FindObjectOfType<MainMenu>().BeginTheGame();
 		}
 
