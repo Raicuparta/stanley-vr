@@ -437,15 +437,6 @@ public static class Patches
 		stanleyActionsInstance = __instance;
 		inputMap = new Dictionary<string, IActionInput>()
 		{
-			// { ActionNames.AnyButton, SteamVR_Actions.triggerButton }, // TODO any button.
-			// { ActionNames.MoveForward, SteamVR_Actions.triggerButton },
-			// { ActionNames.MoveBackward, SteamVR_Actions.triggerButton },
-			// { ActionNames.MoveLeft, SteamVR_Actions.triggerButton },
-			// { ActionNames.MoveRight, SteamVR_Actions.triggerButton },
-			// { ActionNames.LookUp, SteamVR_Actions.triggerButton },
-			// { ActionNames.LookDown, SteamVR_Actions.triggerButton },
-			// { ActionNames.LookLeft, SteamVR_Actions.triggerButton },
-			// { ActionNames.LookRight, SteamVR_Actions.triggerButton },
 			{ ActionNames.Up, ActionInputDefinitions.MenuUp },
 			{ ActionNames.Down, ActionInputDefinitions.MenuDown },
 			{ ActionNames.Left, ActionInputDefinitions.MenuLeft },
@@ -460,8 +451,6 @@ public static class Patches
 			{ ActionNames.AnyButton, ActionInputDefinitions.Interact },
 			{ ActionNames.MenuBack, ActionInputDefinitions.Menu },
 			{ ActionNames.MenuOpen, ActionInputDefinitions.Menu },
-			// { ActionNames.FastForward, SteamVR_Actions.primaryButton },
-			// { ActionNames.SlowDown, SteamVR_Actions.triggerButton },
 			{ ActionNames.Movement, ActionInputDefinitions.Move },
 			{ ActionNames.View, ActionInputDefinitions.Rotate },
 		};
@@ -492,7 +481,7 @@ public static class Patches
 
 	[HarmonyPrefix]
 	[HarmonyPatch(typeof(OneAxisInputControl), nameof(OneAxisInputControl.UpdateWithState))]
-	private static void ReadXrOneAxisInput(OneAxisInputControl __instance, ref bool state)
+	private static void ReadXrOneAxisInputState(OneAxisInputControl __instance, ref bool state)
 	{
 		if (__instance is not PlayerAction action) return;
 		
@@ -510,7 +499,7 @@ public static class Patches
 	[HarmonyPatch(typeof(OneAxisInputControl), nameof(OneAxisInputControl.UpdateWithValue))]
 	[HarmonyPatch(typeof(OneAxisInputControl), nameof(OneAxisInputControl.UpdateWithRawValue))]
 	[HarmonyPatch(typeof(OneAxisInputControl), nameof(OneAxisInputControl.SetValue))]
-	private static void ReadXrOneAxisInput(OneAxisInputControl __instance, ref float value)
+	private static void ReadXrOneAxisInputValue(OneAxisInputControl __instance, ref float value)
 	{
 		if (__instance is not PlayerAction action) return;
 
