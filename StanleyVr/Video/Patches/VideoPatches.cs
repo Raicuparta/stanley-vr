@@ -13,12 +13,10 @@ public static class VideoPatches
 	[HarmonyPatch(typeof(VideoPlayer), nameof(VideoPlayer.Play))]
 	private static void FixVideoPlayer(VideoPlayer __instance)
 	{
-		// For some reason everything is broken if I try to show video in the UI Camera.
-		// So I'm using the Bucket camera for now.
-		// But for whatever other reason, if I render video while the UI camera is enabled, the video is upside down??
-		VrUiManager.Instance.UiCamera.enabled = false;
 
 		// The camera that comes with the video player acts weird so I'm just using the UI camera instead.
+		// For some reason everything is broken if I try to show video in the UI Camera.
+		// So I'm using the Bucket camera for now.
 		__instance.targetCamera = VrCameraController.GetBucketCamera();
 		
 		// Bucket camera has no clear flags by default, so we need to change that temporarily.
@@ -38,6 +36,5 @@ public static class VideoPatches
 	private static void ResetUiCameraClearFlags()
 	{
 		VrCameraController.GetBucketCamera().clearFlags = CameraClearFlags.Nothing;
-		VrUiManager.Instance.UiCamera.enabled = true;
 	}
 }
