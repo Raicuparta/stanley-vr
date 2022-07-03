@@ -42,6 +42,8 @@ public class VrCameraController: MonoBehaviour
 			bucketCamera = camera;
 			// bucketCamera.cullingMask |= 1 << LayerMask.NameToLayer("UI");
 		}
+		
+		Recenter();
 	}
 
 	public static Camera GetBucketCamera()

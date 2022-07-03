@@ -12,9 +12,6 @@ public static class CameraPatches
 	private static void SetUpVrCameraMain(MainCamera __instance)
 	{
 		__instance.gameObject.AddComponent<StereoPortalRenderer>();
-		var transform = __instance.transform;
-		transform.localPosition = Vector3.down;
-		transform.localRotation = Quaternion.identity;
 		
 		__instance.gameObject.AddComponent<VrCameraController>();
 
