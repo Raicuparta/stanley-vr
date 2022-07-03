@@ -11,10 +11,7 @@ public static class ActionMap
     {
 	    InputMap = new Dictionary<string, IActionInput>
 	    {
-		    {ActionNames.Up, ActionInputDefinitions.MenuUp},
-		    {ActionNames.Down, ActionInputDefinitions.MenuDown},
-		    {ActionNames.Left, ActionInputDefinitions.MenuLeft},
-		    {ActionNames.Right, ActionInputDefinitions.MenuRight},
+		    {ActionNames.MenuInteract, ActionInputDefinitions.MenuInteract},
 		    {ActionNames.Crouch, ActionInputDefinitions.Crouch},
 		    {ActionNames.Use, ActionInputDefinitions.Interact},
 		    {ActionNames.Jump, ActionInputDefinitions.Jump},
@@ -25,8 +22,6 @@ public static class ActionMap
 		    {ActionNames.AnyButton, ActionInputDefinitions.Interact},
 		    {ActionNames.MenuBack, ActionInputDefinitions.Menu},
 		    {ActionNames.MenuOpen, ActionInputDefinitions.Menu},
-		    {ActionNames.Movement, ActionInputDefinitions.Move},
-		    {ActionNames.View, ActionInputDefinitions.Rotate},
 	    };
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using HarmonyLib;
 using InControl;
+using StanleyVr.VrInput.ActionInputs;
 using Valve.VR;
 using Object = UnityEngine.Object;
 
@@ -9,30 +10,36 @@ namespace StanleyVr.VrInput.Patches;
 [HarmonyPatch]
 public static class InputPatches
 {
+	private static InControlInputModule inputModule;
+	
 	[HarmonyPostfix]
 	[HarmonyPatch(typeof(StanleyActions), MethodType.Constructor)]
 	private static void SetUpMenuInputs(StanleyActions __instance)
 	{
-		var inputModule = Object.FindObjectOfType<InControlInputModule>();
-		inputModule.SubmitAction = __instance.UseAction; // TODO make a new action for this.
+		inputModule = Object.FindObjectOfType<InControlInputModule>();
+		inputModule.SubmitAction = __instance.CreatePlayerAction(ActionNames.MenuInteract); // TODO make a new action for this.
 		inputModule.CancelAction = __instance.MenuBack;
-		inputModule.direction = __instance.Movement; // TODO make a new action for this.
+		inputModule.direction = __instance.CreateTwoAxisPlayerAction(
+			__instance.MoveLeft,
+			__instance.MoveRight,
+			__instance.MoveBackward,
+			__instance.MoveForward);
 	}
 	
 	[HarmonyPrefix]
 	[HarmonyPatch(typeof(TwoAxisInputControl), nameof(TwoAxisInputControl.UpdateWithAxes))]
 	private static void ReadVrTwoAxisInput(TwoAxisInputControl __instance, ref float x, ref float y)
 	{
-		string actionName;
+		IActionInput actionInput;
 
 		// Two axis actions don't have names in the game code, so we assign them manually.
-		if (__instance == GameMaster.Instance.stanleyActions.View) actionName = ActionNames.View;
-		else if (__instance == GameMaster.Instance.stanleyActions.Movement) actionName = ActionNames.Movement;
+		if (__instance == GameMaster.Instance.stanleyActions.View) actionInput = ActionInputDefinitions.Rotate;
+		else if (__instance == GameMaster.Instance.stanleyActions.Movement) actionInput = ActionInputDefinitions.Move;
+		else if (__instance == inputModule.direction) actionInput = ActionInputDefinitions.MenuDirection;
 		else return;
-		
-		var vrInput = ActionMap.InputMap[actionName];
-		x = vrInput.Position.x;
-		y = vrInput.Position.y;
+
+		x = actionInput.Position.x;
+		y = actionInput.Position.y;
 	}
 
 	private static string GetActionName(OneAxisInputControl inputControl)

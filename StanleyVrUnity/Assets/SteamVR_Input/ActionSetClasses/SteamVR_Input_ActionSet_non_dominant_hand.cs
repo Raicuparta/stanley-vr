@@ -32,5 +32,13 @@ namespace Valve.VR
                 return SteamVR_Actions.non_dominant_hand_Menu;
             }
         }
+        
+        public virtual SteamVR_Action_Vector2 MenuDirection
+        {
+            get
+            {
+                return SteamVR_Actions.non_dominant_hand_MenuDirection;
+            }
+        }
     }
 }
