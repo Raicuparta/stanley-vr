@@ -96,4 +96,12 @@ public static class CameraPatches
 		}
 		return false;
 	}
+
+	[HarmonyPrefix]
+	[HarmonyPatch(typeof(SetFOVBasedOnAspectRatio), nameof(SetFOVBasedOnAspectRatio.LateUpdate))]
+	private static bool PreventChangingFov(SetFOVBasedOnAspectRatio __instance)
+	{
+		Object.Destroy(__instance);
+		return false;
+	}
 }
