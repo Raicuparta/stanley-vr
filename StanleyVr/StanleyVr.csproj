@@ -62,4 +62,8 @@
           <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\Unity.XR.OpenVR.dll</HintPath>
         </Reference>
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Video" />
+    </ItemGroup>
 </Project>
