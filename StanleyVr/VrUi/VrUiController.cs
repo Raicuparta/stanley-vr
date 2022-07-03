@@ -16,7 +16,7 @@ public class VrUiController : MonoBehaviour
 
 	private void Start()
 	{
-		canvas.planeDistance = 0.2f;
+		canvas.planeDistance = 1f;
 		canvas.scaleFactor = 1.3f;
 		gameObject.layer = LayerMask.NameToLayer("UI");
 		Debug.Log($"Canvas parent is {(canvas.transform.parent ? canvas.transform.parent.name : "NONE")}");
@@ -26,7 +26,8 @@ public class VrUiController : MonoBehaviour
 
 	private void Update()
 	{
-		canvas.worldCamera = VrCameraController.GetUiCamera();
+		if (!VrUiManager.Instance) return;
+		canvas.worldCamera = VrUiManager.Instance.UiCamera;
 		canvas.renderMode = RenderMode.ScreenSpaceCamera;
 	}
 

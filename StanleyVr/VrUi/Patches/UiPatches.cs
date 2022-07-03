@@ -57,4 +57,11 @@ public static class UiPatches
 		// The MainMenu behaviour changes the canvas rendermode to overlay, so I need ot change it to camera here too.
 		__instance.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
 	}
+
+	[HarmonyPostfix]
+	[HarmonyPatch(typeof(GameMaster), nameof(GameMaster.Awake))]
+	private static void CreateUiManager(GameMaster __instance)
+	{
+		VrUiManager.Create(__instance);
+	}
 }
