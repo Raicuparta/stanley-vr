@@ -37,6 +37,10 @@
       "type": "pose"
     },
     {
+      "name": "/actions/default/in/Recenter",
+      "type": "boolean"
+    },
+    {
       "name": "/actions/default/out/Haptic",
       "type": "vibration"
     },
