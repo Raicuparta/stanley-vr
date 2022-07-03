@@ -417,9 +417,9 @@ public static class Patches
 	private static void FixVideoPlayer(VideoPlayer __instance)
 	{
 		var camera = __instance.GetComponent<Camera>();
-		camera.enabled = false;
-		Object.Destroy(camera);
-
+		var forceDisable = __instance.gameObject.AddComponent<ForceDisableBehaviour>();
+		forceDisable.behaviour = camera;
+		
 		__instance.targetCamera = VrCamera.GetUiCamera();
 		__instance.targetCamera.clearFlags = CameraClearFlags.Color;
 		__instance.targetCamera.backgroundColor = Color.black;
@@ -492,6 +492,13 @@ public static class Patches
 		}
 
 		state = inputMap[actionName].ButtonValue;
+	}
+
+	[HarmonyPostfix]
+	[HarmonyPatch(typeof(GameMaster.MoviePlaybackContext), nameof(GameMaster.MoviePlaybackContext.StopMovie))]
+	private static void ResetUiCameraClearFlags()
+	{
+		VrCamera.GetUiCamera().clearFlags = CameraClearFlags.Nothing;
 	}
 	
 	[HarmonyPrefix]

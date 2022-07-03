@@ -14,6 +14,8 @@ public class VrCamera: MonoBehaviour
 		trackedPoseDriver.UseRelativeTransform = true;
 		transform.localScale = Vector3.one * 0.5f;
 
+		trackedPoseDriver.trackingType = GetComponent<MainCamera>() ? TrackedPoseDriver.TrackingType.RotationAndPosition : TrackedPoseDriver.TrackingType.RotationOnly;
+
 		if (name == bucketCameraName)
 		{
 			bucketCamera = GetComponent<Camera>();
