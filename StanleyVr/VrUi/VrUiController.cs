@@ -19,7 +19,6 @@ public class VrUiController : MonoBehaviour
 		canvas.planeDistance = 1f;
 		canvas.scaleFactor = 1.3f;
 		gameObject.layer = LayerMask.NameToLayer("UI");
-		Debug.Log($"Canvas parent is {(canvas.transform.parent ? canvas.transform.parent.name : "NONE")}");
 		
 		SetUpScale();
 	}
