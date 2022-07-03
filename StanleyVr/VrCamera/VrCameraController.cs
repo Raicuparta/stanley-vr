@@ -31,7 +31,7 @@ public class VrCameraController: MonoBehaviour
 		var blur = GetComponent<Blur>();
 		if (blur)
 		{
-			blur.enabled = false;
+			Destroy(blur);
 		}
 		
 		if (name == bucketCameraName)
