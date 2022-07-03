@@ -26,8 +26,19 @@ public static class UiPatches
 		};
 	
 		Debug.Log($"Found CanvasScaler {__instance.name}");
+
+		var parent = canvas.transform.parent;
+		var aspectRationScaler = parent ? parent.GetComponent<AspectRatioScaler>() : null;
+		if (aspectRationScaler)
+		{
+			aspectRationScaler.enabled = false;
+			aspectRationScaler.transform.localScale = Vector3.one * 0.25f;
+		}
+		else
+		{
+			VrUiController.Create(canvas);
+		}
 		
-		VrUiController.Create(canvas);
 	}
 
 	[HarmonyPrefix]
