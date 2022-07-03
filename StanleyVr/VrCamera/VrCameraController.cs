@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using StanleyVr.VrInput.ActionInputs;
+using UnityEngine;
 using UnityEngine.SpatialTracking;
 using UnityEngine.XR;
 using UnityStandardAssets.ImageEffects;
@@ -58,7 +59,8 @@ public class VrCameraController: MonoBehaviour
 
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.F3))
+		// TODO cleanup repeated code between here and VrPlayerController.
+		if (ActionInputDefinitions.Recenter.ButtonDown)
 		{
 			Recenter();
 		}

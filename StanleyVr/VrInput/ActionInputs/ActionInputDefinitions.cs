@@ -29,4 +29,6 @@ public static class ActionInputDefinitions
     public static readonly BooleanActionInput Jump = new(rotation_hand.Jump);
     
     public static readonly BooleanActionInput Crouch = new(non_dominant_hand.Crouch);
+    
+    public static readonly BooleanActionInput Recenter = new(_default.Recenter);
 }

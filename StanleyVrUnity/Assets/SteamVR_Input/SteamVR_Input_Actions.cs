@@ -33,6 +33,8 @@ namespace Valve.VR
         
         private static SteamVR_Action_Pose p_default_Pointer;
         
+        private static SteamVR_Action_Boolean p_default_Recenter;
+        
         private static SteamVR_Action_Vibration p_default_Haptic;
         
         private static SteamVR_Action_Boolean p_dominant_hand_Interact;
@@ -122,6 +124,14 @@ namespace Valve.VR
             get
             {
                 return SteamVR_Actions.p_default_Pointer.GetCopy<SteamVR_Action_Pose>();
+            }
+        }
+        
+        public static SteamVR_Action_Boolean default_Recenter
+        {
+            get
+            {
+                return SteamVR_Actions.p_default_Recenter.GetCopy<SteamVR_Action_Boolean>();
             }
         }
         
@@ -248,6 +258,7 @@ namespace Valve.VR
                     SteamVR_Actions.default_Squeeze,
                     SteamVR_Actions.default_HeadsetOnHead,
                     SteamVR_Actions.default_Pointer,
+                    SteamVR_Actions.default_Recenter,
                     SteamVR_Actions.default_Haptic,
                     SteamVR_Actions.dominant_hand_Interact,
                     SteamVR_Actions.dominant_hand_MenuTabRight,
@@ -271,6 +282,7 @@ namespace Valve.VR
                     SteamVR_Actions.default_Squeeze,
                     SteamVR_Actions.default_HeadsetOnHead,
                     SteamVR_Actions.default_Pointer,
+                    SteamVR_Actions.default_Recenter,
                     SteamVR_Actions.dominant_hand_Interact,
                     SteamVR_Actions.dominant_hand_MenuTabRight,
                     SteamVR_Actions.dominant_hand_MenuTabLeft,
@@ -295,6 +307,7 @@ namespace Valve.VR
                     SteamVR_Actions.default_GrabPinch,
                     SteamVR_Actions.default_GrabGrip,
                     SteamVR_Actions.default_HeadsetOnHead,
+                    SteamVR_Actions.default_Recenter,
                     SteamVR_Actions.dominant_hand_Interact,
                     SteamVR_Actions.dominant_hand_MenuTabRight,
                     SteamVR_Actions.dominant_hand_MenuTabLeft,
@@ -320,6 +333,7 @@ namespace Valve.VR
                     SteamVR_Actions.default_GrabGrip,
                     SteamVR_Actions.default_Squeeze,
                     SteamVR_Actions.default_HeadsetOnHead,
+                    SteamVR_Actions.default_Recenter,
                     SteamVR_Actions.dominant_hand_Interact,
                     SteamVR_Actions.dominant_hand_MenuTabRight,
                     SteamVR_Actions.dominant_hand_MenuTabLeft,
@@ -345,6 +359,7 @@ namespace Valve.VR
             SteamVR_Actions.p_default_Squeeze = ((SteamVR_Action_Single)(SteamVR_Action.Create<SteamVR_Action_Single>("/actions/default/in/Squeeze")));
             SteamVR_Actions.p_default_HeadsetOnHead = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/HeadsetOnHead")));
             SteamVR_Actions.p_default_Pointer = ((SteamVR_Action_Pose)(SteamVR_Action.Create<SteamVR_Action_Pose>("/actions/default/in/Pointer")));
+            SteamVR_Actions.p_default_Recenter = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/Recenter")));
             SteamVR_Actions.p_default_Haptic = ((SteamVR_Action_Vibration)(SteamVR_Action.Create<SteamVR_Action_Vibration>("/actions/default/out/Haptic")));
             SteamVR_Actions.p_dominant_hand_Interact = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/dominant_hand/in/Interact")));
             SteamVR_Actions.p_dominant_hand_MenuTabRight = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/dominant_hand/in/MenuTabRight")));

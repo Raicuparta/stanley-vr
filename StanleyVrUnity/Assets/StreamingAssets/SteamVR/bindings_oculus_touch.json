@@ -121,6 +121,24 @@
                },
                "mode" : "trigger",
                "path" : "/user/hand/right/input/grip"
+            },
+            {
+               "inputs" : {
+                  "long" : {
+                     "output" : "/actions/default/in/recenter"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/left/input/joystick"
+            },
+            {
+               "inputs" : {
+                  "long" : {
+                     "output" : "/actions/default/in/recenter"
+                  }
+               },
+               "mode" : "button",
+               "path" : "/user/hand/right/input/joystick"
             }
          ]
       },

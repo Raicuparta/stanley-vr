@@ -1,5 +1,6 @@
 ﻿using System;
 using StanleyVr.VrCamera;
+using StanleyVr.VrInput.ActionInputs;
 using UnityEngine;
 using UnityEngine.XR;
 using Valve.VR;
@@ -41,7 +42,8 @@ public class VrPlayerController: MonoBehaviour
     
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.F3))
+		// TODO cleanup repeated code between here and VrCameraController.
+		if (ActionInputDefinitions.Recenter.ButtonDown)
 		{
 			Recenter();
 		}
