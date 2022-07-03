@@ -5,7 +5,7 @@ using BepInEx;
 using HarmonyLib;
 using LIV.SDK.Unity;
 using UnityEngine;
-using Valve.VR;
+using StanleyVr.VrInput;
 
 namespace StanleyVr;
 
@@ -32,6 +32,7 @@ public class Plugin : BaseUnityPlugin
 		SDKShaders.LoadFromAssetBundle(shaderBundle);
 
 		gameObject.AddComponent<ModXrManager>();
+		ActionMap.Initialize();
 	}
 
 	private void Update()
