@@ -37,11 +37,11 @@ public class VrCameraController: MonoBehaviour
 		if (name == bucketCameraName)
 		{
 			bucketCamera = camera;
-			bucketCamera.cullingMask |= 1 << LayerMask.NameToLayer("UI");
+			// bucketCamera.cullingMask |= 1 << LayerMask.NameToLayer("UI");
 		}
 	}
 
-	public static Camera GetUiCamera()
+	public static Camera GetBucketCamera()
 	{
 		if (bucketCamera && bucketCamera.isActiveAndEnabled)
 		{
