@@ -7,7 +7,6 @@ using LIV.SDK.Unity;
 using UnityEngine;
 using StanleyVr.VrInput;
 using StanleyVr.VrUi;
-using UnityEngine.SceneManagement;
 
 namespace StanleyVr;
 

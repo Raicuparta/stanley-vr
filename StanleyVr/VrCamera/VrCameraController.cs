@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SpatialTracking;
+using UnityEngine.XR;
 using UnityStandardAssets.ImageEffects;
 
 namespace StanleyVr.VrCamera;
@@ -8,16 +9,18 @@ public class VrCameraController: MonoBehaviour
 {
 	private static Camera bucketCamera;
 	private const string bucketCameraName = "Bucket Camera";
+	private Camera camera;
+	private TrackedPoseDriver trackedPoseDriver;
 	
 	private void Start()
 	{
-		var trackedPoseDriver = gameObject.AddComponent<TrackedPoseDriver>();
+		trackedPoseDriver = gameObject.AddComponent<TrackedPoseDriver>();
 		trackedPoseDriver.UseRelativeTransform = true;
 		transform.localScale = Vector3.one * 0.5f;
 
 		trackedPoseDriver.trackingType = GetComponent<MainCamera>() ? TrackedPoseDriver.TrackingType.RotationAndPosition : TrackedPoseDriver.TrackingType.RotationOnly;
 
-		var camera = GetComponent<Camera>();
+		camera = GetComponent<Camera>();
 		camera.backgroundColor = Color.black;
 
 		if (camera.targetTexture)
@@ -49,5 +52,35 @@ public class VrCameraController: MonoBehaviour
 		}
 
 		return Camera.main ? Camera.main : Camera.current;
+	}
+
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.F3))
+		{
+			Recenter();
+		}
+	}
+
+	private void Recenter()
+	{
+		InputDevices.GetDeviceAtXRNode(XRNode.CenterEye)
+			.TryGetFeatureValue(CommonUsages.centerEyePosition, out var centerEyePosition);
+		
+		InputDevices.GetDeviceAtXRNode(XRNode.CenterEye)
+			.TryGetFeatureValue(CommonUsages.centerEyeRotation, out var centerEyerotation);
+		
+		trackedPoseDriver.enabled = false;
+
+		transform.localPosition = -centerEyePosition;
+		
+		transform.localRotation = Quaternion.Inverse(centerEyerotation);
+		transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
+
+		// When a Tracked Pose Driver has UseRelativePosition = true,
+		// that relative position is only taken into account during Awake.
+		trackedPoseDriver.Invoke("Awake", 0);
+
+		trackedPoseDriver.enabled = true;
 	}
 }

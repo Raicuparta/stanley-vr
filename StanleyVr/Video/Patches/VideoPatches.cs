@@ -1,6 +1,5 @@
 ﻿using HarmonyLib;
 using StanleyVr.VrCamera;
-using StanleyVr.VrUi;
 using UnityEngine;
 using UnityEngine.Video;
 
