@@ -2,6 +2,7 @@
 
 public static class ActionNames
 {
+    // These are set in the original game code.
     public const string MoveForward = "Move Forward";
     public const string MoveBackward = "Move Backward";
     public const string MoveLeft = "Move Left";
@@ -26,6 +27,7 @@ public static class ActionNames
     public const string MenuBack = "Menu Back";
     public const string MenuConfirm = "Menu Confirm";
     public const string AnyButton = "Any Button";
-    public const string View = "View";
-    public const string Movement = "Movement";
+    
+    // These are not from the game code, I use them manually.
+    public const string MenuInteract = "MenuInteract";
 }

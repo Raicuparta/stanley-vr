@@ -27,8 +27,6 @@ namespace Valve.VR
         
         private static SteamVR_Input_ActionSet_rotation_hand p_rotation_hand;
         
-        private static SteamVR_Input_ActionSet_menu p_menu;
-        
         public static SteamVR_Input_ActionSet_default _default
         {
             get
@@ -69,14 +67,6 @@ namespace Valve.VR
             }
         }
         
-        public static SteamVR_Input_ActionSet_menu menu
-        {
-            get
-            {
-                return SteamVR_Actions.p_menu.GetCopy<SteamVR_Input_ActionSet_menu>();
-            }
-        }
-        
         private static void StartPreInitActionSets()
         {
             SteamVR_Actions.p__default = ((SteamVR_Input_ActionSet_default)(SteamVR_ActionSet.Create<SteamVR_Input_ActionSet_default>("/actions/default")));
@@ -84,14 +74,12 @@ namespace Valve.VR
             SteamVR_Actions.p_non_dominant_hand = ((SteamVR_Input_ActionSet_non_dominant_hand)(SteamVR_ActionSet.Create<SteamVR_Input_ActionSet_non_dominant_hand>("/actions/non_dominant_hand")));
             SteamVR_Actions.p_movement_hand = ((SteamVR_Input_ActionSet_movement_hand)(SteamVR_ActionSet.Create<SteamVR_Input_ActionSet_movement_hand>("/actions/movement_hand")));
             SteamVR_Actions.p_rotation_hand = ((SteamVR_Input_ActionSet_rotation_hand)(SteamVR_ActionSet.Create<SteamVR_Input_ActionSet_rotation_hand>("/actions/rotation_hand")));
-            SteamVR_Actions.p_menu = ((SteamVR_Input_ActionSet_menu)(SteamVR_ActionSet.Create<SteamVR_Input_ActionSet_menu>("/actions/menu")));
             Valve.VR.SteamVR_Input.actionSets = new Valve.VR.SteamVR_ActionSet[] {
                     SteamVR_Actions._default,
                     SteamVR_Actions.dominant_hand,
                     SteamVR_Actions.non_dominant_hand,
                     SteamVR_Actions.movement_hand,
-                    SteamVR_Actions.rotation_hand,
-                    SteamVR_Actions.menu};
+                    SteamVR_Actions.rotation_hand};
         }
     }
 }

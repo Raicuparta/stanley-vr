@@ -24,5 +24,29 @@ namespace Valve.VR
                 return SteamVR_Actions.dominant_hand_Interact;
             }
         }
+        
+        public virtual SteamVR_Action_Boolean MenuTabRight
+        {
+            get
+            {
+                return SteamVR_Actions.dominant_hand_MenuTabRight;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean MenuTabLeft
+        {
+            get
+            {
+                return SteamVR_Actions.dominant_hand_MenuTabLeft;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean MenuInteract
+        {
+            get
+            {
+                return SteamVR_Actions.dominant_hand_MenuInteract;
+            }
+        }
     }
 }

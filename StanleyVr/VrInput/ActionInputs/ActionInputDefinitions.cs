@@ -8,17 +8,13 @@ public static class ActionInputDefinitions
 
     public static readonly BooleanActionInput Interact = new(dominant_hand.Interact);
 
-    public static readonly BooleanActionInput MenuUp = new(menu.MenuUp);
+    public static readonly BooleanActionInput MenuTabLeft = new(dominant_hand.MenuTabLeft);
     
-    public static readonly BooleanActionInput MenuDown = new(menu.MenuDown);
+    public static readonly BooleanActionInput MenuTabRight = new(dominant_hand.MenuTabRight);
     
-    public static readonly BooleanActionInput MenuLeft = new(menu.MenuLeft);
-    
-    public static readonly BooleanActionInput MenuRight = new(menu.MenuRight);
+    public static readonly Vector2ActionInput MenuDirection = new(non_dominant_hand.MenuDirection);
 
-    public static readonly BooleanActionInput MenuTabLeft = new(menu.MenuTabLeft);
-    
-    public static readonly BooleanActionInput MenuTabRight = new(menu.MenuTabRight);
+    public static readonly BooleanActionInput MenuInteract= new(dominant_hand.MenuInteract);
 
     public static readonly Vector2ActionInput Move = new(movement_hand.Move);
 

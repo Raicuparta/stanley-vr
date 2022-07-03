@@ -45,12 +45,29 @@
       "type": "boolean"
     },
     {
+      "name": "/actions/dominant_hand/in/MenuTabRight",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/dominant_hand/in/MenuTabLeft",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/dominant_hand/in/MenuInteract",
+      "type": "boolean"
+    },
+    {
       "name": "/actions/non_dominant_hand/in/Crouch",
       "type": "boolean"
     },
     {
       "name": "/actions/non_dominant_hand/in/Menu",
       "type": "boolean"
+    },
+    {
+      "name": "/actions/non_dominant_hand/in/MenuDirection",
+      "type": "vector2",
+      "requirement": "suggested"
     },
     {
       "name": "/actions/movement_hand/in/Move",
@@ -75,30 +92,6 @@
     {
       "name": "/actions/rotation_hand/in/SnapTurnRight",
       "type": "boolean"
-    },
-    {
-      "name": "/actions/menu/in/MenuUp",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/menu/in/MenuDown",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/menu/in/MenuLeft",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/menu/in/MenuRight",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/menu/in/MenuTabLeft",
-      "type": "boolean"
-    },
-    {
-      "name": "/actions/menu/in/MenuTabRight",
-      "type": "boolean"
     }
   ],
   "action_sets": [
@@ -121,10 +114,6 @@
     {
       "name": "/actions/rotation_hand",
       "usage": "single"
-    },
-    {
-      "name": "/actions/menu",
-      "usage": "leftright"
     }
   ],
   "default_bindings": [
