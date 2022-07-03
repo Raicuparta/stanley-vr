@@ -21,6 +21,7 @@ public class VrUiManager: MonoBehaviour
         UiCamera.clearFlags = CameraClearFlags.Nothing;
         
         // High depth to make this camera draw on top of the others.
-        UiCamera.depth = 1000;
+        // Making depth higher than 5 flips the VR camera?? What.
+        UiCamera.depth = 4;
     }
 }
