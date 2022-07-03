@@ -18,7 +18,8 @@ public class StereoPortalRenderer : MonoBehaviour
 			.TryGetFeatureValue(isLeft ? CommonUsages.leftEyePosition : CommonUsages.rightEyePosition, out var eyePosition);
 
 		var cameraPosition = camera.transform.position;
-		camera.transform.localPosition = eyePosition - centerEyePosition;
+		var eyeOffset = eyePosition - centerEyePosition;
+		camera.transform.position += camera.transform.TransformVector(eyeOffset);
 		
 		foreach (var portal in MainCamera.Portals)
 		{
