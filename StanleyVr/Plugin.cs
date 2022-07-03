@@ -6,6 +6,8 @@ using HarmonyLib;
 using LIV.SDK.Unity;
 using UnityEngine;
 using StanleyVr.VrInput;
+using StanleyVr.VrUi;
+using UnityEngine.SceneManagement;
 
 namespace StanleyVr;
 
@@ -33,6 +35,8 @@ public class Plugin : BaseUnityPlugin
 
 		gameObject.AddComponent<ModXrManager>();
 		ActionMap.Initialize();
+		
+		MainMenuSceneFix.Create();
 	}
 
 	private void Update()

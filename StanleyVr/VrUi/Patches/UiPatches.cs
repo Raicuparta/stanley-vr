@@ -32,7 +32,7 @@ public static class UiPatches
 		if (aspectRationScaler)
 		{
 			aspectRationScaler.enabled = false;
-			aspectRationScaler.transform.localScale = Vector3.one * 0.25f;
+			aspectRationScaler.transform.localScale = Vector3.one * 0.2f;
 		}
 		else
 		{

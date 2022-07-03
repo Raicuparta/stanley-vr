@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SpatialTracking;
+using UnityStandardAssets.ImageEffects;
 
 namespace StanleyVr.VrCamera;
 
@@ -16,9 +17,26 @@ public class VrCameraController: MonoBehaviour
 
 		trackedPoseDriver.trackingType = GetComponent<MainCamera>() ? TrackedPoseDriver.TrackingType.RotationAndPosition : TrackedPoseDriver.TrackingType.RotationOnly;
 
+		var camera = GetComponent<Camera>();
+		camera.backgroundColor = Color.black;
+
+		if (camera.targetTexture)
+		{
+			// This is to fix the default main menu camera.
+			// Maybe shouldn't be done for all cases where there is a render texture.
+			camera.targetTexture = null;
+			Debug.LogWarning($"#### VrCameraController has removed the target texture from {name}");
+		}
+
+		var blur = GetComponent<Blur>();
+		if (blur)
+		{
+			blur.enabled = false;
+		}
+		
 		if (name == bucketCameraName)
 		{
-			bucketCamera = GetComponent<Camera>();
+			bucketCamera = camera;
 			bucketCamera.cullingMask |= 1 << LayerMask.NameToLayer("UI");
 		}
 	}
