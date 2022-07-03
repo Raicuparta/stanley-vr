@@ -29,27 +29,17 @@ public class VrPlayerController: MonoBehaviour
         Laser = GetComponentInChildren<SteamVR_LaserPointer>().transform;
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        var vrCameraController = GetComponentInChildren<VrCameraController>();
-
-        var poses = gameObject.GetComponentsInChildren<SteamVR_Behaviour_Pose>();
-        foreach (var pose in poses)
-        {
-            pose.origin = vrCameraController.transform.parent;
-        }
+        VrCameraController.OnRecenter += Recenter;
     }
     
-	private void Update()
-	{
-		// TODO cleanup repeated code between here and VrCameraController.
-		if (ActionInputDefinitions.Recenter.ButtonDown)
-		{
-			Recenter();
-		}
-	}
+    private void OnDisable()
+    {
+        VrCameraController.OnRecenter -= Recenter;
+    }
 
-	private void Recenter()
+    private void Recenter()
 	{
 		enabled = false;
 		
