@@ -1,4 +1,5 @@
-﻿using StanleyVr.VrInput.ActionInputs;
+﻿using System;
+using StanleyVr.VrInput.ActionInputs;
 using UnityEngine;
 using UnityEngine.SpatialTracking;
 using UnityEngine.XR;
@@ -12,6 +13,8 @@ public class VrCameraController: MonoBehaviour
 	private const string bucketCameraName = "Bucket Camera";
 	private Camera camera;
 	private TrackedPoseDriver trackedPoseDriver;
+
+	public static Action OnRecenter;
 	
 	private void Start()
 	{
@@ -41,10 +44,9 @@ public class VrCameraController: MonoBehaviour
 		if (name == bucketCameraName)
 		{
 			bucketCamera = camera;
-			// bucketCamera.cullingMask |= 1 << LayerMask.NameToLayer("UI");
 		}
 		
-		Recenter();
+		Invoke(nameof(Recenter), 1f);
 	}
 
 	public static Camera GetBucketCamera()
@@ -86,5 +88,7 @@ public class VrCameraController: MonoBehaviour
 		trackedPoseDriver.Invoke("Awake", 0);
 
 		trackedPoseDriver.enabled = true;
+		
+		OnRecenter?.Invoke();
 	}
 }
