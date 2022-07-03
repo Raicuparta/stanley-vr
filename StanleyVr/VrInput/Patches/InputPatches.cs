@@ -1,9 +1,12 @@
-﻿using HarmonyLib;
+﻿using System.IO;
+using HarmonyLib;
 using InControl;
+using Valve.VR;
 using Object = UnityEngine.Object;
 
 namespace StanleyVr.VrInput.Patches;
 
+[HarmonyPatch]
 public static class InputPatches
 {
 	[HarmonyPostfix]
@@ -11,9 +14,9 @@ public static class InputPatches
 	private static void SetUpMenuInputs(StanleyActions __instance)
 	{
 		var inputModule = Object.FindObjectOfType<InControlInputModule>();
-		inputModule.SubmitAction = GameMaster.Instance.stanleyActions.UseAction; // TODO make a new action for this.
-		inputModule.CancelAction = GameMaster.Instance.stanleyActions.MenuBack;
-		inputModule.direction = GameMaster.Instance.stanleyActions.Movement; // TODO make a new action for this.
+		inputModule.SubmitAction = __instance.UseAction; // TODO make a new action for this.
+		inputModule.CancelAction = __instance.MenuBack;
+		inputModule.direction = __instance.Movement; // TODO make a new action for this.
 	}
 	
 	[HarmonyPrefix]
@@ -67,6 +70,7 @@ public static class InputPatches
 	[HarmonyPatch(typeof(GameMaster), nameof(GameMaster.RegisterInputDeviceTypeChange))]
 	private static void ForceXboxDeviceType(ref GameMaster.InputDevice newDeviceType)
 	{
+		// Force it to show Xbox button icons.
 		newDeviceType = GameMaster.InputDevice.GamepadXBOXOneOrGeneric;
 	}
 
@@ -86,6 +90,14 @@ public static class InputPatches
 	private static bool ForceJumpActionToJump(ref PlayerAction __result, StanleyActions __instance)
 	{
 		__result = __instance.Jump;
+		return false;
+	}
+	
+	[HarmonyPrefix]
+	[HarmonyPatch(typeof(SteamVR_Input), nameof(SteamVR_Input.GetActionsFileFolder))]
+	private static bool GetSteamVrActionsFileFromMod(ref string __result)
+	{
+		__result = $"{Directory.GetCurrentDirectory()}/BepInEx/plugins/StanleyVr/Bindings";
 		return false;
 	}
 }

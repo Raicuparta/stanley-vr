@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace StanleyVr;
 
