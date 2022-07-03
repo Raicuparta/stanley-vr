@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using StanleyVr.VrCamera;
+using UnityEngine;
+using UnityEngine.XR;
+using Valve.VR;
 using Valve.VR.Extras;
 
 namespace StanleyVr.VrPlayer;
@@ -22,6 +26,42 @@ public class VrPlayerController: MonoBehaviour
     private void Awake()
     {
         Laser = GetComponentInChildren<SteamVR_LaserPointer>().transform;
-		transform.localPosition = Vector3.down;
     }
+
+    private void Start()
+    {
+        var vrCameraController = GetComponentInChildren<VrCameraController>();
+
+        var poses = gameObject.GetComponentsInChildren<SteamVR_Behaviour_Pose>();
+        foreach (var pose in poses)
+        {
+            pose.origin = vrCameraController.transform.parent;
+        }
+    }
+    
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.F3))
+		{
+			Recenter();
+		}
+	}
+
+	private void Recenter()
+	{
+		enabled = false;
+		
+		InputDevices.GetDeviceAtXRNode(XRNode.CenterEye)
+			.TryGetFeatureValue(CommonUsages.centerEyePosition, out var centerEyePosition);
+		
+		InputDevices.GetDeviceAtXRNode(XRNode.CenterEye)
+			.TryGetFeatureValue(CommonUsages.centerEyeRotation, out var centerEyerotation);
+		
+		transform.localPosition = -centerEyePosition;
+		
+		transform.localRotation = Quaternion.Inverse(centerEyerotation);
+		transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
+
+		enabled = true;
+	}
 }
