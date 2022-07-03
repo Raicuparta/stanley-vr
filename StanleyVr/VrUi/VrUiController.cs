@@ -1,5 +1,4 @@
-﻿using StanleyVr.VrCamera;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace StanleyVr.VrUi;
 

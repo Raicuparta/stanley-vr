@@ -1,6 +1,4 @@
 ﻿using HarmonyLib;
-using StanleyVr.VrCamera;
-using UnityEngine;
 
 namespace StanleyVr.Patches;
 
