@@ -64,7 +64,7 @@ public class VrStageController: MonoBehaviour
 		InputDevices.GetDeviceAtXRNode(XRNode.CenterEye)
 			.TryGetFeatureValue(CommonUsages.centerEyeRotation, out var centerEyerotation);
 		
-		transform.localPosition = centerEyePosition;
+		transform.localPosition -= transform.parent.InverseTransformPoint(mainCamera.transform.position);
 		
 		transform.localRotation = Quaternion.Inverse(centerEyerotation);
 		transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
