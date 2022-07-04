@@ -22,6 +22,7 @@ public class MainMenuSceneFix: MonoBehaviour
 		EnableMenuScene();
 	}
 
+	// TODO: make sure to not enable this scene if other menu scenes are active.
 	private void EnableMenuScene()
 	{
 		var backgroundScenes = GameObject.Find("Background Scenes");
