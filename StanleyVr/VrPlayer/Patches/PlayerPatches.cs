@@ -6,13 +6,6 @@ namespace StanleyVr.VrPlayer.Patches;
 [HarmonyPatch]
 public static class PlayerPatches
 {
-	[HarmonyPostfix]
-	[HarmonyPatch(typeof(MainCamera), nameof(MainCamera.Start))]
-	private static void CreateVrPlayer(MainCamera __instance)
-	{
-		VrPlayerController.Create(__instance.transform.parent);
-	}
-	
 	// This is a copy paste of the entire StanleyController.Movement method,
 	// with just small modifications to use the VR camera rotation for movement direction.
 	// Wouldn't need to do this trash if I just rotated the player body with the camera,
