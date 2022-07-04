@@ -1,10 +1,4 @@
-﻿using System;
-using StanleyVr.VrCamera;
-using StanleyVr.VrInput.ActionInputs;
-using StanleyVr.VrStage;
-using UnityEngine;
-using UnityEngine.XR;
-using Valve.VR;
+﻿using UnityEngine;
 using Valve.VR.Extras;
 
 namespace StanleyVr.VrPlayer;
@@ -27,6 +21,9 @@ public class VrPlayerController: MonoBehaviour
 
     private void Awake()
     {
-        Laser = GetComponentInChildren<SteamVR_LaserPointer>().transform;
+        var laserObject = GetComponentInChildren<StanleyVrLaserPointer>();
+        laserObject.RayCollisionMask = LayerMask.GetMask("Default", "UI");
+        
+        Laser = laserObject.transform;
     }
 }

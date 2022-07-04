@@ -73,14 +73,6 @@ namespace Valve.VR
             }
         }
         
-        public virtual SteamVR_Action_Pose Pointer
-        {
-            get
-            {
-                return SteamVR_Actions.default_Pointer;
-            }
-        }
-        
         public virtual SteamVR_Action_Boolean Recenter
         {
             get

@@ -33,10 +33,6 @@
       "requirement": "optional"
     },
     {
-      "name": "/actions/default/in/Pointer",
-      "type": "pose"
-    },
-    {
       "name": "/actions/default/in/Recenter",
       "type": "boolean"
     },
