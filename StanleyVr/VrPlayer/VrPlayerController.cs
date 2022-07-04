@@ -1,6 +1,7 @@
 ﻿using System;
 using StanleyVr.VrCamera;
 using StanleyVr.VrInput.ActionInputs;
+using StanleyVr.VrStage;
 using UnityEngine;
 using UnityEngine.XR;
 using Valve.VR;
@@ -28,32 +29,4 @@ public class VrPlayerController: MonoBehaviour
     {
         Laser = GetComponentInChildren<SteamVR_LaserPointer>().transform;
     }
-
-    private void OnEnable()
-    {
-        VrCameraController.OnRecenter += Recenter;
-    }
-    
-    private void OnDisable()
-    {
-        VrCameraController.OnRecenter -= Recenter;
-    }
-
-    private void Recenter()
-	{
-		enabled = false;
-		
-		InputDevices.GetDeviceAtXRNode(XRNode.CenterEye)
-			.TryGetFeatureValue(CommonUsages.centerEyePosition, out var centerEyePosition);
-		
-		InputDevices.GetDeviceAtXRNode(XRNode.CenterEye)
-			.TryGetFeatureValue(CommonUsages.centerEyeRotation, out var centerEyerotation);
-		
-		transform.localPosition = -centerEyePosition;
-		
-		transform.localRotation = Quaternion.Inverse(centerEyerotation);
-		transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
-
-		enabled = true;
-	}
 }

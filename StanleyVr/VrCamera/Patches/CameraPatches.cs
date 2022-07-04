@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using StanleyVr.Effects;
+using StanleyVr.VrStage;
 using UnityEngine;
 
 namespace StanleyVr.VrCamera.Patches;
@@ -12,8 +13,9 @@ public static class CameraPatches
 	private static void SetUpVrCameraMain(MainCamera __instance)
 	{
 		__instance.gameObject.AddComponent<StereoPortalRenderer>();
-		
 		__instance.gameObject.AddComponent<VrCameraController>();
+		
+		VrStageController.Create(__instance);
 
 		var camera = __instance.GetComponent<Camera>();
 		camera.transform.parent.localScale = Vector3.one * 0.5f;
