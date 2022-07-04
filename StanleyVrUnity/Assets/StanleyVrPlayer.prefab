@@ -9,8 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1259810517}
-  - component: {fileID: 1259810518}
-  - component: {fileID: 1259810519}
+  - component: {fileID: 5327328527332177072}
   m_Layer: 26
   m_Name: Laser
   m_TagString: Untagged
@@ -25,14 +24,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1259810516}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.25, y: 1, z: 0}
+  m_LocalRotation: {x: 0.3506376, y: -0.06292088, z: 0.032491706, w: 0.9338301}
+  m_LocalPosition: {x: -0.0096, y: -0.0049, z: -0.0567}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 3260746009490108474}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1259810518
+  m_Father: {fileID: 3260746009490197858}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 41.221, y: -7.235, z: 1.261}
+--- !u!114 &5327328527332177072
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,54 +40,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1259810516}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2f511c1adaa1e94ebe7ca97bbcabd17, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e75986819f86d146b5122c0414d44a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pose: {fileID: 3230626090384334844}
   interactWithUI:
-    actionPath: /actions/dominant_hand/in/Interact
+    actionPath: /actions/dominant_hand/in/MenuInteract
     needsReinit: 0
   active: 1
-  color: {r: 1, g: 1, b: 1, a: 0}
+  color: {r: 1, g: 1, b: 1, a: 0.39215687}
   thickness: 0.002
   clickColor: {r: 0, g: 1, b: 0, a: 1}
   holder: {fileID: 0}
   pointer: {fileID: 0}
   addRigidBody: 0
   reference: {fileID: 0}
---- !u!114 &1259810519
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1259810516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a5fb0ca93b55ef4b8d54b512b103341, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  poseAction:
-    actionPath: /actions/default/in/Pointer
-    needsReinit: 0
-  inputSource: 2
-  origin: {fileID: 0}
-  onTransformUpdated:
-    m_PersistentCalls:
-      m_Calls: []
-  onTransformChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  onConnectedChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  onTrackingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  onDeviceIndexChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  broadcastDeviceChanges: 1
+  RayCollisionMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &3260746009489773062
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,7 +131,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1259810517}
   - {fileID: 3260746009490202772}
   - {fileID: 3260746009490197858}
   m_Father: {fileID: 0}
@@ -439,8 +407,9 @@ Transform:
   - {fileID: 3260746009490202570}
   - {fileID: 3260746009490188992}
   - {fileID: 3260746009490109660}
+  - {fileID: 1259810517}
   m_Father: {fileID: 3260746009490108474}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3260746009495802558
 MonoBehaviour:
@@ -581,7 +550,7 @@ Transform:
   - {fileID: 3260746009490096322}
   - {fileID: 3260746009490139748}
   m_Father: {fileID: 3260746009490108474}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3260746009495884320
 MonoBehaviour:

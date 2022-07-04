@@ -1,6 +1,5 @@
 ﻿using HarmonyLib;
 using StanleyVr.Effects;
-using StanleyVr.VrStage;
 using UnityEngine;
 
 namespace StanleyVr.VrCamera.Patches;
