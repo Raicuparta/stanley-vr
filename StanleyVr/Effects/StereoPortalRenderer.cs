@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.XR;
 
 namespace StanleyVr.Effects;
@@ -11,23 +12,17 @@ public class StereoPortalRenderer : MonoBehaviour
 	private void OnPreRender()
 	{
 		var camera = Camera.current;
-
-		var isLeft = camera.stereoActiveEye == Camera.MonoOrStereoscopicEye.Left;
 		
-		InputDevices.GetDeviceAtXRNode(XRNode.CenterEye)
-			.TryGetFeatureValue(CommonUsages.centerEyePosition, out var centerEyePosition);
-		
-		InputDevices.GetDeviceAtXRNode(isLeft ? XRNode.LeftEye : XRNode.RightEye)
-			.TryGetFeatureValue(isLeft ? CommonUsages.leftEyePosition : CommonUsages.rightEyePosition, out var eyePosition);
-
 		var cameraPosition = camera.transform.position;
-		var eyeOffset = eyePosition - centerEyePosition;
-		camera.transform.position += camera.transform.TransformVector(eyeOffset);
+		var cameraRotation = camera.transform.rotation;
+
+		UpdateCameraTransform(camera);
 		
 		foreach (var portal in MainCamera.Portals)
 		{
 			if (!portal.disabled)
 			{
+				portal.playerCam = camera;
 				portal.Render();
 			}
 		}
@@ -41,5 +36,27 @@ public class StereoPortalRenderer : MonoBehaviour
 		}
 
 		camera.transform.position = cameraPosition;
+		camera.transform.rotation = cameraRotation;
+	}
+
+	private void UpdateCameraTransform(Camera camera)
+	{
+		if (!camera.stereoEnabled)
+		{
+			return;
+		}
+		
+		var isLeft = camera.stereoActiveEye == Camera.MonoOrStereoscopicEye.Left;
+
+		// TODO also fix rotation?
+		
+		InputDevices.GetDeviceAtXRNode(XRNode.CenterEye)
+			.TryGetFeatureValue(CommonUsages.centerEyePosition, out var centerEyePosition);
+		
+		InputDevices.GetDeviceAtXRNode(isLeft ? XRNode.LeftEye : XRNode.RightEye)
+			.TryGetFeatureValue(isLeft ? CommonUsages.leftEyePosition : CommonUsages.rightEyePosition, out var eyePosition);
+
+		var eyeOffset = eyePosition - centerEyePosition;
+		camera.transform.position += camera.transform.TransformVector(eyeOffset);
 	}
 }
