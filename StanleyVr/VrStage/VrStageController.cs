@@ -1,41 +1,38 @@
-﻿using System;
-using StanleyVr.VrInput.ActionInputs;
+﻿using StanleyVr.VrInput.ActionInputs;
 using StanleyVr.VrPlayer;
 using UnityEngine;
-using UnityEngine.SpatialTracking;
 using UnityEngine.XR;
 
 namespace StanleyVr.VrStage;
 
 public class VrStageController: MonoBehaviour
 {
-    private const float minPositionOffset = 0;
+	public static VrStageController Instance;
+	
+	private const float minPositionOffset = 0;
     private const float maxPositionOffset = 1f;
     
-	public static Action OnRecenter;
 	private Vector3 prevCameraPosition;
 	private StanleyController stanleyController;
 	private MainCamera mainCamera;
 
-	public static void Create(MainCamera mainCamera)
+	public static void Create(StanleyController stanleyController)
 	{
-		var instance = new GameObject("VrStage").AddComponent<VrStageController>();
-		instance.transform.SetParent(mainCamera.transform.parent, false);
-		instance.mainCamera = mainCamera;
-
-		mainCamera.transform.SetParent(instance.transform, true);
+		Instance = new GameObject("VrStage").AddComponent<VrStageController>();
+		Instance.transform.SetParent(stanleyController.transform.Find("CameraParent"), false);
+		Instance.stanleyController = stanleyController;
 	}
 
-	private void Awake()
+	public void SetUp(MainCamera newMainCamera)
 	{
-		stanleyController = GetComponentInParent<StanleyController>();
+		mainCamera = newMainCamera;
+		mainCamera.transform.SetParent(transform, true);
+		Recenter();
 	}
 
 	private void Start()
 	{
 		VrPlayerController.Create(transform);
-		
-		Invoke(nameof(Recenter), 1f);
 	}
 
 	private void Update()
@@ -56,6 +53,8 @@ public class VrStageController: MonoBehaviour
 
 	private void Recenter()
 	{
+		if (!mainCamera) return;
+
 		InputDevices.GetDeviceAtXRNode(XRNode.CenterEye)
 			.TryGetFeatureValue(CommonUsages.centerEyePosition, out var centerEyePosition);
 
@@ -68,8 +67,6 @@ public class VrStageController: MonoBehaviour
 		
 		transform.localRotation = Quaternion.Inverse(centerEyerotation);
 		transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
-
-		OnRecenter?.Invoke();
 	}
 	
     private void UpdateRoomScalePosition()
