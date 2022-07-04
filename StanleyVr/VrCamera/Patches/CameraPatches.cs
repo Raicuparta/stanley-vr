@@ -14,8 +14,6 @@ public static class CameraPatches
 	{
 		__instance.gameObject.AddComponent<StereoPortalRenderer>();
 		__instance.gameObject.AddComponent<VrCameraController>();
-		
-		VrStageController.Create(__instance);
 
 		var camera = __instance.GetComponent<Camera>();
 		camera.transform.parent.localScale = Vector3.one * 0.5f;
