@@ -26,6 +26,7 @@ namespace Valve.VR.Extras
         public event PointerEventHandler PointerOut;
         public event PointerEventHandler PointerClick;
         public LayerMask RayCollisionMask = -1;
+        public float MaxDistance = 10f;
 
         Transform previousContact = null;
 
@@ -48,7 +49,7 @@ namespace Valve.VR.Extras
 
             pointer = GameObject.CreatePrimitive(PrimitiveType.Cube);
             pointer.transform.parent = holder.transform;
-            pointer.transform.localScale = new Vector3(thickness, thickness, 100f);
+            pointer.transform.localScale = new Vector3(thickness, thickness, MaxDistance);
             pointer.transform.localPosition = new Vector3(0f, 0f, 50f);
             pointer.transform.localRotation = Quaternion.identity;
             BoxCollider collider = pointer.GetComponent<BoxCollider>();
@@ -100,11 +101,11 @@ namespace Valve.VR.Extras
                 this.transform.GetChild(0).gameObject.SetActive(true);
             }
 
-            float dist = 100f;
+            float dist = MaxDistance;
 
             Ray raycast = new Ray(transform.position, transform.forward);
             RaycastHit hit;
-            bool bHit = Physics.Raycast(raycast, out hit, Mathf.Infinity, RayCollisionMask, QueryTriggerInteraction.Ignore);
+            bool bHit = Physics.Raycast(raycast, out hit, MaxDistance, RayCollisionMask, QueryTriggerInteraction.Ignore);
 
             if (previousContact && previousContact != hit.transform)
             {
@@ -130,7 +131,7 @@ namespace Valve.VR.Extras
             {
                 previousContact = null;
             }
-            if (bHit && hit.distance < 100f)
+            if (bHit && hit.distance < MaxDistance)
             {
                 dist = hit.distance;
             }

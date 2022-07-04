@@ -32,7 +32,7 @@ public class VrStageController: MonoBehaviour
 
 	private void Start()
 	{
-		VrPlayerController.Create(transform);
+		VrPlayerController.Create(transform, stanleyController);
 	}
 
 	private void Update()
