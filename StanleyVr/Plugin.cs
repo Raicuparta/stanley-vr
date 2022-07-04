@@ -103,7 +103,6 @@ public class Plugin : BaseUnityPlugin
 				"FlareLayer",
 				"CanvasRenderer",
 				"EnableDepthOnHighQuality",
-				"StereoPortalRenderer",
 				"TrackedPoseDriver"
 			}).ToArray();
 
