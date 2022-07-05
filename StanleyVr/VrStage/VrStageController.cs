@@ -15,6 +15,7 @@ public class VrStageController: MonoBehaviour
 	private Vector3 prevCameraPosition;
 	private StanleyController stanleyController;
 	private MainCamera mainCamera;
+	private bool previousMotionFrozen;
 
 	public static void Create(StanleyController stanleyController)
 	{
@@ -33,22 +34,27 @@ public class VrStageController: MonoBehaviour
 	private void Start()
 	{
 		VrPlayerController.Create(transform, stanleyController);
+		previousMotionFrozen = stanleyController.motionFrozen;
 	}
 
 	private void Update()
 	{
-		// TODO cleanup repeated code between here and VrPlayerController.
+		UpdateRecenter();
+		UpdateRoomScalePosition();
+	}
+
+	private void UpdateRecenter()
+	{
 		if (ActionInputDefinitions.Recenter.ButtonDown)
 		{
 			Recenter();
 		}
 
-		if (Input.GetKeyDown(KeyCode.F2))
+		if (!previousMotionFrozen && stanleyController.motionFrozen)
 		{
-			UpdateRoomScalePosition();
+			Recenter();
+			previousMotionFrozen = stanleyController.motionFrozen;
 		}
-		
-		UpdateRoomScalePosition();
 	}
 
 	private void Recenter()
