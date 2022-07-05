@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Valve.VR.Extras;
 
 namespace StanleyVr.VrPlayer;
@@ -23,5 +24,18 @@ public class VrPlayerController: MonoBehaviour
         laserObject.MaxDistance = stanleyController.armReach;
         
         Laser = laserObject.transform;
+    }
+
+    private void Start()
+    {
+        var shader = Shader.Find("Stanley/Stanley_Default_ReflectionProbeLit_Low");
+        var renderers = GetComponentsInChildren<Renderer>();
+        foreach (var renderer in renderers)
+        {
+            foreach (var material in renderer.materials)
+            {
+                material.shader = shader;
+            }
+        }
     }
 }
