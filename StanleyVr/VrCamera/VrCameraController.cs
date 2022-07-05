@@ -13,6 +13,13 @@ public class VrCameraController: MonoBehaviour
 
 	private void Start()
 	{
+		if (name == bucketCameraName)
+		{
+			bucketCamera = camera;
+			camera.clearFlags = CameraClearFlags.Nothing;
+			return;
+		}
+		
 		trackedPoseDriver = gameObject.AddComponent<TrackedPoseDriver>();
 		trackedPoseDriver.UseRelativeTransform = false;
 		transform.localScale = Vector3.one * 0.5f;
@@ -34,11 +41,6 @@ public class VrCameraController: MonoBehaviour
 		if (blur)
 		{
 			Destroy(blur);
-		}
-		
-		if (name == bucketCameraName)
-		{
-			bucketCamera = camera;
 		}
 	}
 

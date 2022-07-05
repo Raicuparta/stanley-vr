@@ -49,7 +49,7 @@ MonoBehaviour:
     actionPath: 
     needsReinit: 0
   inputSource: 2
-  rangeOfMotion: 0
+  rangeOfMotion: 1
   skeletonRoot: {fileID: 2307931222452012098}
   origin: {fileID: 0}
   updatePose: 1

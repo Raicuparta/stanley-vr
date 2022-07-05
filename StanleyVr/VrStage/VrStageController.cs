@@ -16,6 +16,7 @@ public class VrStageController: MonoBehaviour
 	private StanleyController stanleyController;
 	private MainCamera mainCamera;
 	private bool previousMotionFrozen;
+	private VrPlayerController vrPlayerController;
 
 	public static void Create(StanleyController stanleyController)
 	{
@@ -33,7 +34,7 @@ public class VrStageController: MonoBehaviour
 
 	private void Start()
 	{
-		VrPlayerController.Create(transform, stanleyController);
+		vrPlayerController = VrPlayerController.Create(transform, stanleyController);
 		previousMotionFrozen = stanleyController.motionFrozen;
 	}
 
@@ -113,5 +114,15 @@ public class VrStageController: MonoBehaviour
 		// trackedPoseDriver.Invoke("Awake", 0);
 
 		// trackedPoseDriver.enabled = true;
+    }
+
+    public void AttachToLeftHand(Transform child)
+    {
+	    if (!vrPlayerController)
+	    {
+		    Debug.LogWarning("Tried to attach an object to the left hand before player controller is ready");
+		    return;
+	    }
+	    vrPlayerController.AttachToLeftHand(child);
     }
 }

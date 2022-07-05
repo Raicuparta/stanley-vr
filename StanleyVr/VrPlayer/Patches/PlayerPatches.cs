@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using StanleyVr.VrStage;
 using UnityEngine;
 
 namespace StanleyVr.VrPlayer.Patches;
@@ -135,5 +136,25 @@ public static class PlayerPatches
 	{
 		__instance.controllerSensitivityY = 0;
 		__instance.mouseSensitivityY = 0;
+	}
+
+	[HarmonyPostfix]
+	[HarmonyPatch(typeof(BucketController), nameof(BucketController.OnBucketPickup), typeof(bool), typeof(bool))]
+	private static void MoveBucketToHand(BucketController __instance)
+	{
+		if (!VrStageController.Instance) return;
+		
+		VrStageController.Instance.AttachToLeftHand(__instance.transform);
+		__instance.transform.localScale = Vector3.one * 2;
+		__instance.transform.localPosition = new Vector3(-0.152f, -0.1276f, -0.24f);
+		__instance.transform.localEulerAngles = new Vector3(38.8052f, 321.044f, 295.3439f);
+	}
+	
+	[HarmonyPostfix]
+	[HarmonyPatch(typeof(BucketController), nameof(BucketController.OnBucketRemoval))]
+	[HarmonyPatch(typeof(BucketController), nameof(BucketController.Awake))]
+	private static void HideBucket(BucketController __instance)
+	{
+		__instance.transform.localScale = Vector3.zero;
 	}
 }
