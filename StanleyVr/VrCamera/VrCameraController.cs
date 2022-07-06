@@ -13,9 +13,12 @@ public class VrCameraController: MonoBehaviour
 
 	private void Start()
 	{
+		// TODO move bucket camera logic elsewhere.
 		if (name == bucketCameraName)
 		{
 			bucketCamera = camera;
+			camera.transform.localPosition = Vector3.zero;
+			camera.transform.localRotation = Quaternion.identity;
 			camera.clearFlags = CameraClearFlags.Nothing;
 			return;
 		}
