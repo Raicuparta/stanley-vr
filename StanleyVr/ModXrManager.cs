@@ -40,7 +40,7 @@ public class ModXrManager : MonoBehaviour
 			subsystem.TryRecenter();
 		}
 		
-        ApplicationManifestHelper.UpdateManifest(Paths.ManagedPath + @"\StreamingAssets\outerwilds.vrmanifest",
+        ApplicationManifestHelper.UpdateManifest(Paths.ManagedPath + @"\..\StreamingAssets\stanleyparable.vrmanifest",
 	        "steam.app.1703340",
 	        "https://steamcdn-a.akamaihd.net/steam/apps/1703340/header.jpg",
 	        "The Stanley Parable VR",
