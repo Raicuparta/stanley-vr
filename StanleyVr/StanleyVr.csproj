@@ -69,6 +69,9 @@
         <Reference Include="Unity.XR.OpenVR, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\Unity.XR.OpenVR.dll</HintPath>
         </Reference>
+        <Reference Include="Valve.Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <HintPath>..\StanleyVrUnity\Build\StanleyVrUnity_Data\Managed\Valve.Newtonsoft.Json.dll</HintPath>
+        </Reference>
     </ItemGroup>
     
     <Target Name="Zip release" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Release' ">

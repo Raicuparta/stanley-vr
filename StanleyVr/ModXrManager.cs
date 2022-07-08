@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BepInEx;
 using Unity.XR.OpenVR;
 using UnityEngine;
 using UnityEngine.XR;
@@ -38,6 +39,14 @@ public class ModXrManager : MonoBehaviour
 			subsystem.TrySetTrackingOriginMode(TrackingOriginModeFlags.Device);
 			subsystem.TryRecenter();
 		}
+		
+        ApplicationManifestHelper.UpdateManifest(Paths.ManagedPath + @"\StreamingAssets\outerwilds.vrmanifest",
+	        "steam.app.1703340",
+	        "https://steamcdn-a.akamaihd.net/steam/apps/1703340/header.jpg",
+	        "The Stanley Parable VR",
+	        "StanleyVR mod for Ultra Deluxe",
+	        steamBuild: SteamManager.Initialized,
+	        steamAppId: 1703340);
     }
 
     private void SetUpXr()

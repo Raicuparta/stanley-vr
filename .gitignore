@@ -5,4 +5,3 @@ riderModule.iml
 /_ReSharper.Caches/
 .idea
 *.user
-ReleaseFiles/BepInEx/plugins/**
