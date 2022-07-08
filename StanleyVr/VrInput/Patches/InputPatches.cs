@@ -2,6 +2,7 @@
 using HarmonyLib;
 using InControl;
 using StanleyVr.VrInput.ActionInputs;
+using UnityEngine;
 using Valve.VR;
 using Object = UnityEngine.Object;
 
@@ -97,14 +98,6 @@ public static class InputPatches
 	private static bool ForceJumpActionToJump(ref PlayerAction __result, StanleyActions __instance)
 	{
 		__result = __instance.Jump;
-		return false;
-	}
-	
-	[HarmonyPrefix]
-	[HarmonyPatch(typeof(SteamVR_Input), nameof(SteamVR_Input.GetActionsFileFolder))]
-	private static bool GetSteamVrActionsFileFromMod(ref string __result)
-	{
-		__result = $"{Directory.GetCurrentDirectory()}/BepInEx/plugins/StanleyVr/Bindings";
 		return false;
 	}
 }
