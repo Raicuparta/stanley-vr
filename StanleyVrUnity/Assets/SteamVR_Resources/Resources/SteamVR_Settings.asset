@@ -15,8 +15,7 @@ MonoBehaviour:
   pauseGameWhenDashboardVisible: 1
   lockPhysicsUpdateRateToRenderFrequency: 1
   trackingSpaceOrigin: 1
-  actionsFilePath: ../../../../../StanleyVr/ReleaseFiles/The Stanley Parable Ultra
-    Deluxe_Data/StreamingAssets/Steam/actions.json
+  actionsFilePath: actions.json
   steamVRInputPath: SteamVR_Input
   inputUpdateMode: 2
   poseUpdateMode: 8
