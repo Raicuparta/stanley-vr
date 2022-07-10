@@ -47,8 +47,6 @@ public class StereoPortalRenderer : MonoBehaviour
 		
 		var isLeft = camera.stereoActiveEye == Camera.MonoOrStereoscopicEye.Left;
 
-		// TODO also fix rotation?
-		
 		InputDevices.GetDeviceAtXRNode(XRNode.CenterEye)
 			.TryGetFeatureValue(CommonUsages.centerEyePosition, out var centerEyePosition);
 		
