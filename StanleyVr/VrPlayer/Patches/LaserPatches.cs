@@ -6,45 +6,24 @@ namespace StanleyVr.VrPlayer.Patches;
 [HarmonyPatch]
 public class LaserPatches
 {
+	private static Transform camParent;
+	
 	[HarmonyPrefix]
 	[HarmonyPatch(typeof(StanleyController), nameof(StanleyController.ClickingOnThings))]
-	private static bool LaserInteraction(StanleyController __instance)
+	private static void UseLaserForInteractionDirection(StanleyController __instance)
 	{
-		var laser = VrPlayerController.Laser;
-		if (laser == null) return false;
+		if (!VrPlayerController.Laser) return;
 		
-		if (Singleton<GameMaster>.Instance.FullScreenMoviePlaying || !Singleton<GameMaster>.Instance.stanleyActions.UseAction.WasPressed)
-		{
-			return false;
-		}
-		RaycastHit hitInfo;
-		// TODO just replace __instance.camparent during this method instead of copying everything.
-		if (Physics.Raycast(laser.position, laser.forward, out hitInfo, __instance.armReach, __instance.clickLayers, QueryTriggerInteraction.Ignore))
-		{
-			var gameObject = hitInfo.collider.gameObject;
-			var component = gameObject.GetComponent<HammerEntity>();
-			if (component != null)
-			{
-				component.Use();
-			}
-			else
-			{
-				__instance.PlayKeyboardSound();
-			}
-			if (StanleyController.OnInteract != null)
-			{
-				StanleyController.OnInteract(gameObject);
-			}
-		}
-		else
-		{
-			__instance.PlayKeyboardSound();
-			if (StanleyController.OnInteract != null)
-			{
-				StanleyController.OnInteract(null);
-			}
-		}
+		camParent = __instance.camParent;
+		__instance.camParent = VrPlayerController.Laser;
+	}	
 	
-		return false;
+	[HarmonyPostfix]
+	[HarmonyPatch(typeof(StanleyController), nameof(StanleyController.ClickingOnThings))]
+	private static void ResetStanleyControllerCamParent(StanleyController __instance)
+	{
+		if (!camParent) return;
+		
+		__instance.camParent = camParent;
 	}
 }

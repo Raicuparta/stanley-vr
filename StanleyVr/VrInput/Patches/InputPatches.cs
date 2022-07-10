@@ -18,7 +18,7 @@ public static class InputPatches
 	private static void SetUpMenuInputs(StanleyActions __instance)
 	{
 		inputModule = Object.FindObjectOfType<InControlInputModule>();
-		inputModule.SubmitAction = __instance.CreatePlayerAction(ActionNames.MenuInteract); // TODO make a new action for this.
+		inputModule.SubmitAction = __instance.CreatePlayerAction(ActionNames.MenuInteract);
 		inputModule.CancelAction = __instance.MenuBack;
 		inputModule.direction = __instance.CreateTwoAxisPlayerAction(
 			__instance.MoveLeft,
