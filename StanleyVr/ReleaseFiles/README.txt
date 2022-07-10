@@ -18,6 +18,7 @@ In most controllers, you can recenter by holding L3 or R3 (clicking and holding 
 For Vive controllers, recenter by holding either menu button.
 
 There are some issues with the player position not matching the camera position.
+You should probably play sitting down and avoid moving too much to keep it stable until these issues are fixed.
 When you look down at the floor, you should see a shadow. If the shadow isn't underneath you, press the recenter button.
 
 This is an early development version of StanleyVR. There are many bugs.
