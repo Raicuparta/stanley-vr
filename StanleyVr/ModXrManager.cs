@@ -18,7 +18,7 @@ public class ModXrManager : MonoBehaviour
 		SetUpXr();
 		SteamVR.Initialize();
 		ActionInputDefinitions.Initialize();
-		SteamVR.settings.pauseGameWhenDashboardVisible = false;
+		SteamVR.settings.pauseGameWhenDashboardVisible = true;
 
 		foreach (var actionSet in SteamVR_Input.actionSets)
 		{
