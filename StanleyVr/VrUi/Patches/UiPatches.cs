@@ -28,6 +28,7 @@ public static class UiPatches
 		Debug.Log($"Found CanvasScaler {__instance.name}");
 
 		var parent = canvas.transform.parent;
+		__instance.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
 		var aspectRationScaler = parent ? parent.GetComponent<AspectRatioScaler>() : null;
 		if (aspectRationScaler)
 		{

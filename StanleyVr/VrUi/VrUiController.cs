@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace StanleyVr.VrUi;
 
@@ -20,6 +21,15 @@ public class VrUiController : MonoBehaviour
 		gameObject.layer = LayerMask.NameToLayer("UI");
 		
 		SetUpScale();
+		FixCanvasScaler();
+	}
+
+	private void FixCanvasScaler()
+	{
+		// Changing the VR render resolution makes the CanvasScaler dynamically update the Canvas scale, as expected.
+		// But for some reason the inital resolution isn't being applied correctly to the Canvas scale.
+		// Invoking this method forces the canvas scaler to use the initial VR render resolution.
+		canvas.GetComponent<CanvasScaler>().Invoke("HandleConstantPhysicalSize", 0);
 	}
 
 	private void Update()
