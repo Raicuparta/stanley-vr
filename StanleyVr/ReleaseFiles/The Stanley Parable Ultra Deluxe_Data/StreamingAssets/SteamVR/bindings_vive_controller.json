@@ -214,26 +214,44 @@
          "sources" : [
             {
                "inputs" : {
-                  "click" : {
-                     "output" : "/actions/movement_hand/in/teleport"
+                  "east" : {
+                     "output" : "/actions/movement_hand/in/moveright"
                   },
-                  "position" : {
-                     "output" : "/actions/movement_hand/in/move"
+                  "north" : {
+                     "output" : "/actions/movement_hand/in/moveforward"
+                  },
+                  "south" : {
+                     "output" : "/actions/movement_hand/in/movebackwards"
+                  },
+                  "west" : {
+                     "output" : "/actions/movement_hand/in/moveleft"
                   }
                },
-               "mode" : "trackpad",
+               "mode" : "dpad",
+               "parameters" : {
+                  "sub_mode" : "click"
+               },
                "path" : "/user/hand/left/input/trackpad"
             },
             {
                "inputs" : {
-                  "click" : {
-                     "output" : "/actions/movement_hand/in/teleport"
+                  "east" : {
+                     "output" : "/actions/movement_hand/in/moveright"
                   },
-                  "position" : {
-                     "output" : "/actions/movement_hand/in/move"
+                  "north" : {
+                     "output" : "/actions/movement_hand/in/moveforward"
+                  },
+                  "south" : {
+                     "output" : "/actions/movement_hand/in/movebackwards"
+                  },
+                  "west" : {
+                     "output" : "/actions/movement_hand/in/moveleft"
                   }
                },
-               "mode" : "trackpad",
+               "mode" : "dpad",
+               "parameters" : {
+                  "sub_mode" : "click"
+               },
                "path" : "/user/hand/right/input/trackpad"
             }
          ]
@@ -278,20 +296,44 @@
             },
             {
                "inputs" : {
-                  "position" : {
-                     "output" : "/actions/non_dominant_hand/in/menudirection"
+                  "east" : {
+                     "output" : "/actions/non_dominant_hand/in/menuright"
+                  },
+                  "north" : {
+                     "output" : "/actions/non_dominant_hand/in/menuup"
+                  },
+                  "south" : {
+                     "output" : "/actions/non_dominant_hand/in/menudown"
+                  },
+                  "west" : {
+                     "output" : "/actions/non_dominant_hand/in/menuleft"
                   }
                },
-               "mode" : "trackpad",
+               "mode" : "dpad",
+               "parameters" : {
+                  "sub_mode" : "click"
+               },
                "path" : "/user/hand/left/input/trackpad"
             },
             {
                "inputs" : {
-                  "position" : {
-                     "output" : "/actions/non_dominant_hand/in/menudirection"
+                  "east" : {
+                     "output" : "/actions/non_dominant_hand/in/menuright"
+                  },
+                  "north" : {
+                     "output" : "/actions/non_dominant_hand/in/menuup"
+                  },
+                  "south" : {
+                     "output" : "/actions/non_dominant_hand/in/menudown"
+                  },
+                  "west" : {
+                     "output" : "/actions/non_dominant_hand/in/menuleft"
                   }
                },
-               "mode" : "trackpad",
+               "mode" : "dpad",
+               "parameters" : {
+                  "sub_mode" : "click"
+               },
                "path" : "/user/hand/right/input/trackpad"
             }
          ]
@@ -307,29 +349,11 @@
          "sources" : [
             {
                "inputs" : {
-                  "position" : {
-                     "output" : "/actions/rotation_hand/in/rotate"
-                  }
-               },
-               "mode" : "trackpad",
-               "path" : "/user/hand/left/input/trackpad"
-            },
-            {
-               "inputs" : {
-                  "position" : {
-                     "output" : "/actions/rotation_hand/in/rotate"
-                  }
-               },
-               "mode" : "trackpad",
-               "path" : "/user/hand/right/input/trackpad"
-            },
-            {
-               "inputs" : {
                   "east" : {
-                     "output" : "/actions/rotation_hand/in/snapturnright"
+                     "output" : "/actions/rotation_hand/in/turnright"
                   },
                   "west" : {
-                     "output" : "/actions/rotation_hand/in/snapturnleft"
+                     "output" : "/actions/rotation_hand/in/turnleft"
                   }
                },
                "mode" : "dpad",
@@ -341,10 +365,10 @@
             {
                "inputs" : {
                   "east" : {
-                     "output" : "/actions/rotation_hand/in/snapturnright"
+                     "output" : "/actions/rotation_hand/in/turnright"
                   },
                   "west" : {
-                     "output" : "/actions/rotation_hand/in/snapturnleft"
+                     "output" : "/actions/rotation_hand/in/turnleft"
                   }
                },
                "mode" : "dpad",

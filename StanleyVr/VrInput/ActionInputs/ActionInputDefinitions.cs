@@ -12,19 +12,29 @@ public static class ActionInputDefinitions
     
     public static readonly BooleanActionInput MenuTabRight = new(dominant_hand.MenuTabRight);
     
-    public static readonly Vector2ActionInput MenuDirection = new(non_dominant_hand.MenuDirection);
+    public static readonly Vector2ActionInput MenuDirection = new(non_dominant_hand.MenuDirection,
+        non_dominant_hand.MenuLeft,
+        non_dominant_hand.MenuRight,
+        non_dominant_hand.MenuUp,
+        non_dominant_hand.MenuDown);
 
     public static readonly BooleanActionInput MenuInteract= new(dominant_hand.MenuInteract);
 
-    public static readonly Vector2ActionInput Move = new(movement_hand.Move);
+    public static readonly Vector2ActionInput Move = new(movement_hand.Move,
+        movement_hand.MoveLeft,
+        movement_hand.MoveRight,
+        movement_hand.MoveForward,
+        movement_hand.MoveBackwards);
 
-    public static readonly Vector2ActionInput Rotate = new(rotation_hand.Rotate);
+    public static readonly Vector2ActionInput Rotate = new(rotation_hand.Rotate,
+        rotation_hand.TurnLeft,
+        rotation_hand.TurnRight);
 
-    public static readonly BooleanActionInput Teleport = new(movement_hand.Teleport);
+    public static readonly BooleanActionInput Teleport = new(movement_hand.MoveForward);
 
-    public static readonly BooleanActionInput SnapTurnLeft = new(rotation_hand.SnapTurnLeft);
+    public static readonly BooleanActionInput SnapTurnLeft = new(rotation_hand.TurnLeft);
 
-    public static readonly BooleanActionInput SnapTurnRight = new(rotation_hand.SnapTurnRight);
+    public static readonly BooleanActionInput SnapTurnRight = new(rotation_hand.TurnRight);
 
     public static readonly BooleanActionInput Jump = new(rotation_hand.Jump);
     

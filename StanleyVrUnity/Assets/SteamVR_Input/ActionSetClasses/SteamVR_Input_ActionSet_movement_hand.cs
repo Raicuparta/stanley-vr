@@ -25,11 +25,35 @@ namespace Valve.VR
             }
         }
         
-        public virtual SteamVR_Action_Boolean Teleport
+        public virtual SteamVR_Action_Boolean MoveForward
         {
             get
             {
-                return SteamVR_Actions.movement_hand_Teleport;
+                return SteamVR_Actions.movement_hand_MoveForward;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean MoveBackwards
+        {
+            get
+            {
+                return SteamVR_Actions.movement_hand_MoveBackwards;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean MoveLeft
+        {
+            get
+            {
+                return SteamVR_Actions.movement_hand_MoveLeft;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean MoveRight
+        {
+            get
+            {
+                return SteamVR_Actions.movement_hand_MoveRight;
             }
         }
     }

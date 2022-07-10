@@ -33,19 +33,19 @@ namespace Valve.VR
             }
         }
         
-        public virtual SteamVR_Action_Boolean SnapTurnLeft
+        public virtual SteamVR_Action_Boolean TurnLeft
         {
             get
             {
-                return SteamVR_Actions.rotation_hand_SnapTurnLeft;
+                return SteamVR_Actions.rotation_hand_TurnLeft;
             }
         }
         
-        public virtual SteamVR_Action_Boolean SnapTurnRight
+        public virtual SteamVR_Action_Boolean TurnRight
         {
             get
             {
-                return SteamVR_Actions.rotation_hand_SnapTurnRight;
+                return SteamVR_Actions.rotation_hand_TurnRight;
             }
         }
     }

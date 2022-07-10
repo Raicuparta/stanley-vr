@@ -40,5 +40,37 @@ namespace Valve.VR
                 return SteamVR_Actions.non_dominant_hand_MenuDirection;
             }
         }
+        
+        public virtual SteamVR_Action_Boolean MenuUp
+        {
+            get
+            {
+                return SteamVR_Actions.non_dominant_hand_MenuUp;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean MenuDown
+        {
+            get
+            {
+                return SteamVR_Actions.non_dominant_hand_MenuDown;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean MenuLeft
+        {
+            get
+            {
+                return SteamVR_Actions.non_dominant_hand_MenuLeft;
+            }
+        }
+        
+        public virtual SteamVR_Action_Boolean MenuRight
+        {
+            get
+            {
+                return SteamVR_Actions.non_dominant_hand_MenuRight;
+            }
+        }
     }
 }

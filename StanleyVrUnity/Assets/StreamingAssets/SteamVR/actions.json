@@ -70,12 +70,48 @@
       "requirement": "suggested"
     },
     {
+      "name": "/actions/non_dominant_hand/in/MenuUp",
+      "type": "boolean",
+      "requirement": "suggested"
+    },
+    {
+      "name": "/actions/non_dominant_hand/in/MenuDown",
+      "type": "boolean",
+      "requirement": "suggested"
+    },
+    {
+      "name": "/actions/non_dominant_hand/in/MenuLeft",
+      "type": "boolean",
+      "requirement": "suggested"
+    },
+    {
+      "name": "/actions/non_dominant_hand/in/MenuRight",
+      "type": "boolean",
+      "requirement": "suggested"
+    },
+    {
       "name": "/actions/movement_hand/in/Move",
       "type": "vector2"
     },
     {
-      "name": "/actions/movement_hand/in/Teleport",
-      "type": "boolean"
+      "name": "/actions/movement_hand/in/MoveForward",
+      "type": "boolean",
+      "requirement": "suggested"
+    },
+    {
+      "name": "/actions/movement_hand/in/MoveBackwards",
+      "type": "boolean",
+      "requirement": "suggested"
+    },
+    {
+      "name": "/actions/movement_hand/in/MoveLeft",
+      "type": "boolean",
+      "requirement": "suggested"
+    },
+    {
+      "name": "/actions/movement_hand/in/MoveRight",
+      "type": "boolean",
+      "requirement": "suggested"
     },
     {
       "name": "/actions/rotation_hand/in/Jump",
@@ -86,12 +122,14 @@
       "type": "vector2"
     },
     {
-      "name": "/actions/rotation_hand/in/SnapTurnLeft",
-      "type": "boolean"
+      "name": "/actions/rotation_hand/in/TurnLeft",
+      "type": "boolean",
+      "requirement": "suggested"
     },
     {
-      "name": "/actions/rotation_hand/in/SnapTurnRight",
-      "type": "boolean"
+      "name": "/actions/rotation_hand/in/TurnRight",
+      "type": "boolean",
+      "requirement": "suggested"
     }
   ],
   "action_sets": [
@@ -179,7 +217,8 @@
       "/actions/default/in/Pose": "Pose",
       "/actions/default/in/SkeletonLeftHand": "Skeleton (Left)",
       "/actions/default/in/SkeletonRightHand": "Skeleton (Right)",
-      "/actions/default/out/Haptic": "Haptic"
+      "/actions/default/out/Haptic": "Haptic",
+      "/actions/movement_hand/in/MoveForward": "Move Forward / Teleport"
     }
   ]
 }

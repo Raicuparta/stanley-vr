@@ -34,7 +34,7 @@ public abstract class ActionInput<TAction> : IActionInput where TAction : ISteam
     }
 
     public ISteamVR_Action_In Action => SpecificAction;
-    public Vector2 Position => GetPositionValue(HandSource);
+    public Vector2 Position => GetValue(HandSource);
     public bool ButtonValue => GetButtonValue(HandSource);
     public bool ButtonUp => GetButtonUp(HandSource);
     public bool ButtonDown => GetButtonDown(HandSource);
@@ -47,11 +47,6 @@ public abstract class ActionInput<TAction> : IActionInput where TAction : ISteam
 
             return Action != null && Action.active ? Action.activeDevice : SteamVR_Input_Sources.Any;
         }
-    }
-
-    private Vector2 GetPositionValue(SteamVR_Input_Sources source)
-    {
-        return Action.active ? GetValue(source) : Vector2.zero;
     }
 
     private bool GetButtonValue(SteamVR_Input_Sources source)
