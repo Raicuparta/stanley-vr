@@ -13,6 +13,7 @@ public class VrPlayerController: MonoBehaviour
     private static AssetBundle playerBundle;
     private Transform leftHand;
     private Transform rightHand;
+    private const string playerShadowObjectName = "PlayerShadow";
 
     public static VrPlayerController Create(Transform parent, StanleyController stanleyController)
     {
@@ -46,11 +47,15 @@ public class VrPlayerController: MonoBehaviour
         foreach (var renderer in renderers)
         {
             renderer.gameObject.layer = LayerMask.NameToLayer("Bucket");
+            if (renderer.name == playerShadowObjectName) continue;
             foreach (var material in renderer.materials)
             {
                 material.shader = shader;
             }
         }
+
+        var shadow = transform.Find(playerShadowObjectName);
+        shadow.SetParent(transform.parent.parent.parent, false);
     }
 
     public void AttachToLeftHand(Transform child)
