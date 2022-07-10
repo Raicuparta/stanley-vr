@@ -74,6 +74,7 @@ public class VrStageController: MonoBehaviour
 		
 		transform.localRotation = Quaternion.Inverse(centerEyerotation);
 		transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, 0);
+		transform.localScale = Vector3.one * 0.5f;
 	}
 	
     private void UpdateRoomScalePosition()

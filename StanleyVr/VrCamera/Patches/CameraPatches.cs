@@ -13,9 +13,6 @@ public static class CameraPatches
 	{
 		__instance.gameObject.AddComponent<StereoPortalRenderer>();
 		__instance.gameObject.AddComponent<VrCameraController>();
-
-		var camera = __instance.GetComponent<Camera>();
-		camera.transform.parent.localScale = Vector3.one * 0.5f;
 	}
 	
 	[HarmonyPostfix]

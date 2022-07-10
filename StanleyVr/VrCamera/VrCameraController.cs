@@ -27,10 +27,15 @@ public class VrCameraController: MonoBehaviour
 		
 		trackedPoseDriver = gameObject.AddComponent<TrackedPoseDriver>();
 		trackedPoseDriver.UseRelativeTransform = false;
-		transform.localScale = Vector3.one * 0.5f;
 
-		trackedPoseDriver.trackingType = GetComponent<MainCamera>() ? TrackedPoseDriver.TrackingType.RotationAndPosition : TrackedPoseDriver.TrackingType.RotationOnly;
+		var isMainCamera = GetComponent<MainCamera>() != null;
+		trackedPoseDriver.trackingType = isMainCamera ? TrackedPoseDriver.TrackingType.RotationAndPosition : TrackedPoseDriver.TrackingType.RotationOnly;
 
+		if (!isMainCamera)
+		{
+			transform.localScale = Vector3.one * 0.5f;
+		}
+		
 		camera.backgroundColor = Color.black;
 		
 		if (camera.targetTexture)
