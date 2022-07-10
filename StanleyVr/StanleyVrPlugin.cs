@@ -11,7 +11,7 @@ using StanleyVr.VrUi;
 namespace StanleyVr;
 
 [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
-public class Plugin : BaseUnityPlugin
+public class StanleyVrPlugin : BaseUnityPlugin
 {
 	// private VrUi vrUi;
 	private LIV.SDK.Unity.LIV liv;
@@ -42,26 +42,9 @@ public class Plugin : BaseUnityPlugin
 	{
 		Cursor.lockState = CursorLockMode.None;
 		
-		if (Input.GetKeyDown(KeyCode.KeypadMinus))
-		{
-			Camera.main.transform.parent.localScale *= 1.1f;
-		}
-		if (Input.GetKeyDown(KeyCode.KeypadPlus))
-		{
-			Camera.main.transform.parent.localScale *= 0.9f;
-		}
-
 		if (Input.GetKeyDown((KeyCode.Equals)))
 		{
 			Time.timeScale = Time.timeScale == 0 ? 1 : 0;
-		}
-
-		if (Input.GetKeyDown(KeyCode.F9))
-		{
-			DisableAll<MobileBlur>();
-			DisableAll<MobileBloom>();
-			DisableAll<AmplifyBloomEffect>();
-			DisableAll<PostEffectsCamera>();
 		}
 
 		if (Input.GetKeyDown(KeyCode.F1))

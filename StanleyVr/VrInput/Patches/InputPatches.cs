@@ -100,4 +100,12 @@ public static class InputPatches
 		__result = __instance.Jump;
 		return false;
 	}
+	
+	[HarmonyPrefix]
+	[HarmonyPatch(typeof(Input), nameof(Input.GetAxis))]
+	[HarmonyPatch(typeof(Input), nameof(Input.GetAxisRaw))]
+	private static bool DisableMouseAxisInput(string axisName)
+	{
+		return !axisName.StartsWith("Mouse ");
+	}
 }
