@@ -1,7 +1,10 @@
-﻿using StanleyVr.VrInput.ActionInputs;
+﻿using System;
+using System.Collections.Generic;
+using StanleyVr.VrInput.ActionInputs;
 using StanleyVr.VrPlayer;
 using UnityEngine;
 using UnityEngine.XR;
+using Valve.VR;
 
 namespace StanleyVr.VrStage;
 
@@ -29,15 +32,51 @@ public class VrStageController: MonoBehaviour
 	{
 		mainCamera = newMainCamera;
 		mainCamera.transform.SetParent(transform, true);
+		CreateVrPlayer();
 		Recenter();
 	}
 
 	private void Start()
 	{
-		vrPlayerController = VrPlayerController.Create(transform, stanleyController);
+		
 		previousMotionFrozen = stanleyController.motionFrozen;
 		transform.localScale = Vector3.one * 0.5f;
 		LivManager.Create(this);
+	}
+
+	private void OnEnable()
+	{
+		InputTracking.nodeAdded += HandleXrNodeAdded;
+	}
+
+	private void HandleXrNodeAdded(XRNodeState xrNode)
+	{
+		Debug.Log($"Added {xrNode}");
+		CreateVrPlayer();
+	}
+
+	private static bool AreBothControllersActiove()
+	{
+		var nodes = new List<XRNodeState>();
+		InputTracking.GetNodeStates(nodes);
+
+		var rightActive = false;
+		var leftActive = false;
+		
+		foreach (var node in nodes)
+		{
+			if (node.nodeType == XRNode.RightHand) rightActive = true;
+			if (node.nodeType == XRNode.LeftHand) leftActive = true;
+		}
+
+		return rightActive && leftActive;
+	}
+
+	private void CreateVrPlayer()
+	{
+		if (vrPlayerController != null || !AreBothControllersActiove()) return;
+		Debug.Log("CreateVrPlayer");
+		vrPlayerController = VrPlayerController.Create(transform, stanleyController);
 	}
 
 	private void Update()

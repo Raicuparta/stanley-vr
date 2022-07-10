@@ -4,41 +4,72 @@ namespace StanleyVr.VrInput.ActionInputs;
 
 public static class ActionInputDefinitions
 {
-    public static readonly BooleanActionInput Menu = new(non_dominant_hand.Menu);
+    public static BooleanActionInput Menu {get; private set;}
 
-    public static readonly BooleanActionInput Interact = new(dominant_hand.Interact);
+    public static BooleanActionInput Interact {get; private set;}
 
-    public static readonly BooleanActionInput MenuTabLeft = new(dominant_hand.MenuTabLeft);
+    public static BooleanActionInput MenuTabLeft {get; private set;}
     
-    public static readonly BooleanActionInput MenuTabRight = new(dominant_hand.MenuTabRight);
+    public static BooleanActionInput MenuTabRight {get; private set;}
     
-    public static readonly Vector2ActionInput MenuDirection = new(non_dominant_hand.MenuDirection,
-        non_dominant_hand.MenuLeft,
-        non_dominant_hand.MenuRight,
-        non_dominant_hand.MenuUp,
-        non_dominant_hand.MenuDown);
+    public static Vector2ActionInput MenuDirection {get; private set;}
 
-    public static readonly BooleanActionInput MenuInteract= new(dominant_hand.MenuInteract);
+    public static BooleanActionInput MenuInteract {get; private set;}
 
-    public static readonly Vector2ActionInput Move = new(movement_hand.Move,
-        movement_hand.MoveLeft,
-        movement_hand.MoveRight,
-        movement_hand.MoveForward,
-        movement_hand.MoveBackwards);
+    public static Vector2ActionInput Move {get; private set;}
 
-    public static readonly Vector2ActionInput Rotate = new(rotation_hand.Rotate,
-        rotation_hand.TurnLeft,
-        rotation_hand.TurnRight);
+    public static Vector2ActionInput Rotate {get; private set;}
 
-    public static readonly BooleanActionInput Teleport = new(movement_hand.MoveForward);
+    public static BooleanActionInput Teleport {get; private set;}
 
-    public static readonly BooleanActionInput SnapTurnLeft = new(rotation_hand.TurnLeft);
+    public static BooleanActionInput SnapTurnLeft {get; private set;}
 
-    public static readonly BooleanActionInput SnapTurnRight = new(rotation_hand.TurnRight);
+    public static BooleanActionInput SnapTurnRight {get; private set;}
 
-    public static readonly BooleanActionInput Jump = new(rotation_hand.Jump);
+    public static BooleanActionInput Jump {get; private set;}
     
-    public static readonly BooleanActionInput Crouch = new(non_dominant_hand.Crouch);
+    public static BooleanActionInput Crouch {get; private set;}
     
-    public static readonly BooleanActionInput Recenter = new(_default.Recenter);
+    public static BooleanActionInput Recenter {get; private set;}
+
+    public static void Initialize()
+    {
+        Menu = new(non_dominant_hand.Menu);
+
+        Interact = new(dominant_hand.Interact);
+
+        MenuTabLeft = new(dominant_hand.MenuTabLeft);
+    
+        MenuTabRight = new(dominant_hand.MenuTabRight);
+    
+        MenuDirection = new(non_dominant_hand.MenuDirection,
+            non_dominant_hand.MenuLeft,
+            non_dominant_hand.MenuRight,
+            non_dominant_hand.MenuUp,
+            non_dominant_hand.MenuDown);
+
+        MenuInteract= new(dominant_hand.MenuInteract);
+
+        Move = new(movement_hand.Move,
+            movement_hand.MoveLeft,
+            movement_hand.MoveRight,
+            movement_hand.MoveForward,
+            movement_hand.MoveBackwards);
+
+        Rotate = new(rotation_hand.Rotate,
+            rotation_hand.TurnLeft,
+            rotation_hand.TurnRight);
+
+        Teleport = new(movement_hand.MoveForward);
+
+        SnapTurnLeft = new(rotation_hand.TurnLeft);
+
+        SnapTurnRight = new(rotation_hand.TurnRight);
+
+        Jump = new(rotation_hand.Jump);
+    
+        Crouch = new(non_dominant_hand.Crouch);
+    
+        Recenter = new(_default.Recenter);
+    }
 }

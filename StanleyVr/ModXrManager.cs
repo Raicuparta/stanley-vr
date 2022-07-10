@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BepInEx;
+using StanleyVr.VrInput.ActionInputs;
 using Unity.XR.OpenVR;
 using UnityEngine;
 using UnityEngine.XR;
@@ -16,6 +17,7 @@ public class ModXrManager : MonoBehaviour
 		SteamVR_Actions.PreInitialize();
 		SetUpXr();
 		SteamVR.Initialize();
+		ActionInputDefinitions.Initialize();
 		SteamVR.settings.pauseGameWhenDashboardVisible = false;
 
 		foreach (var actionSet in SteamVR_Input.actionSets)
