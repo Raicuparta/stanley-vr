@@ -34,6 +34,6 @@ public static class VideoPatches
 	[HarmonyPatch(typeof(GameMaster.MoviePlaybackContext), nameof(GameMaster.MoviePlaybackContext.StopMovie))]
 	private static void ResetUiCameraClearFlags()
 	{
-		VrCameraController.GetBucketCamera().clearFlags = CameraClearFlags.Nothing;
+		VrCameraController.GetBucketCamera().clearFlags = CameraClearFlags.Depth;
 	}
 }
