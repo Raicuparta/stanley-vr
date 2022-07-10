@@ -14,8 +14,8 @@ public class VrCameraController: MonoBehaviour
 	private void Start()
 	{
 		camera = GetComponent<Camera>();
-		// TODO move bucket camera logic elsewhere.
 
+		// TODO move bucket camera logic elsewhere.
 		if (name == bucketCameraName)
 		{
 			bucketCamera = camera;
