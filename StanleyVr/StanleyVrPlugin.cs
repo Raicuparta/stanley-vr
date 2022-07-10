@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Reflection;
-using AmplifyBloom;
+﻿using System.Reflection;
 using BepInEx;
 using HarmonyLib;
 using LIV.SDK.Unity;
@@ -13,20 +11,14 @@ namespace StanleyVr;
 [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
 public class StanleyVrPlugin : BaseUnityPlugin
 {
-	// private VrUi vrUi;
-	private LIV.SDK.Unity.LIV liv;
-
 	private void Awake()
 	{
 		Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly());
 		
 		VrAssetManager.Initialize();
-		// LoadXRModule();
 
 		Debug.Log("####### Stanley Parable Ultra Deluxe version " + Application.version);
 		Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
-
-		// InputTracking.disablePositionalTracking = true;
 
 		var shaderBundle = VrAssetManager.LivShadersBundle;
 		Debug.Log($"###### using bundl for LIV {shaderBundle}");
@@ -51,47 +43,6 @@ public class StanleyVrPlugin : BaseUnityPlugin
 		{
 			FindObjectOfType<MainMenu>().ExitMenu();
 			FindObjectOfType<MainMenu>().BeginTheGame();
-		}
-
-		if (Input.GetKeyDown(KeyCode.F4))
-		{
-			if (liv)
-			{
-				Debug.Log("#### LIV already exists, destroying");
-				Destroy(liv.gameObject);
-			}
-			Debug.Log($"Attempting to create LIV with camera {Camera.main.name}");
-
-			var livParent = new GameObject("LIVParent");
-			livParent.transform.SetParent(Camera.main.transform.parent, false);
-			livParent.transform.localPosition = Vector3.down;
-
-			var livObject = new GameObject("LIV");
-			livObject.gameObject.SetActive(false);
-			livObject.transform.SetParent(livParent.transform, false);
-
-			var cameraObject = new GameObject("LIVCamera");
-			cameraObject.SetActive(false);
-			cameraObject.AddComponent<Camera>();
-
-			liv = livObject.AddComponent<LIV.SDK.Unity.LIV>();
-			liv.stage = livParent.transform;
-			liv.HMDCamera = Camera.main;
-			liv.fixPostEffectsAlpha = true;
-			liv.spectatorLayerMask = Camera.main.cullingMask;
-			liv.excludeBehaviours = liv.excludeBehaviours.Concat(new[]
-			{
-				"MainCamera",
-				"AudioListener",
-				"FlareLayer",
-				"CanvasRenderer",
-				"EnableDepthOnHighQuality",
-				"TrackedPoseDriver"
-			}).ToArray();
-
-			livObject.SetActive(true);
-
-			Debug.Log("Successfully created LIV");
 		}
 	}
 

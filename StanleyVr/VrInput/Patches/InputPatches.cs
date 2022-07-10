@@ -1,9 +1,7 @@
-﻿using System.IO;
-using HarmonyLib;
+﻿using HarmonyLib;
 using InControl;
 using StanleyVr.VrInput.ActionInputs;
 using UnityEngine;
-using Valve.VR;
 using Object = UnityEngine.Object;
 
 namespace StanleyVr.VrInput.Patches;

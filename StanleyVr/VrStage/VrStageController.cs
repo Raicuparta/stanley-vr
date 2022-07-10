@@ -37,6 +37,7 @@ public class VrStageController: MonoBehaviour
 		vrPlayerController = VrPlayerController.Create(transform, stanleyController);
 		previousMotionFrozen = stanleyController.motionFrozen;
 		transform.localScale = Vector3.one * 0.5f;
+		LivManager.Create(this);
 	}
 
 	private void Update()
