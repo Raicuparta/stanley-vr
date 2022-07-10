@@ -18,11 +18,9 @@ public class StereoPortalRenderer : MonoBehaviour
 		
 		foreach (var portal in MainCamera.Portals)
 		{
-			if (!portal.disabled)
-			{
-				portal.playerCam = camera;
-				portal.Render();
-			}
+			if (portal.disabled) continue;
+			portal.playerCam = camera;
+			portal.Render();
 		}
 
 		foreach (var portal in MainCamera.Portals)
@@ -37,7 +35,7 @@ public class StereoPortalRenderer : MonoBehaviour
 		camera.transform.rotation = cameraRotation;
 	}
 
-	private void UpdateCameraTransform(Camera camera)
+	private static void UpdateCameraTransform(Camera camera)
 	{
 		if (!camera.stereoEnabled)
 		{
