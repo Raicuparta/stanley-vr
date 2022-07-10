@@ -9,6 +9,7 @@ public class VrUiManager: MonoBehaviour
     
     public static void Create(GameMaster gameMaster)
     {
+        if (!gameMaster) return;
         if (Instance) Destroy(Instance.gameObject);
         Instance = new GameObject("VrUiManager").AddComponent<VrUiManager>();
         Instance.transform.SetParent(gameMaster.transform, false);

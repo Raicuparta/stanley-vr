@@ -13,6 +13,8 @@ public class VrCameraController: MonoBehaviour
 
 	private void Start()
 	{
+		camera = GetComponent<Camera>();
+
 		// TODO move bucket camera logic elsewhere.
 		if (name == bucketCameraName)
 		{
@@ -29,7 +31,6 @@ public class VrCameraController: MonoBehaviour
 
 		trackedPoseDriver.trackingType = GetComponent<MainCamera>() ? TrackedPoseDriver.TrackingType.RotationAndPosition : TrackedPoseDriver.TrackingType.RotationOnly;
 
-		camera = GetComponent<Camera>();
 		camera.backgroundColor = Color.black;
 		
 		if (camera.targetTexture)
