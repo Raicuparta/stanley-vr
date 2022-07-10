@@ -7,7 +7,6 @@ public class StereoPortalRenderer : MonoBehaviour
 {
 	// TODO: should also try moving the portal depending on which eye is being rendered?
 	// To prevent cases where one eye goes in first.
-	// TODO: also detect when head is actually going through the portal instead of just player body.
 	private void OnPreRender()
 	{
 		var camera = Camera.current;
