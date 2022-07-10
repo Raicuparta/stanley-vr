@@ -2,6 +2,11 @@
 Usually that would be something like "C:\Program Files (x86)\Steam\steamapps\common\The Stanley Parable Ultra Deluxe".
 After extracting, the file "winhttp.dll" should be on the same folder as "The Stanley Parable Ultra Deluxe.exe".
 
+Disable the Steam Game Theatre to prevent it from starting up when you're trying to play StanleyVR:
+    - Right click Stanley Parable Ultra Deluxe on Steam.
+    - Select Properties.
+    - Under "General", disable "Use Desktop Game Theatre".
+
 I have included input bindings for Oculus, Index, Vive, and WMR.
 If they aren't comfortable for you, please let me know and send me suggestions of better bindings.
 
