@@ -58,7 +58,7 @@ public class VrStageController: MonoBehaviour
 		}
 	}
 
-	private void Recenter()
+	public void Recenter()
 	{
 		if (!mainCamera) return;
 
