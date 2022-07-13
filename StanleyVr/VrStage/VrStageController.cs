@@ -144,6 +144,7 @@ public class VrStageController: MonoBehaviour
         stanleyController.character.Move(groundedPositionDelta);
 
         var stanleyOffset = stanleyController.transform.position - prevStanleyPosition;
+        stanleyOffset.y = 0;
 
 		// trackedPoseDriver.enabled = false;
 
