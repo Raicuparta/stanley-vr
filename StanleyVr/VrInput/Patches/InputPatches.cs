@@ -106,4 +106,15 @@ public static class InputPatches
 	{
 		return !axisName.StartsWith("Mouse ");
 	}
+
+	[HarmonyPrefix]
+	[HarmonyPatch(typeof(GameMaster), nameof(GameMaster.UsingSimplifiedControls), MethodType.Getter)]
+	private static bool ForceSimplifiedControls(ref bool __result)
+	{
+		// By default, the game will ask for a bunch of random inputs at some points.
+		// If we force the "simplified controls" accessibility option, the game will just ask for "any button".
+		// Makes it easier to deal with VR input bindings.
+		__result = true;
+		return false;
+	}
 }
