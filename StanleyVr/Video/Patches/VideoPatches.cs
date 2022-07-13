@@ -25,9 +25,13 @@ public static class VideoPatches
 		// We're using the Bucket camera as a UI camera.
 		__instance.gameObject.layer = LayerMask.NameToLayer("Bucket"); // TODO organize layers.
 
-		// The default video player camera gets enabled via script so I'm forcing it to get disabled.
-		var forceDisable = __instance.gameObject.AddComponent<ForceDisableBehaviour>();
-		forceDisable.behaviour = __instance.GetComponent<Camera>();
+		var camera = __instance.GetComponent<Camera>();
+		if (camera)
+		{
+			// The default video player camera gets enabled via script so I'm forcing it to get disabled.
+			var forceDisable = __instance.gameObject.AddComponent<ForceDisableBehaviour>();
+			forceDisable.behaviour = camera;
+		}
 	}
 	
 	[HarmonyPostfix]
