@@ -18,7 +18,12 @@ public static class StagePatches
     {
         if (!VrStageController.Instance) return;
 
+        // Camera gets enabled and disabled after loading a scene.
+        // We renceter it immediately after.
+        // We also recenter it again after a short delay, in case the first recenter wasn't good.
+        // Kind of a shitty solution but I don't know what else to do here.
         VrStageController.Instance.Recenter();
+        VrStageController.Instance.RecenterDelayed();
     }
     
     [HarmonyPostfix]
