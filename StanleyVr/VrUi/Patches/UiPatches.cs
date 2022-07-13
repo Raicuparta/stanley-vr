@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using HarmonyLib;
+using StanleyVr.VrCamera;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -64,5 +65,12 @@ public static class UiPatches
 	private static void CreateUiManager(GameMaster __instance)
 	{
 		VrUiManager.Create(__instance);
+	}
+
+	[HarmonyPostfix]
+	[HarmonyPatch(typeof(FigleyOverlayController), nameof(FigleyOverlayController.Awake))]
+	private static void DrawFigleyOnTopOfUi(FigleyOverlayController __instance)
+	{
+		__instance.figleyCamera.depth = VrUiManager.UiCameraDepth + 0.1f;
 	}
 }

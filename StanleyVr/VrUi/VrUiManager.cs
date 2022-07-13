@@ -6,6 +6,7 @@ public class VrUiManager: MonoBehaviour
 {
     public Camera UiCamera { get; private set; }
     public static VrUiManager Instance { get; private set; }
+    public const float UiCameraDepth = 4;
     
     public static void Create(GameMaster gameMaster)
     {
@@ -23,6 +24,6 @@ public class VrUiManager: MonoBehaviour
         
         // High depth to make this camera draw on top of the others.
         // Making depth higher than 5 flips the VR camera?? What.
-        UiCamera.depth = 4;
+        UiCamera.depth = UiCameraDepth;
     }
 }
