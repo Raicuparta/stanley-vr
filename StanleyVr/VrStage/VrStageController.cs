@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using StanleyVr.VrInput.ActionInputs;
 using StanleyVr.VrPlayer;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.XR;
 using Valve.VR;
 
@@ -36,30 +37,52 @@ public class VrStageController: MonoBehaviour
 		Recenter();
 	}
 
+	private void Awake()
+	{
+		InputTracking.nodeAdded += HandleXrNodeAdded;
+		SceneManager.activeSceneChanged += OnActiveSceneChanged;
+	}
+
 	private void Start()
 	{
-		
 		previousMotionFrozen = stanleyController.motionFrozen;
-		transform.localScale = Vector3.one * 0.5f;
+		SetUpStageTransform(true);
 		LivManager.Create(this);
 	}
 
-	private void OnEnable()
-	{
-		InputTracking.nodeAdded += HandleXrNodeAdded;
-	}
-	
-	private void OnDisable()
+	private void OnDestroy()
 	{
 		InputTracking.nodeAdded -= HandleXrNodeAdded;
+		SceneManager.activeSceneChanged -= OnActiveSceneChanged;
 	}
 
 	private void HandleXrNodeAdded(XRNodeState xrNode)
 	{
-		Debug.Log($"Added {xrNode}");
 		CreateVrPlayer();
 	}
+	
+	private void SetUpStageTransform(bool shouldScaleCamera)
+	{
+		if (shouldScaleCamera)
+		{
+			transform.localScale = Vector3.one * 0.5f;
+		}
+		else
+		{
+			transform.localScale = Vector3.one;
+		}
+	}
 
+	private void OnActiveSceneChanged(Scene oldScene, Scene newScene)
+	{
+		SetUpStageTransform(ShouldScaleCameraInScene(newScene));
+	}
+
+	private static bool ShouldScaleCameraInScene(Scene scene)
+	{
+		return scene.name != "Firewatch_UD_MASTER";
+	}
+	
 	private static bool AreBothControllersActiove()
 	{
 		var nodes = new List<XRNodeState>();
