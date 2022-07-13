@@ -136,6 +136,7 @@ public static class PlayerPatches
 	{
 		__instance.controllerSensitivityY = 0;
 		__instance.mouseSensitivityY = 0;
+		__instance.viewPitch = 0;
 	}
 
 	[HarmonyPostfix]
