@@ -10,6 +10,7 @@ public class VrCameraController: MonoBehaviour
 	private const string bucketCameraName = "Bucket Camera";
 	private Camera camera;
 	private TrackedPoseDriver trackedPoseDriver;
+	private bool isMainCamera;
 
 	private void Start()
 	{
@@ -28,7 +29,7 @@ public class VrCameraController: MonoBehaviour
 		trackedPoseDriver = gameObject.AddComponent<TrackedPoseDriver>();
 		trackedPoseDriver.UseRelativeTransform = false;
 
-		var isMainCamera = GetComponent<MainCamera>() != null;
+		isMainCamera = GetComponent<MainCamera>() != null;
 		trackedPoseDriver.trackingType = isMainCamera ? TrackedPoseDriver.TrackingType.RotationAndPosition : TrackedPoseDriver.TrackingType.RotationOnly;
 
 		if (!isMainCamera)
@@ -61,5 +62,20 @@ public class VrCameraController: MonoBehaviour
 		}
 
 		return Camera.main ? Camera.main : Camera.current;
+	}
+
+	private void Update()
+	{
+		if (isMainCamera && bucketCamera)
+		{
+			if (camera.enabled)
+			{
+				bucketCamera.clearFlags = CameraClearFlags.Depth;
+			}
+			else
+			{
+				bucketCamera.clearFlags = CameraClearFlags.Color;
+			}
+		}
 	}
 }
