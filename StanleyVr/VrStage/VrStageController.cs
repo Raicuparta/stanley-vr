@@ -48,6 +48,11 @@ public class VrStageController: MonoBehaviour
 	{
 		InputTracking.nodeAdded += HandleXrNodeAdded;
 	}
+	
+	private void OnDisable()
+	{
+		InputTracking.nodeAdded -= HandleXrNodeAdded;
+	}
 
 	private void HandleXrNodeAdded(XRNodeState xrNode)
 	{
