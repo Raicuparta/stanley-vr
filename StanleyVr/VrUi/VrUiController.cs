@@ -17,11 +17,10 @@ public class VrUiController : MonoBehaviour
 	private void Start()
 	{
 		canvas.planeDistance = 1f;
-		canvas.scaleFactor = 1.3f;
 		gameObject.layer = LayerMask.NameToLayer("UI");
 		
-		SetUpScale();
 		FixCanvasScaler();
+		SetUpScale();
 	}
 
 	private void FixCanvasScaler()
@@ -46,6 +45,6 @@ public class VrUiController : MonoBehaviour
 		var vrUiParent = new GameObject(vrUiScalerName).transform;
 		vrUiParent.SetParent(transform.parent, false);
 		transform.SetParent(vrUiParent, true);
-		vrUiParent.localScale = Vector3.one * 0.5f;
+		vrUiParent.localScale = Vector3.one * 0.4f;
 	}
 }
