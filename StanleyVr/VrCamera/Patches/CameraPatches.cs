@@ -36,10 +36,18 @@ public static class CameraPatches
 		// TODO: I think this only gets skipped on the main camera because MainCamera.Start happens to run first.
 		// Should make this more reliable.
 
-		if (__instance.GetComponent<VrCameraController>()) return;
+		if (__instance.GetComponent<VrCameraController>() || __instance.GetComponent<ViewControl>()) return;
 
 		__instance.gameObject.AddComponent<VrCameraController>();
 	}
+
+	[HarmonyPostfix]
+	[HarmonyPatch(typeof(ViewControl), nameof(ViewControl.Awake))]
+	private static void SetUpCutsceneCameras(ViewControl __instance)
+	{
+		__instance.transform.localScale = Vector3.one * 0.5f;
+	}
+	
 	
 	[HarmonyPrefix]
 	[HarmonyPatch(typeof(Camera), nameof(Camera.fieldOfView), MethodType.Setter)]
