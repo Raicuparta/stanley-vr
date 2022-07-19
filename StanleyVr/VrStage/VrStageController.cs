@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using StanleyVr.VrInput.ActionInputs;
 using StanleyVr.VrPlayer;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR;
-using Valve.VR;
 
 namespace StanleyVr.VrStage;
 
@@ -171,24 +169,10 @@ public class VrStageController: MonoBehaviour
 
         var groundNormal = Vector3.up; // TODO check ground normal.
         var groundedPositionDelta = Vector3.ProjectOnPlane(worldPositionDelta, groundNormal);
-
-        var prevStanleyPosition = stanleyController.transform.position;
         
-        stanleyController.character.Move(groundedPositionDelta);
+        stanleyController.transform.position += groundedPositionDelta;
 
-        var stanleyOffset = stanleyController.transform.position - prevStanleyPosition;
-        stanleyOffset.y = 0;
-
-		// trackedPoseDriver.enabled = false;
-
-		transform.position -= stanleyOffset;
-		// transform.position -= stanleyOffset;
-
-		// When a Tracked Pose Driver has UseRelativePosition = true,
-		// that relative position is only taken into account during Awake.
-		// trackedPoseDriver.Invoke("Awake", 0);
-
-		// trackedPoseDriver.enabled = true;
+        transform.position -= groundedPositionDelta;
     }
 
     public void AttachToLeftHand(Transform child)
