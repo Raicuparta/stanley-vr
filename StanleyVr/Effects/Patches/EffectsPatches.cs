@@ -1,5 +1,6 @@
 ﻿using AmplifyBloom;
 using HarmonyLib;
+using StanleyVr.VrUi;
 using UnityEngine;
 
 namespace StanleyVr.Effects.Patches;
@@ -21,5 +22,15 @@ public static class EffectsPatches
 	{
 		__instance.enabled = false;
 		return false;
+	}
+	
+	[HarmonyPostfix]
+	[HarmonyPatch(typeof(Eyelids), nameof(Eyelids.Start))]
+	private static void RenderEyelidsToUiCamera(Eyelids __instance)
+	{
+		var canvas = __instance.GetComponent<Canvas>();
+		canvas.worldCamera = VrUiManager.Instance.UiCamera;
+		canvas.renderMode = RenderMode.ScreenSpaceCamera;
+		canvas.planeDistance = 1f;
 	}
 }
