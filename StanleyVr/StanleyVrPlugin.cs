@@ -8,7 +8,7 @@ using StanleyVr.VrUi;
 
 namespace StanleyVr;
 
-[BepInPlugin("StanleyVr", "StanleyVr", "0.2.0")]
+[BepInPlugin("StanleyVr", "StanleyVr", "0.3.0")]
 public class StanleyVrPlugin : BaseUnityPlugin
 {
 	private void Awake()
