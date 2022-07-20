@@ -24,7 +24,6 @@ public class VrPlayerController: MonoBehaviour
 		var instance = Instantiate(playerPrefab, parent, false).AddComponent<VrPlayerController>();
         
         var laserObject = instance.GetComponentInChildren<StanleyVrLaserPointer>();
-        laserObject.RayCollisionMask = LayerMask.GetMask("Default", "UI");
         laserObject.MaxDistance = stanleyController.armReach;
         
         Laser = laserObject.transform;
