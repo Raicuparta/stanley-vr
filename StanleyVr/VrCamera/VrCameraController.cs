@@ -66,16 +66,17 @@ public class VrCameraController: MonoBehaviour
 
 	private void Update()
 	{
-		if (isMainCamera && bucketCamera)
+		if (!isMainCamera || !bucketCamera) return;
+
+		bucketCamera.clearFlags = camera.enabled ? CameraClearFlags.Depth : CameraClearFlags.Color;
+
+		if (StanleyController.Instance && StanleyController.Instance.motionFrozen)
 		{
-			if (camera.enabled)
-			{
-				bucketCamera.clearFlags = CameraClearFlags.Depth;
-			}
-			else
-			{
-				bucketCamera.clearFlags = CameraClearFlags.Color;
-			}
+			trackedPoseDriver.trackingType = TrackedPoseDriver.TrackingType.RotationOnly;
+		}
+		else
+		{
+			trackedPoseDriver.trackingType = TrackedPoseDriver.TrackingType.RotationAndPosition;
 		}
 	}
 }
