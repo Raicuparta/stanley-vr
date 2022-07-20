@@ -18,7 +18,6 @@ public class StanleyVrPlugin : BaseUnityPlugin
 		VrAssetManager.Initialize();
 
 		Debug.Log("####### Stanley Parable Ultra Deluxe version " + Application.version);
-		Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
 
 		var shaderBundle = VrAssetManager.LivShadersBundle;
 		Debug.Log($"###### using bundl for LIV {shaderBundle}");
