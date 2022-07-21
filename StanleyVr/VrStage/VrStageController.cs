@@ -45,7 +45,6 @@ public class VrStageController: MonoBehaviour
 	{
 		previousMotionFrozen = stanleyController.motionFrozen;
 		SetUpStageTransform(true);
-		LivManager.Create(this);
 	}
 
 	private void OnDestroy()

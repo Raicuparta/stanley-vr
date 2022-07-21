@@ -7,11 +7,13 @@ namespace StanleyVr;
 public class LivManager: MonoBehaviour
 {
 	private LIV.SDK.Unity.LIV liv;
+	private MainCamera mainCamera;
 	
-    public static void Create(VrStageController stage)
+    public static void Create(MainCamera mainCamera)
     {
 	    var instance = new GameObject("LivManager").AddComponent<LivManager>();
-		instance.transform.SetParent(stage.transform, false);
+		instance.transform.SetParent(VrStageController.Instance.transform, false);
+		instance.mainCamera = mainCamera;
     }
 
     private void Update()
@@ -29,19 +31,15 @@ public class LivManager: MonoBehaviour
 			Debug.Log("#### LIV already exists, destroying");
 			Destroy(liv);
 		}
-		Debug.Log($"Attempting to create LIV with camera {Camera.main.name}");
 
-		var cameraObject = new GameObject("LIVCamera");
-		cameraObject.SetActive(false);
-		cameraObject.AddComponent<Camera>();
-
-		gameObject.SetActive(false);
+	    gameObject.SetActive(false);
 		
 		liv = gameObject.AddComponent<LIV.SDK.Unity.LIV>();
+		var camera = mainCamera.GetComponent<Camera>();
 		liv.stage = transform;
-		liv.HMDCamera = Camera.main;
+		liv.HMDCamera = camera;
 		liv.fixPostEffectsAlpha = true;
-		liv.spectatorLayerMask = -1;
+		liv.spectatorLayerMask = camera.cullingMask | 1 << LayerMask.NameToLayer("Bucket");
 		liv.excludeBehaviours = liv.excludeBehaviours.Concat(new[]
 		{
 			"MainCamera",
@@ -49,7 +47,8 @@ public class LivManager: MonoBehaviour
 			"FlareLayer",
 			"CanvasRenderer",
 			"EnableDepthOnHighQuality",
-			"TrackedPoseDriver"
+			"TrackedPoseDriver",
+			"VrCameraController"
 		}).ToArray();
 
 		gameObject.SetActive(true);

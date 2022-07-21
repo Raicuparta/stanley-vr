@@ -13,6 +13,7 @@ public static class CameraPatches
 	{
 		__instance.gameObject.AddComponent<StereoPortalRenderer>();
 		__instance.gameObject.AddComponent<VrCameraController>();
+		LivManager.Create(__instance);
 	}
 	
 	[HarmonyPostfix]
