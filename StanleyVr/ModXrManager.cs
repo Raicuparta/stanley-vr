@@ -58,13 +58,13 @@ public class ModXrManager : MonoBehaviour
         var openVrLoader = ScriptableObject.CreateInstance<OpenVRLoader>();
 
         generalSettings.Manager = managerSetings;
-        managerSetings.SetValue("m_RegisteredLoaders", new HashSet<XRLoader>() {openVrLoader});
+        managerSetings.SetValue("m_RegisteredLoaders", new HashSet<XRLoader> {openVrLoader});
         managerSetings.TrySetLoaders(new List<XRLoader> {openVrLoader});
 
         managerSetings.InitializeLoaderSync();
 		if (managerSetings.activeLoader == null) throw new Exception("Cannot initialize OpenVR Loader");
 
-		var openVrSettings = OpenVRSettings.GetSettings(true);
+		var openVrSettings = OpenVRSettings.GetSettings();
 		if (openVrSettings == null) throw new Exception("OpenVRSettings instance is null");
 		openVrSettings.EditorAppKey = "steam.app.753640";
 		openVrSettings.InitializationType = OpenVRSettings.InitializationTypes.Scene;
