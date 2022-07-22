@@ -51,16 +51,23 @@ public class ModXrManager : MonoBehaviour
 	        steamAppId: 1703340);
     }
 
-    private void SetUpXr()
+    private static void SetUpXr()
     {
-		var generalSettings = ScriptableObject.CreateInstance<XRGeneralSettings>();
-		var managerSetings = ScriptableObject.CreateInstance<XRManagerSettings>();
-		var openVrLoader = ScriptableObject.CreateInstance<OpenVRLoader>();
+	    var generalSettings = ScriptableObject.CreateInstance<XRGeneralSettings>();
+        var managerSetings = ScriptableObject.CreateInstance<XRManagerSettings>();
+        var openVrLoader = ScriptableObject.CreateInstance<OpenVRLoader>();
 
-		generalSettings.Manager = managerSetings;
-		managerSetings.SetValue("m_RegisteredLoaders", new HashSet<XRLoader>() {openVrLoader});
-		managerSetings.TrySetLoaders(new List<XRLoader> {openVrLoader});
+        generalSettings.Manager = managerSetings;
+        managerSetings.SetValue("m_RegisteredLoaders", new HashSet<XRLoader>() {openVrLoader});
+        managerSetings.TrySetLoaders(new List<XRLoader> {openVrLoader});
 
-		managerSetings.InitializeLoaderSync();
+        managerSetings.InitializeLoaderSync();
+		if (managerSetings.activeLoader == null) throw new Exception("Cannot initialize OpenVR Loader");
+
+		var openVrSettings = OpenVRSettings.GetSettings(true);
+		if (openVrSettings == null) throw new Exception("OpenVRSettings instance is null");
+		openVrSettings.EditorAppKey = "steam.app.753640";
+		openVrSettings.InitializationType = OpenVRSettings.InitializationTypes.Scene;
+		openVrSettings.SetMirrorViewMode(OpenVRSettings.MirrorViewModes.Right);
     }
 }
