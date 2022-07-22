@@ -53,25 +53,14 @@ public class ModXrManager : MonoBehaviour
 
     private void SetUpXr()
     {
-	    var xrManagerBundle = VrAssetManager.LoadBundle("xrmanager");
+		var generalSettings = ScriptableObject.CreateInstance<XRGeneralSettings>();
+		var managerSetings = ScriptableObject.CreateInstance<XRManagerSettings>();
+		var openVrLoader = ScriptableObject.CreateInstance<OpenVRLoader>();
 
-        foreach (var xrManager in xrManagerBundle.LoadAllAssets())
-            Debug.Log($"######## Loaded xrManager: {xrManager.name}");
+		generalSettings.Manager = managerSetings;
+		managerSetings.SetValue("m_RegisteredLoaders", new HashSet<XRLoader>() {openVrLoader});
+		managerSetings.TrySetLoaders(new List<XRLoader> {openVrLoader});
 
-		var instance = XRGeneralSettings.Instance;
-		if (instance == null) throw new Exception("XRGeneralSettings instance is null");
-
-		var xrManagerSettings = instance.Manager;
-		if (xrManagerSettings == null) throw new Exception("XRManagerSettings instance is null");
-
-		xrManagerSettings.InitializeLoaderSync();
-		if (xrManagerSettings.activeLoader == null) throw new Exception("Cannot initialize OpenVR Loader");
-
-		var openVrSettings = OpenVRSettings.GetSettings(false);
-		openVrSettings.EditorAppKey = "steam.app.753640";
-		openVrSettings.InitializationType = OpenVRSettings.InitializationTypes.Scene;
-		if (openVrSettings == null) throw new Exception("OpenVRSettings instance is null");
-
-		openVrSettings.SetMirrorViewMode(OpenVRSettings.MirrorViewModes.Right);
+		managerSetings.InitializeLoaderSync();
     }
 }
