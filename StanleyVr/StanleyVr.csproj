@@ -3,7 +3,7 @@
         <TargetFramework>net48</TargetFramework>
         <AssemblyName>StanleyVr</AssemblyName>
         <Description>VR mod for The Stanley Parable Ultra Deluxe</Description>
-        <Version>1.0.0</Version>
+        <Version>1.1.0</Version>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <LangVersion>10</LangVersion>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
