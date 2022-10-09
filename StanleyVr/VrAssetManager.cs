@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using BepInEx;
 using UnityEngine;
 
 namespace StanleyVr;
@@ -8,7 +9,7 @@ public static class VrAssetManager
 {
 	public static AssetBundle LivShadersBundle { get; private set; }
 
-	private const string assetsDir = "/BepInEx/plugins/StanleyVr/Assets/";
+	private const string assetsDir = "StanleyVr/Assets/";
 
 	public static void Initialize()
 	{
@@ -18,7 +19,7 @@ public static class VrAssetManager
 	public static AssetBundle LoadBundle(string assetName)
 	{
 		Debug.Log($"loading bundle {assetName}...");
-		var bundle = AssetBundle.LoadFromFile($"{Directory.GetCurrentDirectory()}{assetsDir}{assetName}");
+		var bundle = AssetBundle.LoadFromFile(Path.Combine(Paths.PluginPath, Path.Combine(assetsDir, assetName)));
 
 		if (bundle == null)
 		{

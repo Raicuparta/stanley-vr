@@ -10,9 +10,7 @@
         <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
         <UnityProjectPath>$(SolutionDir)\StanleyVrUnity</UnityProjectPath>
         <AssetBundlesPath>$(UnityProjectPath)\AssetBundles\StandaloneWindows</AssetBundlesPath>
-        <GameDir>C:\Program Files (x86)\Steam\steamapps\common\The Stanley Parable Ultra Deluxe</GameDir>
-        <PluginPath>BepInEx\plugins\StanleyVr</PluginPath>
-        <OutputPath>ReleaseFiles\$(PluginPath)</OutputPath>
+        <OutputPath>$(PublishDir)\BepInEx\plugins\StanleyVr</OutputPath>
     </PropertyGroup>
 
     <ItemGroup>
@@ -30,20 +28,15 @@
             <LinkBase>Assets</LinkBase>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
+        <Content Include="ModFiles\**" />
     </ItemGroup>
-    
-    <Target Name="Copy bindings files" AfterTargets="PostBuildEvent">
+
+    <Target Name="Copy mod files" AfterTargets="PostBuildEvent">
         <ItemGroup>
-            <BindingsFiles Include="../StanleyVrUnity/Assets/StreamingAssets/SteamVR/*.json" />
+            <_ModFiles Remove="@(_ModFiles)" />
+            <_ModFiles Include="ModFiles\**" />
         </ItemGroup>
-        <Copy SourceFiles="@(BindingsFiles)" DestinationFolder="ReleaseFiles/The Stanley Parable Ultra Deluxe_Data/StreamingAssets/SteamVR" OverwriteReadOnlyFiles="true" />
-    </Target>
-    
-    <Target Name="Copy build files" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
-        <ItemGroup>
-            <ReleaseFiles Include="ReleaseFiles\**" />
-        </ItemGroup>
-        <Copy SourceFiles="@(ReleaseFiles)" DestinationFolder="$(GameDir)\%(RecursiveDir)" OverwriteReadOnlyFiles="true" />
+        <Copy SourceFiles="@(_ModFiles)" DestinationFiles="$(PublishDir)%(RecursiveDir)%(Filename)%(Extension)" />
     </Target>
 
     <ItemGroup>

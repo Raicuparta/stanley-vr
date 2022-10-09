@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net35</TargetFramework>
+        <AssemblyTitle>StanleyVrPatcher</AssemblyTitle>
+        <Product>StanleyVrPatcher</Product>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <Configurations>Release;Debug</Configurations>
+        <Platforms>x64</Platforms>
+        <LangVersion>10</LangVersion>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <OutputPath>$(PublishDir)\BepInEx\patchers\StanleyVrPatcher</OutputPath>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <DebugType>pdbonly</DebugType>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <DebugType>none</DebugType>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Mono.Cecil" Version="0.10.4" IncludeAssets="compile" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="CopyToGame/**">
+            <LinkBase>CopyToGame</LinkBase>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\StanleyVrUnity\Assets\StreamingAssets\SteamVR\*.json">
+            <LinkBase>CopyToGame\The Stanley Parable Ultra Deluxe_Data\StreamingAssets\SteamVR</LinkBase>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+</Project>

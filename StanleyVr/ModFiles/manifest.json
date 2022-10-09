@@ -1,0 +1,13 @@
+{
+  "id": "stanley-vr",
+  "modTitle": "StanleyVR",
+  "gameTitle": "The Stanley Parable: Ultra Deluxe",
+  "providers": [
+    {
+      "providerId": "steam",
+      "gameIdentifier": "The Stanley Parable Ultra Deluxe",
+      "requireAdmin": false,
+      "gameExe": "The Stanley Parable Ultra Deluxe.exe"
+    }
+  ]
+}

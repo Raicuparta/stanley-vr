@@ -13,7 +13,9 @@ public static class ApplicationManifestHelper
     {
         try
         {
+            Debug.Log("test 1");
             var launchType = steamBuild ? GetSteamLaunchString(steamAppId) : GetBinaryLaunchString();
+            Debug.Log("test 2");
             var appManifestContent = $@"{{
                                             ""source"": ""builtin"",
                                             ""applications"": [{{
@@ -28,21 +30,28 @@ public static class ApplicationManifestHelper
                                                 }}
                                             }}]
                                         }}";
+            Debug.Log("test 3");
 
             File.WriteAllText(manifestPath, appManifestContent);
+            Debug.Log("test 4");
 
             var error = OpenVR.Applications.AddApplicationManifest(manifestPath, false);
+            Debug.Log("test 5");
             if (error != EVRApplicationError.None)
             {
                 Debug.LogError("Failed to set AppManifest " + error);
             }
+            Debug.Log("test 6");
 
             var processId = System.Diagnostics.Process.GetCurrentProcess().Id;
+            Debug.Log("test 8");
+            Debug.Log("test 8");
             var applicationIdentifyErr = OpenVR.Applications.IdentifyApplication((uint) processId, appKey);
             if (applicationIdentifyErr != EVRApplicationError.None)
             {
                 Debug.LogError("Error identifying application: " + applicationIdentifyErr);
             }
+            Debug.Log("test 7");
         }
         catch (Exception exception)
         {
