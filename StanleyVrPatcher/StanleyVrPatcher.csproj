@@ -30,5 +30,9 @@
             <LinkBase>CopyToGame\The Stanley Parable Ultra Deluxe_Data\StreamingAssets\SteamVR</LinkBase>
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
+        <Content Include="..\StanleyVrUnity\Assets\XR\Settings\Open VR Settings.asset">
+            <Link>CopyToGame\The Stanley Parable Ultra Deluxe_Data\StreamingAssets\SteamVR\OpenVRSettings.asset</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 </Project>
